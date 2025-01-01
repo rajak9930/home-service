@@ -5,6 +5,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import Splash from '../views/Splash';
 import SignIn from '../views/Auth/SignIn';
 import Main from '../views/Main';
+import Onboarding from '../views/Onboarding';
 
 const Stack = createNativeStackNavigator();
 
@@ -12,11 +13,12 @@ const AppNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Splash"
+        initialRouteName="Onboarding"
         screenOptions={{
           headerShown: false,
         }}>
         <Stack.Screen name="Splash" component={Splash} />
+        <Stack.Screen name="Onboarding" component={Onboarding} />
         <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="Main" component={Main} />
       </Stack.Navigator>
