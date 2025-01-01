@@ -16,10 +16,12 @@ import {
 } from '@react-native-google-signin/google-signin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
 
 import images from '../../constants/images';
 import Colors from '../../constants/colors';
 import {supabase} from '../../supabase/supabaseClient';
+import {setUser} from '../../redux/auth/authSlice';
 
 const SignIn = () => {
   const logoOpacity = useRef(new Animated.Value(0)).current;
@@ -28,8 +30,10 @@ const SignIn = () => {
   const googleButtonTranslateY = useRef(new Animated.Value(50)).current;
   const guestButtonOpacity = useRef(new Animated.Value(0)).current;
   const guestButtonTranslateY = useRef(new Animated.Value(50)).current;
-
   const colorScheme = useColorScheme();
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
   const [isDarkMode, setIsDarkMode] = useState(colorScheme === 'dark');
 
   useEffect(() => {
@@ -106,11 +110,11 @@ const SignIn = () => {
 
       // First sign in and get user info
       const userInfo = await GoogleSignin.signIn();
-      console.log('User Info:', userInfo);
+      // console.log('User Info:', userInfo);
 
       // Get tokens explicitly
       const tokens = await GoogleSignin.getTokens();
-      console.log('Tokens:', tokens);
+      // console.log('Tokens:', tokens);
 
       // Notice that idToken is inside userInfo.data.idToken
       if (userInfo.data && userInfo.data.idToken) {
@@ -120,10 +124,10 @@ const SignIn = () => {
         });
 
         if (error) throw error;
-        console.log('Supabase Success:', data);
-        // await AsyncStorage.setItem('user', JSON.stringify(data));
-        // dispatch(setUser(data));
-        // navigation.replace('Main');
+        // console.log('Supabase Success:', data);
+        await AsyncStorage.setItem('user', JSON.stringify(data));
+        dispatch(setUser(data));
+        navigation.replace('Main');
       } else {
         throw new Error('Failed to get necessary tokens');
       }
