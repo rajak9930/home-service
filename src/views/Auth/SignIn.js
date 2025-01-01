@@ -1,3 +1,4 @@
+import {WEB_CLIENT_ID} from '@env';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   View,
@@ -7,10 +8,18 @@ import {
   TouchableOpacity,
   Animated,
   useColorScheme,
+  Alert,
 } from 'react-native';
+import {
+  GoogleSignin,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useNavigation} from '@react-navigation/native';
 
 import images from '../../constants/images';
 import Colors from '../../constants/colors';
+import {supabase} from '../../supabase/supabaseClient';
 
 const SignIn = () => {
   const logoOpacity = useRef(new Animated.Value(0)).current;
@@ -73,7 +82,64 @@ const SignIn = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleGoogleSignIn = () => {};
+  useEffect(() => {
+    const configureGoogleSignIn = async () => {
+      try {
+        await GoogleSignin.configure({
+          webClientId: WEB_CLIENT_ID,
+          offlineAccess: true,
+          // Add these scopes
+          scopes: ['profile', 'email'],
+        });
+        // console.log('Google Sign In configured successfully');
+      } catch (error) {
+        console.error('Google Sign In configuration error:', error);
+      }
+    };
+
+    configureGoogleSignIn();
+  }, []);
+
+  const handleGoogleSignIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+
+      // First sign in and get user info
+      const userInfo = await GoogleSignin.signIn();
+      console.log('User Info:', userInfo);
+
+      // Get tokens explicitly
+      const tokens = await GoogleSignin.getTokens();
+      console.log('Tokens:', tokens);
+
+      // Notice that idToken is inside userInfo.data.idToken
+      if (userInfo.data && userInfo.data.idToken) {
+        const {data, error} = await supabase.auth.signInWithIdToken({
+          provider: 'google',
+          token: userInfo.data.idToken,
+        });
+
+        if (error) throw error;
+        console.log('Supabase Success:', data);
+        // await AsyncStorage.setItem('user', JSON.stringify(data));
+        // dispatch(setUser(data));
+        // navigation.replace('Main');
+      } else {
+        throw new Error('Failed to get necessary tokens');
+      }
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        Alert.alert('User cancelled the login flow');
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        Alert.alert('Operation in progress');
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        Alert.alert('Play services not available or outdated');
+      } else {
+        Alert.alert('Error', `${error.message}\nCode: ${error.code}`);
+        console.error('Detailed error:', error);
+      }
+    }
+  };
 
   return (
     <View
