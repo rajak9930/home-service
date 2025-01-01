@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   },
   imageWrapper: {
     width: width,
-    height: height * 0.45,
+    height: height * 0.5,
     marginTop: 50,
   },
   image: {
