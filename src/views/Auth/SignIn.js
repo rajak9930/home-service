@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   Animated,
+  useColorScheme,
 } from 'react-native';
 
 import images from '../../constants/images';
@@ -18,6 +19,13 @@ const SignIn = () => {
   const googleButtonTranslateY = useRef(new Animated.Value(50)).current;
   const guestButtonOpacity = useRef(new Animated.Value(0)).current;
   const guestButtonTranslateY = useRef(new Animated.Value(50)).current;
+
+  const colorScheme = useColorScheme();
+  const [isDarkMode, setIsDarkMode] = useState(colorScheme === 'dark');
+
+  useEffect(() => {
+    setIsDarkMode(colorScheme === 'dark');
+  }, [colorScheme]);
 
   useEffect(() => {
     Animated.sequence([
@@ -68,16 +76,25 @@ const SignIn = () => {
   const handleGoogleSignIn = () => {};
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {backgroundColor: isDarkMode ? Colors.primaryDark : Colors.pureWhite},
+      ]}>
       <Animated.View style={[styles.contentContainer, {opacity: logoOpacity}]}>
         <Image
-          source={images.authLogo}
+          source={isDarkMode ? images.logo : images.authLogo}
           style={styles.logo}
           resizeMode="contain"
         />
       </Animated.View>
 
-      <Animated.Text style={[styles.welcomeText, {opacity: welcomeOpacity}]}>
+      <Animated.Text
+        style={[
+          styles.welcomeText,
+          isDarkMode ? {color: Colors.white} : {color: '#333'},
+          {opacity: welcomeOpacity},
+        ]}>
         Welcome back! Glad to see you, Again
       </Animated.Text>
 
@@ -109,7 +126,13 @@ const SignIn = () => {
           transform: [{translateY: guestButtonTranslateY}],
         }}>
         <TouchableOpacity style={styles.guest}>
-          <Text style={styles.guestText}>Continue as guest</Text>
+          <Text
+            style={[
+              styles.guestText,
+              isDarkMode ? {color: Colors.black} : {color: '#666'},
+            ]}>
+            Continue as guest
+          </Text>
         </TouchableOpacity>
       </Animated.View>
     </View>
