@@ -3,7 +3,7 @@ import images from './images';
 export const onboarding = [
   {
     id: 1,
-    title: 'Beauty parlour at your home',
+    title: 'Beauty parlour \u00A0\u00A0at your home',
     description:
       'Get professional beauty services and treatments in the comfort of your home',
     image: images.onboardingOne,
