@@ -9,6 +9,7 @@ import {
   Animated,
   useColorScheme,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import {
   GoogleSignin,
@@ -34,6 +35,7 @@ const SignIn = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
+  const [isLoading, setIsLoading] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(colorScheme === 'dark');
 
   useEffect(() => {
@@ -42,19 +44,16 @@ const SignIn = () => {
 
   useEffect(() => {
     Animated.sequence([
-      // Logo fade in
       Animated.timing(logoOpacity, {
         toValue: 1,
         duration: 800,
         useNativeDriver: true,
       }),
-      // Welcome text fade in
       Animated.timing(welcomeOpacity, {
         toValue: 1,
         duration: 800,
         useNativeDriver: true,
       }),
-      // Google button animation
       Animated.parallel([
         Animated.timing(googleButtonOpacity, {
           toValue: 1,
@@ -68,7 +67,6 @@ const SignIn = () => {
           useNativeDriver: true,
         }),
       ]),
-      // Guest button animation
       Animated.parallel([
         Animated.timing(guestButtonOpacity, {
           toValue: 1,
@@ -83,7 +81,6 @@ const SignIn = () => {
         }),
       ]),
     ]).start();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -92,10 +89,8 @@ const SignIn = () => {
         await GoogleSignin.configure({
           webClientId: WEB_CLIENT_ID,
           offlineAccess: true,
-          // Add these scopes
           scopes: ['profile', 'email'],
         });
-        // console.log('Google Sign In configured successfully');
       } catch (error) {
         console.error('Google Sign In configuration error:', error);
       }
@@ -105,26 +100,27 @@ const SignIn = () => {
   }, []);
 
   const handleGoogleSignIn = async () => {
+    if (isLoading) {
+      return;
+    }
+
+    setIsLoading(true);
     try {
       await GoogleSignin.hasPlayServices();
 
-      // First sign in and get user info
       const userInfo = await GoogleSignin.signIn();
-      // console.log('User Info:', userInfo);
-
-      // Get tokens explicitly
       const tokens = await GoogleSignin.getTokens();
-      // console.log('Tokens:', tokens);
 
-      // Notice that idToken is inside userInfo.data.idToken
       if (userInfo.data && userInfo.data.idToken) {
         const {data, error} = await supabase.auth.signInWithIdToken({
           provider: 'google',
           token: userInfo.data.idToken,
         });
 
-        if (error) throw error;
-        // console.log('Supabase Success:', data);
+        if (error) {
+          throw error;
+        }
+
         await AsyncStorage.setItem('user', JSON.stringify(data));
         dispatch(setUser(data));
         navigation.replace('Main');
@@ -142,7 +138,31 @@ const SignIn = () => {
         Alert.alert('Error', `${error.message}\nCode: ${error.code}`);
         console.error('Detailed error:', error);
       }
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  const renderGoogleButtonContent = () => {
+    if (isLoading) {
+      return (
+        <View style={styles.googleButtonContent}>
+          <ActivityIndicator size="small" color="#333" />
+          <Text style={styles.googleButtonText}>Signing in...</Text>
+        </View>
+      );
+    }
+
+    return (
+      <View style={styles.googleButtonContent}>
+        <Image
+          source={images.googleLogo}
+          style={styles.googleIcon}
+          resizeMode="contain"
+        />
+        <Text style={styles.googleButtonText}>Continue with Google</Text>
+      </View>
+    );
   };
 
   return (
@@ -169,7 +189,6 @@ const SignIn = () => {
       </Animated.Text>
 
       <Animated.View
-        // eslint-disable-next-line react-native/no-inline-styles
         style={{
           width: '100%',
           opacity: googleButtonOpacity,
@@ -177,16 +196,13 @@ const SignIn = () => {
         }}>
         <TouchableOpacity
           onPress={handleGoogleSignIn}
-          style={styles.googleButton}
-          activeOpacity={0.8}>
-          <View style={styles.googleButtonContent}>
-            <Image
-              source={images.googleLogo}
-              style={styles.googleIcon}
-              resizeMode="contain"
-            />
-            <Text style={styles.googleButtonText}>Continue with Google</Text>
-          </View>
+          style={[
+            styles.googleButton,
+            isLoading && styles.googleButtonDisabled,
+          ]}
+          activeOpacity={0.8}
+          disabled={isLoading}>
+          {renderGoogleButtonContent()}
         </TouchableOpacity>
       </Animated.View>
 
@@ -195,7 +211,7 @@ const SignIn = () => {
           opacity: guestButtonOpacity,
           transform: [{translateY: guestButtonTranslateY}],
         }}>
-        <TouchableOpacity style={styles.guest}>
+        <TouchableOpacity style={styles.guest} disabled={isLoading}>
           <Text
             style={[
               styles.guestText,
@@ -250,6 +266,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
+  },
+  googleButtonDisabled: {
+    opacity: 0.7,
   },
   googleButtonContent: {
     flexDirection: 'row',
