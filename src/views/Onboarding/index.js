@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -12,50 +12,83 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {onboarding} from '../../constants/data';
 import Colors from '../../constants/colors';
 import images from '../../constants/images';
+import {useNavigation} from '@react-navigation/native';
 
 const {width, height} = Dimensions.get('window');
 
-const Onboarding = ({navigation}) => {
+const Onboarding = () => {
+  const swiperRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const navigation = useNavigation();
+
+  const handleNext = () => {
+    if (swiperRef.current && currentIndex < onboarding.length - 1) {
+      swiperRef.current.scrollBy(1);
+    }
+  };
+
+  const handleSkip = () => {
+    // navigation.replace('Home');
+  };
+
+  const handleGetStarted = () => {
+    // navigation.replace('Home');
+  };
+
   return (
     <View style={styles.container}>
       <Image source={images.onboardingTop} style={styles.topImage} />
 
-      <TouchableOpacity style={styles.skipButton}>
+      <TouchableOpacity style={styles.skipButton} onPress={handleSkip}>
         <Text style={styles.skipText}>Skip</Text>
       </TouchableOpacity>
 
       <Swiper
+        ref={swiperRef}
         style={styles.wrapper}
         dotStyle={styles.dot}
         activeDotStyle={styles.activeDot}
         loop={false}
-        renderPagination={(index, total, context) => (
-          <View style={styles.paginationContainer}>
-            <View style={styles.pagination}>
-              {onboarding.map((_, i) => (
-                <View
-                  key={i}
-                  style={[styles.dot, index === i && styles.activeDot]}
-                />
-              ))}
-            </View>
-          </View>
-        )}>
+        showsPagination={false}
+        onIndexChanged={index => setCurrentIndex(index)}>
         {onboarding.map((item, index) => (
           <View key={item.id} style={styles.slide}>
-            <Image source={item.image} style={styles.image} />
-            <Text style={styles.title}>{item.title}</Text>
-            <Text style={styles.description}>{item.description}</Text>
+            <View style={styles.imageWrapper}>
+              <Image source={item.image} style={styles.image} />
+            </View>
 
-            {index === onboarding.length - 1 ? (
-              <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>Get Started</Text>
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity style={styles.nextButton}>
-                <Icon name="arrow-forward" size={24} color="#fff" />
-              </TouchableOpacity>
-            )}
+            <View style={styles.contentContainer}>
+              <View style={styles.paginationContainer}>
+                <View style={styles.pagination}>
+                  {onboarding.map((_, i) => (
+                    <View
+                      key={i}
+                      style={[
+                        styles.dot,
+                        currentIndex === i && styles.activeDot,
+                      ]}
+                    />
+                  ))}
+                </View>
+              </View>
+
+              <Text style={styles.title}>{item.title}</Text>
+              <Text style={styles.description}>{item.description}</Text>
+
+              {index === onboarding.length - 1 ? (
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={handleGetStarted}>
+                  <Text style={styles.buttonText}>Get Started</Text>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  style={styles.nextButton}
+                  onPress={handleNext}>
+                  <Icon name="arrow-forward" size={24} color="#fff" />
+                </TouchableOpacity>
+              )}
+            </View>
           </View>
         ))}
       </Swiper>
@@ -70,6 +103,49 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  imageWrapper: {
+    width: width,
+    height: height * 0.45,
+    marginTop: 50,
+  },
+  image: {
+    width: width,
+    height: '100%',
+    resizeMode: 'contain',
+  },
+  contentContainer: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  paginationContainer: {
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  pagination: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  slide: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: Colors.black,
+    textAlign: 'center',
+    marginBottom: 15,
+    paddingHorizontal: 20,
+  },
+  description: {
+    fontSize: 16,
+    color: Colors.lightGray,
+    textAlign: 'center',
+    marginBottom: 30,
+    paddingHorizontal: 40,
+  },
+
   topImage: {
     position: 'absolute',
     top: 0,
@@ -90,44 +166,7 @@ const styles = StyleSheet.create({
     color: '#2C2B46',
     fontWeight: '500',
   },
-  slide: {
-    flex: 1,
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingTop: 50,
-  },
-  image: {
-    height: 380,
-    width: 195,
-    resizeMode: 'cover',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: Colors.black,
-    textAlign: 'center',
-    marginTop: 30,
-    marginBottom: 15,
-  },
-  description: {
-    fontSize: 16,
-    color: Colors.lightGray,
-    textAlign: 'center',
-    marginBottom: 30,
-    paddingHorizontal: 20,
-  },
-  paginationContainer: {
-    position: 'absolute',
-    bottom: 100,
-    left: 0,
-    right: 0,
-    alignItems: 'center',
-  },
-  pagination: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+
   dot: {
     width: 8,
     height: 8,
