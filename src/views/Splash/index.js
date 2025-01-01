@@ -16,7 +16,7 @@ const Splash = () => {
     <View
       style={[
         styles.container,
-        {backgroundColor: isDarkMode ? Colors.primaryDark : Colors.primary},
+        {backgroundColor: isDarkMode ? Colors.primaryDark : Colors.pureWhite},
       ]}>
       <View style={styles.logoContainer}>
         <Image source={images.logo} style={styles.logo} resizeMode="contain" />
