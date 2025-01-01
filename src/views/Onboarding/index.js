@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -6,21 +6,29 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
+  useColorScheme,
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/AntDesign';
+import {useNavigation} from '@react-navigation/native';
 
 import {onboarding} from '../../constants/data';
 import Colors from '../../constants/colors';
 import images from '../../constants/images';
-import {useNavigation} from '@react-navigation/native';
 
 const {width, height} = Dimensions.get('window');
 
 const Onboarding = () => {
-  const swiperRef = useRef(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
   const navigation = useNavigation();
+  const swiperRef = useRef(null);
+  const colorScheme = useColorScheme();
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isDarkMode, setIsDarkMode] = useState(colorScheme === 'dark');
+
+  useEffect(() => {
+    setIsDarkMode(colorScheme === 'dark');
+  }, [colorScheme]);
 
   const handleNext = () => {
     if (swiperRef.current && currentIndex < onboarding.length - 1) {
@@ -37,7 +45,11 @@ const Onboarding = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {backgroundColor: isDarkMode ? Colors.primaryDark : Colors.pureWhite},
+      ]}>
       <Image source={images.onboardingTop} style={styles.topImage} />
 
       <TouchableOpacity style={styles.skipButton} onPress={handleSkip}>
@@ -73,8 +85,24 @@ const Onboarding = () => {
                 </View>
               </View>
 
-              <Text style={[styles.title]}>{item.title}</Text>
-              <Text style={styles.description}>{item.description}</Text>
+              <Text
+                style={[
+                  styles.title,
+                  {color: isDarkMode ? Colors.pureWhite : Colors.black},
+                ]}>
+                {item.title}
+              </Text>
+              <Text
+                style={[
+                  styles.description,
+                  {
+                    color: isDarkMode
+                      ? Colors.darkLightGray
+                      : Colors.lightBlack,
+                  },
+                ]}>
+                {item.description}
+              </Text>
 
               {index === onboarding.length - 1 ? (
                 <TouchableOpacity
@@ -102,7 +130,6 @@ export default Onboarding;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
   },
   imageWrapper: {
     width: width,

@@ -6,6 +6,10 @@ const Colors = {
   lightBlack: '#535763',
   lightGray: '#9A9FA5',
   white: '#FCFCFC',
+  pureWhite: '#FFFFFF',
+
+  // For Dark Theme
+  darkLightGray: '#D1D3D4',
 };
 
 export default Colors;
