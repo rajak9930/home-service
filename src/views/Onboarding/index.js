@@ -37,11 +37,11 @@ const Onboarding = () => {
   };
 
   const handleSkip = () => {
-    // navigation.replace('Home');
+    navigation.replace('SignIn');
   };
 
   const handleGetStarted = () => {
-    // navigation.replace('Home');
+    navigation.replace('SignIn');
   };
 
   return (
