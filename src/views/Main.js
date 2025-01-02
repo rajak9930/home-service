@@ -1,12 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {StyleSheet, TouchableOpacity, useColorScheme, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconTwo from 'react-native-vector-icons/Feather';
 import Home from './tabs/Home';
 import Profile from './tabs/Profile';
 import Bookings from './tabs/Bookings';
 import Colors from '../constants/colors';
+import {useCustomTheme} from '../theme/Theme';
 
 const Tab = createBottomTabNavigator();
 
@@ -67,16 +68,13 @@ const SCREENS = [
 ];
 
 const Main = () => {
-  const colorScheme = useColorScheme();
-  const [isDarkMode, setIsDarkMode] = useState(colorScheme === 'dark');
+  const theme = useCustomTheme();
 
-  useEffect(() => {
-    setIsDarkMode(colorScheme === 'dark');
-  }, [colorScheme]);
+  const background = theme === 'dark' ? Colors.darkNavColor : Colors.pureWhite;
 
   const tabBarStyle = {
     ...styles.tabBar,
-    backgroundColor: isDarkMode ? Colors.darkNavColor : Colors.pureWhite,
+    backgroundColor: background,
   };
 
   return (
@@ -98,7 +96,10 @@ const Main = () => {
           name={screen.name}
           component={screen.component}
           options={{
-            tabBarIcon: renderTabIcon(screen.iconName, isDarkMode),
+            tabBarIcon: renderTabIcon(
+              screen.iconName,
+              theme === 'dark' ? true : false,
+            ),
             tabBarButton: TabBarButton,
           }}
         />
