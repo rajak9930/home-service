@@ -13,13 +13,14 @@ const Splash = () => {
 
   useEffect(() => {
     checkAuth();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const checkAuth = async () => {
     const userData = await AsyncStorage.getItem('user');
     const parsedUser = userData ? JSON.parse(userData) : null;
     setTimeout(() => {
-      navigation.replace(parsedUser ? 'Main' : 'SignIn');
+      navigation.replace(parsedUser ? 'Main' : 'Onboarding');
     }, 2000);
   };
 
