@@ -1,60 +1,96 @@
-import {WEB_CLIENT_ID} from '@env';
-import {View, Text, Alert, Button} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import useTypedSelector from '../hooks/useTypedSelector';
-import {selectedUser, setUser} from '../redux/auth/authSlice';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import {supabase} from '../supabase/supabaseClient';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React from 'react';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
+import Home from './tabs/Home';
+import Profile from './tabs/Profile';
+import Bookings from './tabs/Bookings';
+
+const Tab = createBottomTabNavigator();
+
+const TabIcon = ({focused, iconName}) => (
+  <View style={styles.tabIconContainer}>
+    <Icon
+      name={iconName}
+      size={iconName === 'my-library-books' ? 24 : 27}
+      color={focused ? '#0061FF' : '#666876'}
+    />
+  </View>
+);
+
+const TabBarButton = props => (
+  <View style={styles.tabBarButtonContainer}>
+    <TouchableOpacity {...props} activeOpacity={1} />
+  </View>
+);
 
 const Main = () => {
-  const navigation = useNavigation();
-  const dispatch = useDispatch();
-  const userDetails = useTypedSelector(selectedUser);
-
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    const configureGoogleSignIn = async () => {
-      try {
-        await GoogleSignin.configure({
-          webClientId: WEB_CLIENT_ID,
-          offlineAccess: true,
-          scopes: ['profile', 'email'],
-        });
-        // console.log('Google Sign In configured successfully');
-      } catch (error) {
-        console.error('Google Sign In configuration error:', error);
-      }
-    };
-
-    configureGoogleSignIn();
-  }, []);
-
-  const handleSignOut = async () => {
-    setIsLoading(true);
-    try {
-      await GoogleSignin.signOut();
-      await supabase.auth.signOut();
-      await AsyncStorage.removeItem('user');
-      dispatch(setUser(null));
-      navigation.replace('SignIn');
-    } catch (error) {
-      console.error('Error signing out:', error);
-      Alert.alert('Error', 'Failed to logout');
-    } finally {
-      setIsLoading(false);
-    }
-  };
   return (
-    <View>
-      <Text>Main</Text>
-
-      <Button title="Sign Out" onPress={handleSignOut} />
-    </View>
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarShowLabel: false,
+        tabBarStyle: styles.tabBar,
+        tabBarItemStyle: styles.tabBarItem,
+        tabBarActiveBackgroundColor: 'transparent',
+        tabBarInactiveBackgroundColor: 'transparent',
+        android_ripple: {enabled: false},
+        pressColor: 'transparent',
+        pressOpacity: 1,
+      }}>
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarIcon: ({focused}) => (
+            <TabIcon focused={focused} iconName="home" />
+          ),
+          tabBarButton: TabBarButton,
+        }}
+      />
+      <Tab.Screen
+        name="Bookings"
+        component={Bookings}
+        options={{
+          tabBarIcon: ({focused}) => (
+            <TabIcon focused={focused} iconName="my-library-books" />
+          ),
+          tabBarButton: TabBarButton,
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarIcon: ({focused}) => (
+            <TabIcon focused={focused} iconName="person" />
+          ),
+          tabBarButton: TabBarButton,
+        }}
+      />
+    </Tab.Navigator>
   );
 };
 
 export default Main;
+
+const styles = StyleSheet.create({
+  tabIconContainer: {
+    flex: 1,
+    marginTop: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  tabBar: {
+    backgroundColor: 'white',
+    height: 67,
+    paddingVertical: 8,
+  },
+  tabBarItem: {
+    marginHorizontal: 8,
+  },
+  tabBarButtonContainer: {
+    flex: 1,
+  },
+});
