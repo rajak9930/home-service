@@ -2,6 +2,7 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import IconTwo from 'react-native-vector-icons/Feather';
 
 import Home from './tabs/Home';
 import Profile from './tabs/Profile';
@@ -11,11 +12,19 @@ const Tab = createBottomTabNavigator();
 
 const TabIcon = ({focused, iconName}) => (
   <View style={styles.tabIconContainer}>
-    <Icon
-      name={iconName}
-      size={iconName === 'my-library-books' ? 24 : 27}
-      color={focused ? '#0061FF' : '#666876'}
-    />
+    {iconName === 'home' ? (
+      <IconTwo
+        name={iconName}
+        size={22}
+        color={focused ? '#0061FF' : '#666876'}
+      />
+    ) : (
+      <Icon
+        name={iconName}
+        size={iconName === 'my-library-books' ? 24 : 27}
+        color={focused ? '#0061FF' : '#666876'}
+      />
+    )}
   </View>
 );
 
@@ -24,6 +33,11 @@ const TabBarButton = props => (
     <TouchableOpacity {...props} activeOpacity={1} />
   </View>
 );
+
+const renderTabIcon =
+  iconName =>
+  ({focused}) =>
+    <TabIcon focused={focused} iconName={iconName} />;
 
 const Main = () => {
   return (
@@ -43,9 +57,7 @@ const Main = () => {
         name="Home"
         component={Home}
         options={{
-          tabBarIcon: ({focused}) => (
-            <TabIcon focused={focused} iconName="home" />
-          ),
+          tabBarIcon: renderTabIcon('home'),
           tabBarButton: TabBarButton,
         }}
       />
@@ -53,9 +65,7 @@ const Main = () => {
         name="Bookings"
         component={Bookings}
         options={{
-          tabBarIcon: ({focused}) => (
-            <TabIcon focused={focused} iconName="my-library-books" />
-          ),
+          tabBarIcon: renderTabIcon('my-library-books'),
           tabBarButton: TabBarButton,
         }}
       />
@@ -63,9 +73,7 @@ const Main = () => {
         name="Profile"
         component={Profile}
         options={{
-          tabBarIcon: ({focused}) => (
-            <TabIcon focused={focused} iconName="person" />
-          ),
+          tabBarIcon: renderTabIcon('person-outline'),
           tabBarButton: TabBarButton,
         }}
       />
