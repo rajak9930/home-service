@@ -7,7 +7,6 @@ import {
   Image,
   TouchableOpacity,
   Animated,
-  useColorScheme,
   Alert,
   ActivityIndicator,
 } from 'react-native';
@@ -23,6 +22,7 @@ import images from '../../constants/images';
 import Colors from '../../constants/colors';
 import {supabase} from '../../supabase/supabaseClient';
 import {setUser} from '../../redux/auth/authSlice';
+import {useCustomTheme} from '../../theme/Theme';
 
 const SignIn = () => {
   const logoOpacity = useRef(new Animated.Value(0)).current;
@@ -31,16 +31,12 @@ const SignIn = () => {
   const googleButtonTranslateY = useRef(new Animated.Value(50)).current;
   const guestButtonOpacity = useRef(new Animated.Value(0)).current;
   const guestButtonTranslateY = useRef(new Animated.Value(50)).current;
-  const colorScheme = useColorScheme();
+
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const theme = useCustomTheme();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(colorScheme === 'dark');
-
-  useEffect(() => {
-    setIsDarkMode(colorScheme === 'dark');
-  }, [colorScheme]);
 
   useEffect(() => {
     Animated.sequence([
@@ -169,11 +165,14 @@ const SignIn = () => {
     <View
       style={[
         styles.container,
-        {backgroundColor: isDarkMode ? Colors.primaryDark : Colors.pureWhite},
+        {
+          backgroundColor:
+            theme === 'dark' ? Colors.primaryDark : Colors.pureWhite,
+        },
       ]}>
       <Animated.View style={[styles.contentContainer, {opacity: logoOpacity}]}>
         <Image
-          source={isDarkMode ? images.logo : images.authLogo}
+          source={theme === 'dark' ? images.logo : images.authLogo}
           style={styles.logo}
           resizeMode="contain"
         />
@@ -182,13 +181,14 @@ const SignIn = () => {
       <Animated.Text
         style={[
           styles.welcomeText,
-          isDarkMode ? {color: Colors.white} : {color: '#333'},
+          theme === 'dark' ? {color: Colors.white} : {color: '#333'},
           {opacity: welcomeOpacity},
         ]}>
         Welcome back! Glad to see you, Again
       </Animated.Text>
 
       <Animated.View
+        // eslint-disable-next-line react-native/no-inline-styles
         style={{
           width: '100%',
           opacity: googleButtonOpacity,
@@ -215,7 +215,7 @@ const SignIn = () => {
           <Text
             style={[
               styles.guestText,
-              isDarkMode ? {color: Colors.black} : {color: '#666'},
+              theme === 'dark' ? {color: Colors.black} : {color: '#666'},
             ]}>
             Continue as guest
           </Text>
