@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -6,7 +6,6 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
-  useColorScheme,
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -15,20 +14,16 @@ import {useNavigation} from '@react-navigation/native';
 import {onboarding} from '../../constants/data';
 import Colors from '../../constants/colors';
 import images from '../../constants/images';
+import {useCustomTheme} from '../../theme/Theme';
 
 const {width, height} = Dimensions.get('window');
 
 const Onboarding = () => {
   const navigation = useNavigation();
   const swiperRef = useRef(null);
-  const colorScheme = useColorScheme();
+  const theme = useCustomTheme();
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isDarkMode, setIsDarkMode] = useState(colorScheme === 'dark');
-
-  useEffect(() => {
-    setIsDarkMode(colorScheme === 'dark');
-  }, [colorScheme]);
 
   const handleNext = () => {
     if (swiperRef.current && currentIndex < onboarding.length - 1) {
@@ -48,7 +43,10 @@ const Onboarding = () => {
     <View
       style={[
         styles.container,
-        {backgroundColor: isDarkMode ? Colors.primaryDark : Colors.pureWhite},
+        {
+          backgroundColor:
+            theme === 'dark' ? Colors.primaryDark : Colors.pureWhite,
+        },
       ]}>
       <Image source={images.onboardingTop} style={styles.topImage} />
 
@@ -88,7 +86,7 @@ const Onboarding = () => {
               <Text
                 style={[
                   styles.title,
-                  {color: isDarkMode ? Colors.pureWhite : Colors.black},
+                  {color: theme === 'dark' ? Colors.pureWhite : Colors.black},
                 ]}>
                 {item.title}
               </Text>
@@ -96,9 +94,10 @@ const Onboarding = () => {
                 style={[
                   styles.description,
                   {
-                    color: isDarkMode
-                      ? Colors.darkLightGray
-                      : Colors.lightBlack,
+                    color:
+                      theme === 'dark'
+                        ? Colors.darkLightGray
+                        : Colors.lightBlack,
                   },
                 ]}>
                 {item.description}

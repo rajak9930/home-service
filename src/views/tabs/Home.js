@@ -5,6 +5,7 @@ import {useDispatch} from 'react-redux';
 import {setTheme} from '../../redux/theme/themeSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import SignOut from '../Auth/SignOut';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -42,6 +43,8 @@ const Home = () => {
           {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
         </Text>
       </TouchableOpacity>
+
+      <SignOut />
     </View>
   );
 };

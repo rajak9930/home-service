@@ -1,16 +1,15 @@
-import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Image, useColorScheme} from 'react-native';
+import React, {useEffect} from 'react';
+import {View, StyleSheet, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import images from '../../constants/images';
 import Colors from '../../constants/colors';
+import {useCustomTheme} from '../../theme/Theme';
 
 const Splash = () => {
-  const colorScheme = useColorScheme();
   const navigation = useNavigation();
-
-  const [isDarkMode, setIsDarkMode] = useState(colorScheme === 'dark');
+  const theme = useCustomTheme();
 
   useEffect(() => {
     checkAuth();
@@ -24,15 +23,14 @@ const Splash = () => {
     }, 2000);
   };
 
-  useEffect(() => {
-    setIsDarkMode(colorScheme === 'dark');
-  }, [colorScheme]);
-
   return (
     <View
       style={[
         styles.container,
-        {backgroundColor: isDarkMode ? Colors.primaryDark : Colors.primary},
+        {
+          backgroundColor:
+            theme === 'dark' ? Colors.primaryDark : Colors.primary,
+        },
       ]}>
       <View style={styles.logoContainer}>
         <Image source={images.logo} style={styles.logo} resizeMode="contain" />
