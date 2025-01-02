@@ -1,32 +1,41 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, useColorScheme, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconTwo from 'react-native-vector-icons/Feather';
-
 import Home from './tabs/Home';
 import Profile from './tabs/Profile';
 import Bookings from './tabs/Bookings';
+import Colors from '../constants/colors';
 
 const Tab = createBottomTabNavigator();
 
-const TabIcon = ({focused, iconName}) => (
-  <View style={styles.tabIconContainer}>
-    {iconName === 'home' ? (
-      <IconTwo
+const ICON_SIZES = {
+  home: 22,
+  'my-library-books': 24,
+  'person-outline': 27,
+};
+
+const TabIcon = ({focused, iconName, isDarkMode}) => {
+  const IconComponent = iconName === 'home' ? IconTwo : Icon;
+
+  const getIconColor = () => {
+    if (focused) {
+      return isDarkMode ? Colors.pureWhite : Colors.primary;
+    }
+    return '#6F767E';
+  };
+
+  return (
+    <View style={styles.tabIconContainer}>
+      <IconComponent
         name={iconName}
-        size={22}
-        color={focused ? '#0061FF' : '#666876'}
+        size={ICON_SIZES[iconName] || 24}
+        color={getIconColor()}
       />
-    ) : (
-      <Icon
-        name={iconName}
-        size={iconName === 'my-library-books' ? 24 : 27}
-        color={focused ? '#0061FF' : '#666876'}
-      />
-    )}
-  </View>
-);
+    </View>
+  );
+};
 
 const TabBarButton = props => (
   <View style={styles.tabBarButtonContainer}>
@@ -35,17 +44,47 @@ const TabBarButton = props => (
 );
 
 const renderTabIcon =
-  iconName =>
+  (iconName, isDarkMode) =>
   ({focused}) =>
-    <TabIcon focused={focused} iconName={iconName} />;
+    <TabIcon focused={focused} iconName={iconName} isDarkMode={isDarkMode} />;
+
+const SCREENS = [
+  {
+    name: 'Home',
+    component: Home,
+    iconName: 'home',
+  },
+  {
+    name: 'Bookings',
+    component: Bookings,
+    iconName: 'my-library-books',
+  },
+  {
+    name: 'Profile',
+    component: Profile,
+    iconName: 'person-outline',
+  },
+];
 
 const Main = () => {
+  const colorScheme = useColorScheme();
+  const [isDarkMode, setIsDarkMode] = useState(colorScheme === 'dark');
+
+  useEffect(() => {
+    setIsDarkMode(colorScheme === 'dark');
+  }, [colorScheme]);
+
+  const tabBarStyle = {
+    ...styles.tabBar,
+    backgroundColor: isDarkMode ? Colors.darkNavColor : Colors.pureWhite,
+  };
+
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarStyle: styles.tabBar,
+        tabBarStyle: tabBarStyle,
         tabBarItemStyle: styles.tabBarItem,
         tabBarActiveBackgroundColor: 'transparent',
         tabBarInactiveBackgroundColor: 'transparent',
@@ -53,30 +92,17 @@ const Main = () => {
         pressColor: 'transparent',
         pressOpacity: 1,
       }}>
-      <Tab.Screen
-        name="Home"
-        component={Home}
-        options={{
-          tabBarIcon: renderTabIcon('home'),
-          tabBarButton: TabBarButton,
-        }}
-      />
-      <Tab.Screen
-        name="Bookings"
-        component={Bookings}
-        options={{
-          tabBarIcon: renderTabIcon('my-library-books'),
-          tabBarButton: TabBarButton,
-        }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          tabBarIcon: renderTabIcon('person-outline'),
-          tabBarButton: TabBarButton,
-        }}
-      />
+      {SCREENS.map(screen => (
+        <Tab.Screen
+          key={screen.name}
+          name={screen.name}
+          component={screen.component}
+          options={{
+            tabBarIcon: renderTabIcon(screen.iconName, isDarkMode),
+            tabBarButton: TabBarButton,
+          }}
+        />
+      ))}
     </Tab.Navigator>
   );
 };
@@ -86,13 +112,12 @@ export default Main;
 const styles = StyleSheet.create({
   tabIconContainer: {
     flex: 1,
-    marginTop: 4,
+    marginTop: 5,
     alignItems: 'center',
     justifyContent: 'center',
   },
   tabBar: {
-    backgroundColor: 'white',
-    height: 67,
+    height: 57,
     paddingVertical: 8,
   },
   tabBarItem: {

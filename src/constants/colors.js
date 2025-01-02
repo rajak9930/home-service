@@ -10,6 +10,7 @@ const Colors = {
 
   // For Dark Theme
   darkLightGray: '#D1D3D4',
+  darkNavColor: '#18202E',
 };
 
 export default Colors;
