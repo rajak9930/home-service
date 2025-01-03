@@ -5,15 +5,18 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import images from '../../../constants/images';
 import {useCustomTheme} from '../../../theme/Theme';
 import Colors from '../../../constants/colors';
+import {useNavigation} from '@react-navigation/native';
 
 const TopBar = () => {
   const theme = useCustomTheme();
+  const navigation = useNavigation();
+
   const themedStyles = getThemedStyles(theme);
 
   return (
     <View style={[styles.header, themedStyles.headerBackground]}>
       <View style={styles.leftSection}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.openDrawer()}>
           <Icon name="menu" size={24} color={themedStyles.iconColor} />
         </TouchableOpacity>
         <View style={styles.locationContainer}>

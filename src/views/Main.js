@@ -3,11 +3,12 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconTwo from 'react-native-vector-icons/Feather';
-import Home from './tabs/Home';
+
 import Profile from './tabs/Profile';
 import Bookings from './tabs/Bookings';
 import Colors from '../constants/colors';
 import {useCustomTheme} from '../theme/Theme';
+import HomeDrawer from './Home/HomeDrawer';
 
 const Tab = createBottomTabNavigator();
 
@@ -52,7 +53,7 @@ const renderTabIcon =
 const SCREENS = [
   {
     name: 'Home',
-    component: Home,
+    component: HomeDrawer,
     iconName: 'home',
   },
   {
