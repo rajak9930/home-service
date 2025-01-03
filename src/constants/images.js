@@ -17,6 +17,7 @@ import categoryNine from '../assets/images/Category-9.png';
 import SlideOne from '../assets/images/Slide-1.png';
 import SlideTwo from '../assets/images/Slide-2.png';
 import SlideThree from '../assets/images/Slide-3.png';
+import Badge from '../assets/images/Badge.png';
 
 export default {
   logo,
@@ -38,4 +39,5 @@ export default {
   SlideOne,
   SlideTwo,
   SlideThree,
+  Badge,
 };

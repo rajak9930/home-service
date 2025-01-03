@@ -1,50 +1,38 @@
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import React from 'react';
-import {useCustomTheme} from '../../theme/Theme';
-import {useDispatch} from 'react-redux';
-import {setTheme} from '../../redux/theme/themeSlice';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import SignOut from '../Auth/SignOut';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import IconTwo from 'react-native-vector-icons/FontAwesome';
+import images from '../../constants/images';
 
 const Home = () => {
-  const dispatch = useDispatch();
-  const theme = useCustomTheme();
-
-  const backgroundColor = theme === 'dark' ? '#1a1a1a' : '#f5f5f5';
-  const textColor = theme === 'dark' ? '#ffffff' : '#000000';
-
-  const changeTheme = () => {
-    const themeType = theme === 'dark' ? 'light' : 'dark';
-    dispatch(setTheme(themeType));
-    AsyncStorage.setItem('theme', themeType);
-  };
-
   return (
-    <View style={[styles.container, {backgroundColor}]}>
-      <Text style={[styles.title, {color: textColor}]}>Welcome Home</Text>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        {/* Left Section with Menu and Location */}
+        <View style={styles.leftSection}>
+          <TouchableOpacity>
+            <Icon name="menu" size={24} color="#333" />
+          </TouchableOpacity>
+          <View style={styles.locationContainer}>
+            <Text style={styles.locationLabel}>CURRENT LOCATION</Text>
+            <View style={styles.addressContainer}>
+              <Text style={styles.addressText}>15A, James Street</Text>
+              <Icon name="keyboard-arrow-down" size={24} color="#333" />
+            </View>
+          </View>
+        </View>
 
-      <TouchableOpacity
-        style={[
-          styles.themeButton,
-          {
-            backgroundColor: theme === 'dark' ? '#333' : '#e0e0e0',
-          },
-        ]}
-        onPress={changeTheme}>
-        <Icon
-          name={
-            theme === 'dark' ? 'white-balance-sunny' : 'moon-waxing-crescent'
-          }
-          size={24}
-          color={textColor}
-        />
-        <Text style={[styles.buttonText, {color: textColor}]}>
-          {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
-        </Text>
-      </TouchableOpacity>
-
-      <SignOut />
+        {/* Right Section with Points */}
+        <View style={styles.pointsContainer}>
+          <View>
+            <Text style={styles.bronzeText}>BRONZE</Text>
+            <Text style={styles.pointsText}>0 POINTS</Text>
+          </View>
+          <View style={styles.medalIcon}>
+            <Image source={images.Badge} style={styles.badge} />
+          </View>
+        </View>
+      </View>
     </View>
   );
 };
@@ -52,30 +40,61 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    backgroundColor: '#fff',
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    justifyContent: 'center',
+    padding: 12,
+
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 30,
-  },
-  themeButton: {
+  leftSection: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 15,
-    borderRadius: 12,
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
+    gap: 12,
   },
-  buttonText: {
-    marginLeft: 10,
+  locationContainer: {
+    marginLeft: 8,
+  },
+  locationLabel: {
+    fontSize: 12,
+    color: '#666',
+    marginBottom: 2,
+  },
+  addressContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  addressText: {
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: '600',
+    color: '#333',
+    marginRight: 4,
+  },
+  pointsContainer: {
+    alignItems: 'flex-end',
+    flexDirection: 'row',
+    gap: 8,
+  },
+  bronzeText: {
+    fontSize: 14,
+    color: '#F4BF4B',
+    fontWeight: '600',
+  },
+  pointsText: {
+    fontSize: 12,
+    color: '#636A75',
+    borderBottomWidth: 1,
+    borderBottomColor: '#636A75',
+  },
+  badge: {
+    width: 32,
+    height: 32,
+    resizeMode: 'contain',
   },
 });
 
