@@ -8,43 +8,26 @@ import Colors from '../../../constants/colors';
 
 const TopBar = () => {
   const theme = useCustomTheme();
-
-  const background = theme === 'dark' ? Colors.navBg : Colors.pureWhite;
+  const themedStyles = getThemedStyles(theme);
 
   return (
-    <View style={[styles.header, {backgroundColor: background}]}>
+    <View style={[styles.header, themedStyles.headerBackground]}>
       <View style={styles.leftSection}>
         <TouchableOpacity>
-          <Icon
-            name="menu"
-            size={24}
-            color={theme === 'dark' ? Colors.pureWhite : Colors.primaryDark}
-          />
+          <Icon name="menu" size={24} color={themedStyles.iconColor} />
         </TouchableOpacity>
         <View style={styles.locationContainer}>
-          <Text
-            style={[
-              styles.locationLabel,
-              {
-                color: theme === 'dark' ? Colors.darkLightGray : Colors.black,
-              },
-            ]}>
+          <Text style={[styles.locationLabel, themedStyles.textSecondary]}>
             CURRENT LOCATION
           </Text>
           <View style={styles.addressContainer}>
-            <Text
-              style={[
-                styles.addressText,
-                {
-                  color: theme === 'dark' ? Colors.pureWhite : Colors.black,
-                },
-              ]}>
+            <Text style={[styles.addressText, themedStyles.textPrimary]}>
               15A, James Street
             </Text>
             <Icon
               name="keyboard-arrow-down"
               size={24}
-              color={theme === 'dark' ? Colors.pureWhite : Colors.primaryDark}
+              color={themedStyles.iconColor}
             />
           </View>
         </View>
@@ -53,13 +36,7 @@ const TopBar = () => {
       <View style={styles.pointsContainer}>
         <View>
           <Text style={styles.bronzeText}>BRONZE</Text>
-          <Text
-            style={[
-              styles.pointsText,
-              {
-                color: theme === 'dark' ? Colors.darkLightGray : Colors.black,
-              },
-            ]}>
+          <Text style={[styles.pointsText, themedStyles.textSecondary]}>
             0 POINTS
           </Text>
         </View>
@@ -70,6 +47,19 @@ const TopBar = () => {
     </View>
   );
 };
+
+const getThemedStyles = theme => ({
+  headerBackground: {
+    backgroundColor: theme === 'dark' ? Colors.navBg : Colors.pureWhite,
+  },
+  textPrimary: {
+    color: theme === 'dark' ? Colors.pureWhite : Colors.black,
+  },
+  textSecondary: {
+    color: theme === 'dark' ? Colors.darkLightGray : Colors.black,
+  },
+  iconColor: theme === 'dark' ? Colors.pureWhite : Colors.primaryDark,
+});
 
 const styles = StyleSheet.create({
   header: {
@@ -90,7 +80,6 @@ const styles = StyleSheet.create({
   },
   locationLabel: {
     fontSize: 12,
-    color: '#666',
     marginBottom: 2,
   },
   addressContainer: {
@@ -100,7 +89,6 @@ const styles = StyleSheet.create({
   addressText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#333',
     marginRight: 4,
   },
   pointsContainer: {
@@ -115,7 +103,6 @@ const styles = StyleSheet.create({
   },
   pointsText: {
     fontSize: 12,
-    color: '#636A75',
     borderBottomWidth: 1,
     borderBottomColor: '#636A75',
   },
