@@ -70,7 +70,7 @@ const SCREENS = [
 const Main = () => {
   const theme = useCustomTheme();
 
-  const background = theme === 'dark' ? Colors.darkNavColor : Colors.pureWhite;
+  const background = theme === 'dark' ? Colors.navBg : Colors.pureWhite;
 
   const tabBarStyle = {
     ...styles.tabBar,

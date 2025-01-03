@@ -1,7 +1,6 @@
 const Colors = {
   primary: '#6759FF',
   primaryDark: '#0F1621',
-  navBg: '#18202E',
   black: '#1A1D1F',
   lightBlack: '#535763',
   lightGray: '#9A9FA5',
@@ -10,7 +9,7 @@ const Colors = {
 
   // For Dark Theme
   darkLightGray: '#D1D3D4',
-  darkNavColor: '#18202E',
+  navBg: '#18202E',
 };
 
 export default Colors;
