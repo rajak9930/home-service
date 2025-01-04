@@ -8,7 +8,9 @@ const getInitialTheme = async () => {
 
 export const themeSlice = createSlice({
   name: 'theme',
-  initialState: getInitialTheme(),
+  initialState: {
+    theme: getInitialTheme(),
+  },
   reducers: {
     setTheme: (state, action) => {
       state.theme = action.payload;
