@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -11,38 +11,71 @@ import useTypedSelector from '../../../hooks/useTypedSelector';
 import {selectedUser} from '../../../redux/auth/authSlice';
 import {useCustomTheme} from '../../../theme/Theme';
 import {setTheme} from '../../../redux/theme/themeSlice';
+import Colors from '../../../constants/colors';
 
-const CalendarIcon = ({color, size}) => (
-  <MaterialIcons name="calendar-today" color="#fff" size={21} />
-);
+// Icon configuration
+const ICONS = {
+  MaterialIcons,
+  Ionicons,
+  MaterialCommunityIcons,
+};
 
-const PaymentIcon = ({color, size}) => (
-  <MaterialIcons name="payment" color="#fff" size={21} />
-);
+const DRAWER_ITEMS = [
+  {
+    icon: {
+      type: 'MaterialIcons',
+      name: 'calendar-today',
+    },
+    label: 'Calendar',
+  },
+  {
+    icon: {
+      type: 'MaterialIcons',
+      name: 'payment',
+    },
+    label: 'Payments Methods',
+  },
+  {
+    icon: {
+      type: 'Ionicons',
+      name: 'location-outline',
+    },
+    label: 'Address',
+  },
+  {
+    icon: {
+      type: 'MaterialIcons',
+      name: 'notifications-none',
+    },
+    label: 'Notification',
+  },
+  {
+    icon: {
+      type: 'MaterialCommunityIcons',
+      name: 'ticket-percent-outline',
+    },
+    label: 'Offers',
+  },
+  {
+    icon: {
+      type: 'MaterialIcons',
+      name: 'person-add-alt-1',
+    },
+    label: 'Refer a Friend',
+  },
+  {
+    icon: {
+      type: 'MaterialIcons',
+      name: 'support-agent',
+    },
+    label: 'Support',
+  },
+];
 
-const AddressIcon = ({color, size}) => (
-  <Ionicons name="location-outline" color="#fff" size={21} />
-);
-
-const NotificationIcon = ({color, size}) => (
-  <MaterialIcons name="notifications-none" color="#fff" size={21} />
-);
-
-const OffersIcon = ({color, size}) => (
-  <MaterialCommunityIcons
-    name="ticket-percent-outline"
-    color="#fff"
-    size={21}
-  />
-);
-
-const ReferFriendIcon = ({color, size}) => (
-  <MaterialIcons name="person-add-alt-1" color="#fff" size={21} />
-);
-
-const SupportIcon = ({color, size}) => (
-  <MaterialIcons name="support-agent" color="#fff" size={21} />
-);
+const IconRenderer = ({type, name, color = '#fff', size = 21}) => {
+  const IconComponent = ICONS[type];
+  return <IconComponent name={name} color={color} size={size} />;
+};
 
 const CustomDrawer = props => {
   const theme = useCustomTheme();
@@ -59,7 +92,11 @@ const CustomDrawer = props => {
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {backgroundColor: isDarkMode ? Colors.navBg : Colors.primary},
+      ]}>
       <DrawerContentScrollView
         {...props}
         contentContainerStyle={styles.drawerContent}>
@@ -74,18 +111,13 @@ const CustomDrawer = props => {
 
         {/* Drawer Items */}
         <View style={styles.drawerItems}>
-          {[
-            {icon: CalendarIcon, label: 'Calendar'},
-            {icon: PaymentIcon, label: 'Payments Methods'},
-            {icon: AddressIcon, label: 'Address'},
-            {icon: NotificationIcon, label: 'Notification'},
-            {icon: OffersIcon, label: 'Offers'},
-            {icon: ReferFriendIcon, label: 'Refer a Friend'},
-            {icon: SupportIcon, label: 'Support'},
-          ].map((item, index) => (
+          {DRAWER_ITEMS.map((item, index) => (
             <View key={index} style={styles.drawerItemWrapper}>
               <DrawerItem
-                icon={item.icon}
+                // eslint-disable-next-line react/no-unstable-nested-components
+                icon={() => (
+                  <IconRenderer type={item.icon.type} name={item.icon.name} />
+                )}
                 label={item.label}
                 labelStyle={styles.drawerLabel}
               />
@@ -97,7 +129,7 @@ const CustomDrawer = props => {
       {/* Theme Switcher */}
       <View style={styles.themeContainer}>
         <View style={styles.schemeContainer}>
-          <MaterialIcons name="palette" color="#fff" size={21} />
+          <IconRenderer type="MaterialIcons" name="palette" />
           <Text style={styles.themeText}>Color Scheme</Text>
         </View>
         <View style={styles.themeSwitcher}>
@@ -107,7 +139,8 @@ const CustomDrawer = props => {
               !isDarkMode && styles.activeThemeOption,
             ]}
             onPress={() => toggleTheme()}>
-            <Ionicons
+            <IconRenderer
+              type="Ionicons"
               name="sunny-outline"
               color={!isDarkMode ? '#6C63FF' : '#fff'}
               size={20}
@@ -123,7 +156,8 @@ const CustomDrawer = props => {
           <TouchableOpacity
             style={[styles.themeOption, isDarkMode && styles.activeThemeOption]}
             onPress={() => toggleTheme()}>
-            <Ionicons
+            <IconRenderer
+              type="Ionicons"
               name="moon-outline"
               color={isDarkMode ? '#6C63FF' : '#fff'}
               size={20}
@@ -145,7 +179,6 @@ const CustomDrawer = props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#6C63FF',
   },
   drawerContent: {
     flex: 1,
@@ -203,8 +236,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: 'rgba(255,255,255,0.1)',
     borderRadius: 25,
-    padding: 4,
     marginTop: 10,
+    padding: 6,
   },
   themeOption: {
     flexDirection: 'row',
