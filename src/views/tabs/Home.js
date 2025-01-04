@@ -8,6 +8,7 @@ import Colors from '../../constants/colors';
 import useTypedSelector from '../../hooks/useTypedSelector';
 import {selectedUser} from '../../redux/auth/authSlice';
 import images from '../../constants/images';
+import Slider from '../../components/Slider';
 
 const Home = () => {
   const theme = useCustomTheme();
@@ -48,6 +49,14 @@ const Home = () => {
         </Text>
         <SearchBar />
       </View>
+
+      <View
+        style={[
+          styles.offerContainer,
+          isDarkMode ? styles.darkGreetingBg : styles.lightGreetingBg,
+        ]}>
+        <Slider />
+      </View>
     </View>
   );
 };
@@ -64,7 +73,15 @@ const styles = StyleSheet.create({
   },
   greetingContainer: {
     padding: 16,
-    margin: 16,
+    marginHorizontal: 16,
+    marginTop: 16,
+    borderRadius: 12,
+  },
+  offerContainer: {
+    paddingVertical: 16,
+    paddingLeft: 6,
+    marginHorizontal: 16,
+    marginTop: 16,
     borderRadius: 12,
   },
   darkGreetingBg: {
