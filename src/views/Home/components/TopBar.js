@@ -18,7 +18,14 @@ const TopBar = () => {
   };
 
   return (
-    <View style={[styles.header, themedStyles.headerBackground]}>
+    <View
+      style={[
+        styles.header,
+        themedStyles.headerBackground,
+        {
+          borderBottomColor: isDarkMode ? 'transparents' : '#eee',
+        },
+      ]}>
       <View style={styles.leftSection}>
         <TouchableOpacity
           onPress={handleDrawerOpen}
