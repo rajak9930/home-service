@@ -20,48 +20,29 @@ const Home = () => {
     <View
       style={[
         styles.mainContainer,
-        {
-          backgroundColor: isDarkMode
-            ? Colors.primaryDark
-            : Colors.primaryLight,
-        },
+        isDarkMode ? styles.darkContainer : styles.lightContainer,
       ]}>
-      {/* Top Bar */}
       <TopBar />
 
-      {/* Greeting Section */}
       <View
         style={[
           styles.greetingContainer,
-          {
-            backgroundColor: isDarkMode ? Colors.navBg : Colors.pureWhite,
-          },
+          isDarkMode ? styles.darkGreetingBg : styles.lightGreetingBg,
         ]}>
         <View style={styles.greeting}>
           <Text
             style={[
               styles.hello,
-              {
-                color: isDarkMode ? Colors.pureWhite : '#666C89',
-              },
+              isDarkMode ? styles.darkText : styles.lightText,
             ]}>
             {name ? `Hello, ${name}` : 'Hello'}
           </Text>
-          <Image
-            source={images.Hello}
-            style={{
-              width: 20,
-              height: 20,
-              resizeMode: 'contain',
-            }}
-          />
+          <Image source={images.Hello} style={styles.helloIcon} />
         </View>
         <Text
           style={[
             styles.subtitle,
-            {
-              color: isDarkMode ? Colors.pureWhite : '#172B4D',
-            },
+            isDarkMode ? styles.darkSubtitle : styles.lightSubtitle,
           ]}>
           What you are looking for today
         </Text>
@@ -75,11 +56,22 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
   },
+  darkContainer: {
+    backgroundColor: Colors.primaryDark,
+  },
+  lightContainer: {
+    backgroundColor: Colors.primaryLight,
+  },
   greetingContainer: {
     padding: 16,
-    backgroundColor: '#fff',
     margin: 16,
     borderRadius: 12,
+  },
+  darkGreetingBg: {
+    backgroundColor: Colors.navBg,
+  },
+  lightGreetingBg: {
+    backgroundColor: Colors.pureWhite,
   },
   greeting: {
     flexDirection: 'row',
@@ -91,11 +83,27 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     letterSpacing: 0.5,
   },
+  darkText: {
+    color: Colors.pureWhite,
+  },
+  lightText: {
+    color: '#666C89',
+  },
+  helloIcon: {
+    width: 20,
+    height: 20,
+    resizeMode: 'contain',
+  },
   subtitle: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#1F2937',
     marginTop: 6,
+  },
+  darkSubtitle: {
+    color: Colors.pureWhite,
+  },
+  lightSubtitle: {
+    color: '#172B4D',
   },
 });
 

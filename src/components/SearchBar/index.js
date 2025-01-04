@@ -12,14 +12,13 @@ const SearchBar = () => {
     <View
       style={[
         styles.searchContainer,
-        {
-          backgroundColor: isDarkMode ? Colors.navBg : Colors.pureWhite,
-          borderColor: isDarkMode ? '#9B9E9F' : 'transparent',
-          borderWidth: isDarkMode ? 1 : 0,
-        },
+        isDarkMode ? styles.darkSearchContainer : styles.lightSearchContainer,
       ]}>
       <TextInput
-        style={styles.searchInput}
+        style={[
+          styles.searchInput,
+          isDarkMode ? styles.darkInput : styles.lightInput,
+        ]}
         placeholder="Search what you need..."
         placeholderTextColor={isDarkMode ? '#9B9E9F' : '#9CA3AF'}
       />
@@ -45,11 +44,26 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
   },
+  darkSearchContainer: {
+    backgroundColor: Colors.navBg,
+    borderColor: '#9B9E9F',
+    borderWidth: 1,
+  },
+  lightSearchContainer: {
+    backgroundColor: Colors.pureWhite,
+    borderColor: 'transparent',
+    borderWidth: 0,
+  },
   searchInput: {
     flex: 1,
     paddingVertical: 12,
     paddingHorizontal: 16,
     fontSize: 16,
+  },
+  darkInput: {
+    color: Colors.pureWhite,
+  },
+  lightInput: {
     color: '#1F2937',
   },
   searchIconContainer: {
