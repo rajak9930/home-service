@@ -168,18 +168,24 @@ const CustomDrawer = props => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.themeOption, isDarkMode && styles.activeThemeOption]}
+            style={[
+              styles.themeOption,
+              isDarkMode && {backgroundColor: Colors.navBg},
+            ]}
             onPress={() => toggleTheme()}>
             <IconRenderer
               type="Ionicons"
               name="moon-outline"
-              color={isDarkMode ? '#6C63FF' : '#fff'}
+              color={isDarkMode ? '#fff' : '#fff'}
               size={20}
             />
             <Text
               style={[
                 styles.themeOptionText,
-                isDarkMode && styles.activeThemeOptionText,
+                // eslint-disable-next-line react-native/no-inline-styles
+                {
+                  color: isDarkMode ? '#fff' : '#fff',
+                },
               ]}>
               Dark
             </Text>
