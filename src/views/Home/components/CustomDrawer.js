@@ -1,43 +1,43 @@
-// CustomDrawer.js
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import useTypedSelector from '../../../hooks/useTypedSelector';
 import {selectedUser} from '../../../redux/auth/authSlice';
 
 const CalendarIcon = ({color, size}) => (
-  <MaterialIcons name="calendar-today" color="#fff" size={24} />
+  <MaterialIcons name="calendar-today" color="#fff" size={21} />
 );
 
 const PaymentIcon = ({color, size}) => (
-  <MaterialIcons name="payment" color="#fff" size={24} />
+  <MaterialIcons name="payment" color="#fff" size={21} />
 );
 
 const AddressIcon = ({color, size}) => (
-  <Ionicons name="location-outline" color="#fff" size={24} />
+  <Ionicons name="location-outline" color="#fff" size={21} />
 );
 
 const NotificationIcon = ({color, size}) => (
-  <MaterialIcons name="notifications-none" color="#fff" size={24} />
+  <MaterialIcons name="notifications-none" color="#fff" size={21} />
 );
 
 const OffersIcon = ({color, size}) => (
   <MaterialCommunityIcons
     name="ticket-percent-outline"
     color="#fff"
-    size={24}
+    size={21}
   />
 );
 
 const ReferFriendIcon = ({color, size}) => (
-  <MaterialIcons name="person-add-alt-1" color="#fff" size={24} />
+  <MaterialIcons name="person-add-alt-1" color="#fff" size={21} />
 );
 
 const SupportIcon = ({color, size}) => (
-  <MaterialIcons name="support-agent" color="#fff" size={24} />
+  <MaterialIcons name="support-agent" color="#fff" size={21} />
 );
 
 const CustomDrawer = props => {
@@ -59,61 +59,38 @@ const CustomDrawer = props => {
         {/* Profile Section */}
         <View style={styles.profileSection}>
           <Image source={{uri: picture}} style={styles.profileImage} />
-          <Text style={styles.profileName}>{name}</Text>
-          <Text style={styles.profileEmail}>{email}</Text>
+          <View>
+            <Text style={styles.profileName}>{name}</Text>
+            <Text style={styles.profileEmail}>{email}</Text>
+          </View>
         </View>
 
         {/* Drawer Items */}
         <View style={styles.drawerItems}>
-          <DrawerItem
-            icon={CalendarIcon}
-            label="Calendar"
-            labelStyle={styles.drawerLabel}
-            // onPress={() => props.navigation.navigate('Calendar')}
-          />
-          <DrawerItem
-            icon={PaymentIcon}
-            label="Payments Methods"
-            labelStyle={styles.drawerLabel}
-            // onPress={() => props.navigation.navigate('Payments')}
-          />
-          <DrawerItem
-            icon={AddressIcon}
-            label="Address"
-            labelStyle={styles.drawerLabel}
-            // onPress={() => props.navigation.navigate('Address')}
-          />
-          <DrawerItem
-            icon={NotificationIcon}
-            label="Notification"
-            labelStyle={styles.drawerLabel}
-            // onPress={() => props.navigation.navigate('Notifications')}
-          />
-          <DrawerItem
-            icon={OffersIcon}
-            label="Offers"
-            labelStyle={styles.drawerLabel}
-            // onPress={() => props.navigation.navigate('Offers')}
-          />
-          <DrawerItem
-            icon={ReferFriendIcon}
-            label="Refer a Friend"
-            labelStyle={styles.drawerLabel}
-            // onPress={() => props.navigation.navigate('ReferFriend')}
-          />
-          <DrawerItem
-            icon={SupportIcon}
-            label="Support"
-            labelStyle={styles.drawerLabel}
-            // onPress={() => props.navigation.navigate('Support')}
-          />
+          {[
+            {icon: CalendarIcon, label: 'Calendar'},
+            {icon: PaymentIcon, label: 'Payments Methods'},
+            {icon: AddressIcon, label: 'Address'},
+            {icon: NotificationIcon, label: 'Notification'},
+            {icon: OffersIcon, label: 'Offers'},
+            {icon: ReferFriendIcon, label: 'Refer a Friend'},
+            {icon: SupportIcon, label: 'Support'},
+          ].map((item, index) => (
+            <View key={index} style={styles.drawerItemWrapper}>
+              <DrawerItem
+                icon={item.icon}
+                label={item.label}
+                labelStyle={styles.drawerLabel}
+              />
+            </View>
+          ))}
         </View>
       </DrawerContentScrollView>
 
       {/* Theme Switcher */}
       <View style={styles.themeContainer}>
         <View style={styles.schemeContainer}>
-          <MaterialIcons name="palette" color="#fff" size={24} />
+          <MaterialIcons name="palette" color="#fff" size={21} />
           <Text style={styles.themeText}>Color Scheme</Text>
         </View>
         <View style={styles.themeSwitcher}>
@@ -121,7 +98,8 @@ const CustomDrawer = props => {
             style={[
               styles.themeOption,
               !isDarkMode && styles.activeThemeOption,
-            ]}>
+            ]}
+            onPress={toggleTheme}>
             <Ionicons
               name="sunny-outline"
               color={!isDarkMode ? '#6C63FF' : '#fff'}
@@ -136,10 +114,8 @@ const CustomDrawer = props => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[
-              styles.themeOption,
-              isDarkMode && styles.activeThemeOption,
-            ]}>
+            style={[styles.themeOption, isDarkMode && styles.activeThemeOption]}
+            onPress={toggleTheme}>
             <Ionicons
               name="moon-outline"
               color={isDarkMode ? '#6C63FF' : '#fff'}
@@ -168,13 +144,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   profileSection: {
-    padding: 20,
+    padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(255,255,255,0.1)',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
   },
   profileImage: {
-    width: 70,
-    height: 70,
+    width: 60,
+    height: 60,
     borderRadius: 35,
     marginBottom: 10,
   },
@@ -182,7 +161,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontWeight: '600',
-    marginBottom: 5,
   },
   profileEmail: {
     color: 'rgba(255,255,255,0.8)',
@@ -190,11 +168,14 @@ const styles = StyleSheet.create({
   },
   drawerItems: {
     flex: 1,
-    paddingTop: 5,
+    paddingVertical: 10,
+  },
+  drawerItemWrapper: {
+    marginVertical: -3,
   },
   drawerLabel: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '400',
   },
   themeContainer: {
