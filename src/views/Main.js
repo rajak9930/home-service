@@ -1,16 +1,18 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconTwo from 'react-native-vector-icons/Feather';
-
+import Home from './tabs/Home';
 import Profile from './tabs/Profile';
 import Bookings from './tabs/Bookings';
 import Colors from '../constants/colors';
 import {useCustomTheme} from '../theme/Theme';
-import HomeDrawer from './Home/HomeDrawer';
+import CustomDrawer from './Home/components/CustomDrawer';
 
 const Tab = createBottomTabNavigator();
+const Drawer = createDrawerNavigator();
 
 const ICON_SIZES = {
   home: 22,
@@ -50,27 +52,8 @@ const renderTabIcon =
   ({focused}) =>
     <TabIcon focused={focused} iconName={iconName} isDarkMode={isDarkMode} />;
 
-const SCREENS = [
-  {
-    name: 'Home',
-    component: HomeDrawer,
-    iconName: 'home',
-  },
-  {
-    name: 'Bookings',
-    component: Bookings,
-    iconName: 'my-library-books',
-  },
-  {
-    name: 'Profile',
-    component: Profile,
-    iconName: 'person-outline',
-  },
-];
-
-const Main = () => {
+const TabNavigator = () => {
   const theme = useCustomTheme();
-
   const background = theme === 'dark' ? Colors.navBg : Colors.pureWhite;
 
   const tabBarStyle = {
@@ -91,25 +74,60 @@ const Main = () => {
         pressColor: 'transparent',
         pressOpacity: 1,
       }}>
-      {SCREENS.map(screen => (
-        <Tab.Screen
-          key={screen.name}
-          name={screen.name}
-          component={screen.component}
-          options={{
-            tabBarIcon: renderTabIcon(
-              screen.iconName,
-              theme === 'dark' ? true : false,
-            ),
-            tabBarButton: TabBarButton,
-          }}
-        />
-      ))}
+      <Tab.Screen
+        name="HomeTab"
+        component={Home}
+        options={{
+          tabBarIcon: renderTabIcon('home', theme === 'dark' ? true : false),
+          tabBarButton: TabBarButton,
+        }}
+      />
+      <Tab.Screen
+        name="Bookings"
+        component={Bookings}
+        options={{
+          tabBarIcon: renderTabIcon(
+            'my-library-books',
+            theme === 'dark' ? true : false,
+          ),
+          tabBarButton: TabBarButton,
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarIcon: renderTabIcon(
+            'person-outline',
+            theme === 'dark' ? true : false,
+          ),
+          tabBarButton: TabBarButton,
+        }}
+      />
     </Tab.Navigator>
   );
 };
 
-export default Main;
+const Main = () => {
+  return (
+    <Drawer.Navigator
+      drawerContent={props => <CustomDrawer {...props} />}
+      screenOptions={{
+        headerShown: false,
+        drawerStyle: {
+          width: '85%',
+          backgroundColor: 'transparent',
+        },
+        overlayColor: 'rgba(0,0,0,0.5)',
+        drawerType: 'front',
+        sceneContainerStyle: {
+          backgroundColor: 'transparent',
+        },
+      }}>
+      <Drawer.Screen name="TabNavigator" component={TabNavigator} />
+    </Drawer.Navigator>
+  );
+};
 
 const styles = StyleSheet.create({
   tabIconContainer: {
@@ -121,6 +139,10 @@ const styles = StyleSheet.create({
   tabBar: {
     height: 57,
     paddingVertical: 8,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
   tabBarItem: {
     marginHorizontal: 8,
@@ -129,3 +151,5 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+export default Main;

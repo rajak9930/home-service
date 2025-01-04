@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
 import images from '../../../constants/images';
 import {useCustomTheme} from '../../../theme/Theme';
 import Colors from '../../../constants/colors';
@@ -13,10 +12,17 @@ const TopBar = () => {
 
   const themedStyles = getThemedStyles(theme);
 
+  const handleDrawerOpen = () => {
+    navigation.openDrawer();
+  };
+
   return (
     <View style={[styles.header, themedStyles.headerBackground]}>
       <View style={styles.leftSection}>
-        <TouchableOpacity onPress={() => navigation.openDrawer()}>
+        <TouchableOpacity
+          onPress={handleDrawerOpen}
+          style={styles.menuButton}
+          hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
           <Icon name="menu" size={24} color={themedStyles.iconColor} />
         </TouchableOpacity>
         <View style={styles.locationContainer}>
@@ -72,11 +78,23 @@ const styles = StyleSheet.create({
     padding: 12,
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
+    elevation: 2, // For Android shadow
+    shadowColor: '#000', // For iOS shadow
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
   },
   leftSection: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 5,
+  },
+  menuButton: {
+    padding: 8,
+    marginLeft: -8, // To offset the padding and align with the container
   },
   locationContainer: {
     marginLeft: 8,
