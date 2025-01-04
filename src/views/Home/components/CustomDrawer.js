@@ -4,9 +4,13 @@ import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useDispatch} from 'react-redux';
 
 import useTypedSelector from '../../../hooks/useTypedSelector';
 import {selectedUser} from '../../../redux/auth/authSlice';
+import {useCustomTheme} from '../../../theme/Theme';
+import {setTheme} from '../../../redux/theme/themeSlice';
 
 const CalendarIcon = ({color, size}) => (
   <MaterialIcons name="calendar-today" color="#fff" size={21} />
@@ -41,14 +45,17 @@ const SupportIcon = ({color, size}) => (
 );
 
 const CustomDrawer = props => {
+  const theme = useCustomTheme();
+  const dispatch = useDispatch();
   const userDetails = useTypedSelector(selectedUser);
   const {name, email, picture} = userDetails.user.user_metadata;
 
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const isDarkMode = theme === 'dark';
 
   const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-    // Add your theme switching logic here
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    dispatch(setTheme(newTheme));
+    AsyncStorage.setItem('theme', newTheme);
   };
 
   return (
@@ -99,7 +106,7 @@ const CustomDrawer = props => {
               styles.themeOption,
               !isDarkMode && styles.activeThemeOption,
             ]}
-            onPress={toggleTheme}>
+            onPress={() => toggleTheme()}>
             <Ionicons
               name="sunny-outline"
               color={!isDarkMode ? '#6C63FF' : '#fff'}
@@ -115,7 +122,7 @@ const CustomDrawer = props => {
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.themeOption, isDarkMode && styles.activeThemeOption]}
-            onPress={toggleTheme}>
+            onPress={() => toggleTheme()}>
             <Ionicons
               name="moon-outline"
               color={isDarkMode ? '#6C63FF' : '#fff'}
