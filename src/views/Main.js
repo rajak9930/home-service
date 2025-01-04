@@ -55,7 +55,9 @@ const renderTabIcon =
 
 const TabNavigator = () => {
   const theme = useCustomTheme();
-  const background = theme === 'dark' ? Colors.navBg : Colors.pureWhite;
+  const isDarkMode = theme === 'dark';
+
+  const background = isDarkMode ? Colors.navBg : Colors.pureWhite;
 
   const tabBarStyle = {
     ...styles.tabBar,
@@ -79,7 +81,7 @@ const TabNavigator = () => {
         name="HomeTab"
         component={Home}
         options={{
-          tabBarIcon: renderTabIcon('home', theme === 'dark' ? true : false),
+          tabBarIcon: renderTabIcon('home', isDarkMode ? true : false),
           tabBarButton: TabBarButton,
         }}
       />
@@ -89,7 +91,7 @@ const TabNavigator = () => {
         options={{
           tabBarIcon: renderTabIcon(
             'my-library-books',
-            theme === 'dark' ? true : false,
+            isDarkMode ? true : false,
           ),
           tabBarButton: TabBarButton,
         }}
@@ -100,7 +102,7 @@ const TabNavigator = () => {
         options={{
           tabBarIcon: renderTabIcon(
             'person-outline',
-            theme === 'dark' ? true : false,
+            isDarkMode ? true : false,
           ),
           tabBarButton: TabBarButton,
         }}

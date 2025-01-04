@@ -9,8 +9,9 @@ import {useNavigation} from '@react-navigation/native';
 const TopBar = () => {
   const theme = useCustomTheme();
   const navigation = useNavigation();
+  const isDarkMode = theme === 'dark';
 
-  const themedStyles = getThemedStyles(theme);
+  const themedStyles = getThemedStyles(isDarkMode);
 
   const handleDrawerOpen = () => {
     navigation.openDrawer();
@@ -57,17 +58,17 @@ const TopBar = () => {
   );
 };
 
-const getThemedStyles = theme => ({
+const getThemedStyles = isDarkMode => ({
   headerBackground: {
-    backgroundColor: theme === 'dark' ? Colors.navBg : Colors.pureWhite,
+    backgroundColor: isDarkMode ? Colors.navBg : Colors.pureWhite,
   },
   textPrimary: {
-    color: theme === 'dark' ? Colors.pureWhite : Colors.black,
+    color: isDarkMode ? Colors.pureWhite : Colors.black,
   },
   textSecondary: {
-    color: theme === 'dark' ? Colors.darkLightGray : Colors.black,
+    color: isDarkMode ? Colors.darkLightGray : Colors.black,
   },
-  iconColor: theme === 'dark' ? Colors.pureWhite : Colors.primaryDark,
+  iconColor: isDarkMode ? Colors.pureWhite : Colors.primaryDark,
 });
 
 const styles = StyleSheet.create({

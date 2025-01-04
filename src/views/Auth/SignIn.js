@@ -35,6 +35,7 @@ const SignIn = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const theme = useCustomTheme();
+  const isDarkMode = theme === 'dark';
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -166,13 +167,12 @@ const SignIn = () => {
       style={[
         styles.container,
         {
-          backgroundColor:
-            theme === 'dark' ? Colors.primaryDark : Colors.pureWhite,
+          backgroundColor: isDarkMode ? Colors.primaryDark : Colors.pureWhite,
         },
       ]}>
       <Animated.View style={[styles.contentContainer, {opacity: logoOpacity}]}>
         <Image
-          source={theme === 'dark' ? images.logo : images.authLogo}
+          source={isDarkMode ? images.logo : images.authLogo}
           style={styles.logo}
           resizeMode="contain"
         />
@@ -181,7 +181,7 @@ const SignIn = () => {
       <Animated.Text
         style={[
           styles.welcomeText,
-          theme === 'dark' ? {color: Colors.white} : {color: '#333'},
+          isDarkMode ? {color: Colors.white} : {color: '#333'},
           {opacity: welcomeOpacity},
         ]}>
         Welcome back! Glad to see you, Again
@@ -215,7 +215,7 @@ const SignIn = () => {
           <Text
             style={[
               styles.guestText,
-              theme === 'dark' ? {color: Colors.black} : {color: '#666'},
+              isDarkMode ? {color: Colors.black} : {color: '#666'},
             ]}>
             Continue as guest
           </Text>

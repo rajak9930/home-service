@@ -23,6 +23,8 @@ const Onboarding = () => {
   const swiperRef = useRef(null);
   const theme = useCustomTheme();
 
+  const isDarkMode = theme === 'dark';
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleNext = () => {
@@ -44,8 +46,7 @@ const Onboarding = () => {
       style={[
         styles.container,
         {
-          backgroundColor:
-            theme === 'dark' ? Colors.primaryDark : Colors.pureWhite,
+          backgroundColor: isDarkMode ? Colors.primaryDark : Colors.pureWhite,
         },
       ]}>
       <Image source={images.onboardingTop} style={styles.topImage} />
@@ -86,7 +87,7 @@ const Onboarding = () => {
               <Text
                 style={[
                   styles.title,
-                  {color: theme === 'dark' ? Colors.pureWhite : Colors.black},
+                  {color: isDarkMode ? Colors.pureWhite : Colors.black},
                 ]}>
                 {item.title}
               </Text>
@@ -94,10 +95,9 @@ const Onboarding = () => {
                 style={[
                   styles.description,
                   {
-                    color:
-                      theme === 'dark'
-                        ? Colors.darkLightGray
-                        : Colors.lightBlack,
+                    color: isDarkMode
+                      ? Colors.darkLightGray
+                      : Colors.lightBlack,
                   },
                 ]}>
                 {item.description}

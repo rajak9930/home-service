@@ -10,6 +10,7 @@ import {useCustomTheme} from '../../theme/Theme';
 const Splash = () => {
   const navigation = useNavigation();
   const theme = useCustomTheme();
+  const isDarkMode = theme === 'dark';
 
   useEffect(() => {
     checkAuth();
@@ -29,8 +30,7 @@ const Splash = () => {
       style={[
         styles.container,
         {
-          backgroundColor:
-            theme === 'dark' ? Colors.primaryDark : Colors.primary,
+          backgroundColor: isDarkMode ? Colors.primaryDark : Colors.primary,
         },
       ]}>
       <View style={styles.logoContainer}>
