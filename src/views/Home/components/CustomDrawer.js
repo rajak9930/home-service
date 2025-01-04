@@ -5,8 +5,45 @@ import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import useTypedSelector from '../../../hooks/useTypedSelector';
+import {selectedUser} from '../../../redux/auth/authSlice';
+
+const CalendarIcon = ({color, size}) => (
+  <MaterialIcons name="calendar-today" color="#fff" size={24} />
+);
+
+const PaymentIcon = ({color, size}) => (
+  <MaterialIcons name="payment" color="#fff" size={24} />
+);
+
+const AddressIcon = ({color, size}) => (
+  <Ionicons name="location-outline" color="#fff" size={24} />
+);
+
+const NotificationIcon = ({color, size}) => (
+  <MaterialIcons name="notifications-none" color="#fff" size={24} />
+);
+
+const OffersIcon = ({color, size}) => (
+  <MaterialCommunityIcons
+    name="ticket-percent-outline"
+    color="#fff"
+    size={24}
+  />
+);
+
+const ReferFriendIcon = ({color, size}) => (
+  <MaterialIcons name="person-add-alt-1" color="#fff" size={24} />
+);
+
+const SupportIcon = ({color, size}) => (
+  <MaterialIcons name="support-agent" color="#fff" size={24} />
+);
 
 const CustomDrawer = props => {
+  const userDetails = useTypedSelector(selectedUser);
+  const {name, email, picture} = userDetails.user.user_metadata;
+
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleTheme = () => {
@@ -21,75 +58,54 @@ const CustomDrawer = props => {
         contentContainerStyle={styles.drawerContent}>
         {/* Profile Section */}
         <View style={styles.profileSection}>
-          {/* <Image
-            source={require('./path-to-your-profile-image.jpg')} 
-            style={styles.profileImage}
-          /> */}
-          <Text style={styles.profileName}>Ashfak Sayem</Text>
-          <Text style={styles.profileEmail}>ashfaksayem@gmail.com</Text>
+          <Image source={{uri: picture}} style={styles.profileImage} />
+          <Text style={styles.profileName}>{name}</Text>
+          <Text style={styles.profileEmail}>{email}</Text>
         </View>
 
         {/* Drawer Items */}
         <View style={styles.drawerItems}>
           <DrawerItem
-            icon={({color, size}) => (
-              <MaterialIcons name="calendar-today" color="#fff" size={24} />
-            )}
+            icon={CalendarIcon}
             label="Calendar"
             labelStyle={styles.drawerLabel}
-            onPress={() => props.navigation.navigate('Calendar')}
+            // onPress={() => props.navigation.navigate('Calendar')}
           />
           <DrawerItem
-            icon={({color, size}) => (
-              <MaterialIcons name="payment" color="#fff" size={24} />
-            )}
+            icon={PaymentIcon}
             label="Payments Methods"
             labelStyle={styles.drawerLabel}
-            onPress={() => props.navigation.navigate('Payments')}
+            // onPress={() => props.navigation.navigate('Payments')}
           />
           <DrawerItem
-            icon={({color, size}) => (
-              <Ionicons name="location-outline" color="#fff" size={24} />
-            )}
+            icon={AddressIcon}
             label="Address"
             labelStyle={styles.drawerLabel}
-            onPress={() => props.navigation.navigate('Address')}
+            // onPress={() => props.navigation.navigate('Address')}
           />
           <DrawerItem
-            icon={({color, size}) => (
-              <MaterialIcons name="notifications-none" color="#fff" size={24} />
-            )}
+            icon={NotificationIcon}
             label="Notification"
             labelStyle={styles.drawerLabel}
-            onPress={() => props.navigation.navigate('Notifications')}
+            // onPress={() => props.navigation.navigate('Notifications')}
           />
           <DrawerItem
-            icon={({color, size}) => (
-              <MaterialCommunityIcons
-                name="ticket-percent-outline"
-                color="#fff"
-                size={24}
-              />
-            )}
+            icon={OffersIcon}
             label="Offers"
             labelStyle={styles.drawerLabel}
-            onPress={() => props.navigation.navigate('Offers')}
+            // onPress={() => props.navigation.navigate('Offers')}
           />
           <DrawerItem
-            icon={({color, size}) => (
-              <MaterialIcons name="person-add-alt-1" color="#fff" size={24} />
-            )}
+            icon={ReferFriendIcon}
             label="Refer a Friend"
             labelStyle={styles.drawerLabel}
-            onPress={() => props.navigation.navigate('ReferFriend')}
+            // onPress={() => props.navigation.navigate('ReferFriend')}
           />
           <DrawerItem
-            icon={({color, size}) => (
-              <MaterialIcons name="support-agent" color="#fff" size={24} />
-            )}
+            icon={SupportIcon}
             label="Support"
             labelStyle={styles.drawerLabel}
-            onPress={() => props.navigation.navigate('Support')}
+            // onPress={() => props.navigation.navigate('Support')}
           />
         </View>
       </DrawerContentScrollView>
