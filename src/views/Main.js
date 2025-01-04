@@ -4,6 +4,7 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconTwo from 'react-native-vector-icons/Feather';
+
 import Home from './tabs/Home';
 import Profile from './tabs/Profile';
 import Bookings from './tabs/Bookings';
@@ -139,10 +140,6 @@ const styles = StyleSheet.create({
   tabBar: {
     height: 57,
     paddingVertical: 8,
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
   },
   tabBarItem: {
     marginHorizontal: 8,

@@ -96,8 +96,10 @@ const CustomDrawer = props => {
 
       {/* Theme Switcher */}
       <View style={styles.themeContainer}>
-        <MaterialIcons name="palette" color="#fff" size={24} />
-        <Text style={styles.themeText}>Colour Scheme</Text>
+        <View style={styles.schemeContainer}>
+          <MaterialIcons name="palette" color="#fff" size={24} />
+          <Text style={styles.themeText}>Color Scheme</Text>
+        </View>
         <View style={styles.themeSwitcher}>
           <TouchableOpacity
             style={[
@@ -172,7 +174,7 @@ const styles = StyleSheet.create({
   },
   drawerItems: {
     flex: 1,
-    paddingTop: 10,
+    paddingTop: 5,
   },
   drawerLabel: {
     color: '#fff',
@@ -180,14 +182,18 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
   themeContainer: {
-    padding: 20,
+    padding: 15,
     borderTopWidth: 1,
     borderTopColor: 'rgba(255,255,255,0.1)',
+  },
+  schemeContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
   },
   themeText: {
     color: '#fff',
     fontSize: 16,
-    marginVertical: 10,
   },
   themeSwitcher: {
     flexDirection: 'row',
