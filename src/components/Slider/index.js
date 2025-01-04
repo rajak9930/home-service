@@ -9,19 +9,19 @@ const Slider = () => {
       id: 1,
       title: 'Offer AC Service',
       discount: '25%',
-      bgColor: '#F0F8FF', // Light blue background
+      bgColor: '#F0F8FF',
     },
     {
       id: 2,
       title: 'Offer Cleaning Service',
       discount: '15%',
-      bgColor: '#FFE4E1', // Light coral background
+      bgColor: '#FFE4E1',
     },
     {
       id: 3,
       title: 'Offer Painting Service',
       discount: '10%',
-      bgColor: '#E0FFF0', // Light mint background
+      bgColor: '#E0FFF0',
     },
   ];
 
@@ -32,7 +32,11 @@ const Slider = () => {
         autoplayTimeout={3}
         showsPagination={false}
         loop={true}
-        spaceBetween={20}>
+        removeClippedSubviews={false}
+        loadMinimal={true}
+        loadMinimalSize={2}
+        index={0}
+        scrollEnabled={true}>
         {sliderData.map((item, index) => (
           <View key={item.id} style={styles.slide}>
             <View style={[styles.card, {backgroundColor: item.bgColor}]}>
@@ -68,6 +72,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 12,
   },
   card: {
     width: 295,

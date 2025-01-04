@@ -14,9 +14,6 @@ import categorySix from '../assets/images/Category-6.png';
 import categorySeven from '../assets/images/Category-7.png';
 import categoryEight from '../assets/images/Category-8.png';
 import categoryNine from '../assets/images/Category-9.png';
-import SlideOne from '../assets/images/Slide-1.png';
-import SlideTwo from '../assets/images/Slide-2.png';
-import SlideThree from '../assets/images/Slide-3.png';
 import Badge from '../assets/images/Badge.png';
 import Hello from '../assets/images/Hello.png';
 
@@ -37,9 +34,6 @@ export default {
   categorySeven,
   categoryEight,
   categoryNine,
-  SlideOne,
-  SlideTwo,
-  SlideThree,
   Badge,
   Hello,
 };
