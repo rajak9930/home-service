@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const getInitialTheme = async () => {
   const theme = await AsyncStorage.getItem('theme');
-  return theme ? theme : null;
+  return theme ? JSON.parse(theme) : null;
 };
 
 export const themeSlice = createSlice({

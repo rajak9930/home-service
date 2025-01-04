@@ -94,7 +94,12 @@ const CustomDrawer = props => {
   const toggleTheme = () => {
     const newTheme = theme === 'dark' ? 'light' : 'dark';
     dispatch(setTheme(newTheme));
-    AsyncStorage.setItem('theme', newTheme);
+    AsyncStorage.setItem(
+      'theme',
+      JSON.stringify({
+        newTheme,
+      }),
+    );
   };
 
   return (
@@ -109,9 +114,14 @@ const CustomDrawer = props => {
         {/* Profile Section */}
         <View style={styles.profileSection}>
           <Image source={{uri: picture}} style={styles.profileImage} />
-          <View>
+          <View style={styles.profileInfo}>
             <Text style={styles.profileName}>{name}</Text>
-            <Text style={styles.profileEmail}>{email}</Text>
+            <Text
+              style={styles.profileEmail}
+              numberOfLines={1}
+              ellipsizeMode="tail">
+              {email}
+            </Text>
           </View>
         </View>
 
@@ -221,6 +231,9 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontWeight: '600',
+  },
+  profileInfo: {
+    flex: 1,
   },
   profileEmail: {
     color: 'rgba(255,255,255,0.8)',
