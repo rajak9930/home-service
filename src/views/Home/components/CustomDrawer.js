@@ -72,9 +72,15 @@ const DRAWER_ITEMS = [
   },
 ];
 
-const IconRenderer = ({type, name, color = '#fff', size = 21}) => {
+const IconRenderer = ({type, name, isDarkMode, color = '#fff', size = 21}) => {
   const IconComponent = ICONS[type];
-  return <IconComponent name={name} color={color} size={size} />;
+  return (
+    <IconComponent
+      name={name}
+      color={isDarkMode ? '#6F767E' : color}
+      size={size}
+    />
+  );
 };
 
 const CustomDrawer = props => {
@@ -116,7 +122,11 @@ const CustomDrawer = props => {
               <DrawerItem
                 // eslint-disable-next-line react/no-unstable-nested-components
                 icon={() => (
-                  <IconRenderer type={item.icon.type} name={item.icon.name} />
+                  <IconRenderer
+                    type={item.icon.type}
+                    name={item.icon.name}
+                    isDarkMode={isDarkMode}
+                  />
                 )}
                 label={item.label}
                 labelStyle={styles.drawerLabel}
@@ -129,7 +139,11 @@ const CustomDrawer = props => {
       {/* Theme Switcher */}
       <View style={styles.themeContainer}>
         <View style={styles.schemeContainer}>
-          <IconRenderer type="MaterialIcons" name="palette" />
+          <IconRenderer
+            type="MaterialIcons"
+            name="palette"
+            isDarkMode={isDarkMode}
+          />
           <Text style={styles.themeText}>Color Scheme</Text>
         </View>
         <View style={styles.themeSwitcher}>
