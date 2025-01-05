@@ -55,9 +55,7 @@ const CleaningServices = () => {
           style={[
             styles.seeAllButton,
             {
-              backgroundColor: isDarkMode ? 'transparent' : Colors.lightGray,
-              borderWidth: isDarkMode ? 1 : 0,
-              borderColor: isDarkMode ? '#6F767E' : 'transparent',
+              borderColor: isDarkMode ? '#616670' : '#EEEEEE',
             },
           ]}>
           <Text
@@ -130,10 +128,11 @@ const styles = StyleSheet.create({
   seeAllButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F8F9FA',
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#E4E9F2',
   },
   seeAllText: {
     fontSize: 13,
