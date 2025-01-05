@@ -18,6 +18,7 @@ import images from '../../constants/images';
 import Slider from '../../components/Slider';
 import Categories from '../Home/components/Categories';
 import CleaningServices from '../Home/components/CleaningServices';
+import ApplianceRepair from '../Home/components/ApplianceRepair';
 
 const Home = () => {
   const theme = useCustomTheme();
@@ -38,7 +39,6 @@ const Home = () => {
           showsVerticalScrollIndicator={false}
           bounces={true}
           contentContainerStyle={styles.scrollContent}>
-          {/* Greeting Section */}
           <View
             style={[
               styles.greetingContainer,
@@ -64,7 +64,6 @@ const Home = () => {
             <SearchBar />
           </View>
 
-          {/* Slider Section */}
           <View
             style={[
               styles.offerContainer,
@@ -73,7 +72,6 @@ const Home = () => {
             <Slider />
           </View>
 
-          {/* Categories Section */}
           <View
             style={[
               styles.greetingContainer,
@@ -82,7 +80,6 @@ const Home = () => {
             <Categories />
           </View>
 
-          {/* Cleaning Services Section */}
           <View
             style={[
               styles.greetingContainer,
@@ -90,6 +87,14 @@ const Home = () => {
               styles.lastContainer,
             ]}>
             <CleaningServices />
+          </View>
+
+          <View
+            style={[
+              styles.greetingContainer,
+              isDarkMode ? styles.darkGreetingBg : styles.lightGreetingBg,
+            ]}>
+            <ApplianceRepair />
           </View>
         </ScrollView>
       </View>
