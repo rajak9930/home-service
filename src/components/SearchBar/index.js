@@ -1,11 +1,13 @@
 import React from 'react';
-import {View, TextInput, StyleSheet} from 'react-native';
+import {View, TextInput, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../constants/colors';
 import {useCustomTheme} from '../../theme/Theme';
+import {useNavigation} from '@react-navigation/native';
 
-const SearchBar = () => {
+const SearchBar = ({placeholder}) => {
   const theme = useCustomTheme();
+  const navigation = useNavigation();
   const isDarkMode = theme === 'dark';
 
   return (
@@ -14,12 +16,23 @@ const SearchBar = () => {
         styles.searchContainer,
         isDarkMode ? styles.darkSearchContainer : styles.lightSearchContainer,
       ]}>
+      {placeholder && (
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}>
+          <Icon
+            name="arrow-back"
+            size={24}
+            color={isDarkMode ? Colors.pureWhite : '#333'}
+          />
+        </TouchableOpacity>
+      )}
       <TextInput
         style={[
           styles.searchInput,
           isDarkMode ? styles.darkInput : styles.lightInput,
         ]}
-        placeholder="Search what you need..."
+        placeholder={placeholder ? placeholder : 'Search what you need...'}
         placeholderTextColor={isDarkMode ? '#9B9E9F' : '#9CA3AF'}
       />
       <View style={styles.searchIconContainer}>
@@ -71,6 +84,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
     borderRadius: 10,
     marginRight: 10,
+  },
+  backButton: {
+    marginLeft: 8,
   },
 });
 
