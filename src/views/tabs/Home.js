@@ -122,7 +122,6 @@ const styles = StyleSheet.create({
   },
   offerContainer: {
     paddingVertical: 16,
-    paddingLeft: 6,
     marginHorizontal: 16,
     marginTop: 16,
     borderRadius: 12,
@@ -158,6 +157,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     marginTop: 6,
+    width: '80%',
   },
   darkSubtitle: {
     color: Colors.pureWhite,

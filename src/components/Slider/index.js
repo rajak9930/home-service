@@ -1,4 +1,10 @@
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+} from 'react-native';
 import React from 'react';
 import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -27,55 +33,58 @@ const Slider = () => {
 
   return (
     <View style={styles.container}>
-      <Swiper
-        autoplay
-        autoplayTimeout={3}
-        showsPagination={false}
-        loop={true}
-        removeClippedSubviews={false}
-        loadMinimal={true}
-        loadMinimalSize={2}
-        index={0}
-        scrollEnabled={true}>
-        {sliderData.map((item, index) => (
-          <View key={item.id} style={styles.slide}>
-            <View style={[styles.card, {backgroundColor: item.bgColor}]}>
-              <View style={styles.headerContainer}>
-                <Text style={styles.title}>{item.title}</Text>
-                <Icon
-                  name="information-circle-outline"
-                  size={20}
-                  color="#333"
-                />
+      <View style={styles.wrap}>
+        <Swiper
+          autoplay
+          autoplayTimeout={3}
+          showsPagination={false}
+          loop={true}
+          removeClippedSubviews={false}
+          loadMinimal={true}
+          loadMinimalSize={2}
+          index={0}
+          scrollEnabled={true}>
+          {sliderData.map((item, index) => (
+            <View key={item.id} style={styles.slide}>
+              <View style={[styles.card, {backgroundColor: item.bgColor}]}>
+                <View style={styles.headerContainer}>
+                  <Text style={styles.title}>{item.title}</Text>
+                  <Icon
+                    name="information-circle-outline"
+                    size={20}
+                    color="#333"
+                  />
+                </View>
+
+                <Text style={styles.discountText}>Get {item.discount}</Text>
+
+                <TouchableOpacity style={styles.button}>
+                  <Text style={styles.buttonText}>Grab Offer</Text>
+                  <Icon name="chevron-forward" size={16} color="#333" />
+                </TouchableOpacity>
               </View>
-
-              <Text style={styles.discountText}>Get {item.discount}</Text>
-
-              <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>Grab Offer</Text>
-                <Icon name="chevron-forward" size={16} color="#333" />
-              </TouchableOpacity>
             </View>
-          </View>
-        ))}
-      </Swiper>
+          ))}
+        </Swiper>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  wrap: {
     height: 160,
-    width: 320,
   },
   slide: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 12,
   },
   card: {
-    width: 295,
+    width: Dimensions.get('window').width - 65,
     height: 160,
     borderRadius: 12,
     padding: 16,
