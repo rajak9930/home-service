@@ -8,28 +8,34 @@ import {
 } from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
+
 import images from '../../../constants/images';
+import {useCustomTheme} from '../../../theme/Theme';
+import Colors from '../../../constants/colors';
+
+const cleaningData = [
+  {
+    id: 1,
+    title: 'Home Cleaning',
+    image: images.CleaningOne,
+    discount: '10% OFF',
+  },
+  {
+    id: 2,
+    title: 'Carpet Cleaning',
+    image: images.CleaningTwo,
+  },
+  {
+    id: 3,
+    title: 'Office Cleaning',
+    image: images.CleaningThree,
+    discount: '15% OFF',
+  },
+];
 
 const CleaningServices = () => {
-  const cleaningData = [
-    {
-      id: 1,
-      title: 'Home Cleaning',
-      image: images.CleaningOne,
-      discount: '10% OFF',
-    },
-    {
-      id: 2,
-      title: 'Carpet Cleaning',
-      image: images.CleaningTwo,
-    },
-    {
-      id: 3,
-      title: 'Office Cleaning',
-      image: images.CleaningThree,
-      discount: '15% OFF',
-    },
-  ];
+  const theme = useCustomTheme();
+  const isDarkMode = theme === 'dark';
 
   return (
     <View>
@@ -37,11 +43,37 @@ const CleaningServices = () => {
       <View style={styles.headerContainer}>
         <View style={styles.titleContainer}>
           <View style={styles.indicator} />
-          <Text style={styles.title}>Cleaning Services</Text>
+          <Text
+            style={[
+              styles.title,
+              {color: isDarkMode ? Colors.white : Colors.black},
+            ]}>
+            Cleaning Services
+          </Text>
         </View>
-        <TouchableOpacity style={styles.seeAllButton}>
-          <Text style={styles.seeAllText}>See All</Text>
-          <Icon name="chevron-forward" size={17} color="#666C89" />
+        <TouchableOpacity
+          style={[
+            styles.seeAllButton,
+            {
+              backgroundColor: isDarkMode ? 'transparent' : Colors.lightGray,
+              borderWidth: isDarkMode ? 1 : 0,
+              borderColor: isDarkMode ? '#6F767E' : 'transparent',
+            },
+          ]}>
+          <Text
+            style={[
+              styles.seeAllText,
+              {
+                color: isDarkMode ? Colors.pureWhite : Colors.black,
+              },
+            ]}>
+            See All
+          </Text>
+          <Icon
+            name="chevron-forward"
+            size={17}
+            color={isDarkMode ? Colors.pureWhite : '#666C89'}
+          />
         </TouchableOpacity>
       </View>
 
@@ -58,7 +90,13 @@ const CleaningServices = () => {
               </View>
             )}
             <Image source={item.image} style={styles.cardImage} />
-            <Text style={styles.cardTitle}>{item.title}</Text>
+            <Text
+              style={[
+                styles.cardTitle,
+                {color: isDarkMode ? Colors.white : Colors.black},
+              ]}>
+              {item.title}
+            </Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
@@ -81,7 +119,7 @@ const styles = StyleSheet.create({
   indicator: {
     width: 4,
     height: 20,
-    backgroundColor: '#6C63FF',
+    backgroundColor: '#CABDFF',
     borderRadius: 2,
   },
   title: {
