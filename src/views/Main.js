@@ -58,7 +58,7 @@ const TabNavigator = () => {
   const isDarkMode = theme === 'dark';
 
   const background = isDarkMode ? Colors.navBg : Colors.pureWhite;
-  const borderTopWidth = isDarkMode ? 0 : 1;
+  const borderTopWidth = isDarkMode ? 0 : 0;
 
   const tabBarStyle = {
     ...styles.tabBar,
