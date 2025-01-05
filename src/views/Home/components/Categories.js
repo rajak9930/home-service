@@ -11,34 +11,39 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/native';
 
 import images from '../../../constants/images';
+import {useCustomTheme} from '../../../theme/Theme';
+import Colors from '../../../constants/colors';
+
+const categoryData = [
+  {
+    id: 1,
+    title: 'AC Repair',
+    image: images.categoryOne,
+  },
+  {
+    id: 2,
+    title: 'Beauty',
+    image: images.categoryTwo,
+  },
+  {
+    id: 3,
+    title: 'Appliance',
+    image: images.categoryThree,
+  },
+];
 
 const Categories = () => {
   const navigation = useNavigation();
+  const theme = useCustomTheme();
 
-  const categoryData = [
-    {
-      id: 1,
-      title: 'AC Repair',
-      image: images.categoryOne,
-    },
-    {
-      id: 2,
-      title: 'Beauty',
-      image: images.categoryTwo,
-    },
-    {
-      id: 3,
-      title: 'Appliance',
-      image: images.categoryThree,
-    },
-  ];
+  const isDarkMode = theme === 'dark';
 
   const handleCategoryPress = category => {
     // navigation.navigate('CategoryDetails', {category});
   };
 
   const handleSeeAll = () => {
-    navigation.navigate('iconContainer');
+    navigation.navigate('CategoryDetails');
   };
 
   return (
@@ -54,16 +59,32 @@ const Categories = () => {
           <View style={[styles.iconContainer]}>
             <Image source={item.image} style={styles.categoryImage} />
           </View>
-          <Text style={styles.categoryTitle}>{item.title}</Text>
+          <Text
+            style={[
+              styles.categoryTitle,
+              {
+                color: isDarkMode ? Colors.pureWhite : Colors.black,
+              },
+            ]}>
+            {item.title}
+          </Text>
         </TouchableOpacity>
       ))}
 
       {/* See All Button */}
       <TouchableOpacity style={styles.categoryWrapper} onPress={handleSeeAll}>
         <View style={[styles.iconContainer, styles.iconBG]}>
-          <Icon name="arrow-right" size={24} color="#48465B" />
+          <Icon name="arrow-right" size={27} color="#48465B" />
         </View>
-        <Text style={styles.categoryTitle}>See All</Text>
+        <Text
+          style={[
+            styles.categoryTitle,
+            {
+              color: isDarkMode ? Colors.pureWhite : Colors.black,
+            },
+          ]}>
+          See All
+        </Text>
       </TouchableOpacity>
     </ScrollView>
   );
