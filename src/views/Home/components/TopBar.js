@@ -23,7 +23,7 @@ const TopBar = () => {
         styles.header,
         themedStyles.headerBackground,
         {
-          borderBottomColor: isDarkMode ? 'transparents' : '#eee',
+          borderBottomColor: isDarkMode ? 'transparent' : '#eee',
         },
       ]}>
       <View style={styles.leftSection}>

@@ -10,6 +10,7 @@ import {selectedUser} from '../../redux/auth/authSlice';
 import images from '../../constants/images';
 import Slider from '../../components/Slider';
 import Categories from '../Home/components/Categories';
+import CleaningServices from '../Home/components/CleaningServices';
 
 const Home = () => {
   const theme = useCustomTheme();
@@ -66,6 +67,15 @@ const Home = () => {
           isDarkMode ? styles.darkGreetingBg : styles.lightGreetingBg,
         ]}>
         <Categories />
+      </View>
+
+      {/* Cleaning Service */}
+      <View
+        style={[
+          styles.greetingContainer,
+          isDarkMode ? styles.darkGreetingBg : styles.lightGreetingBg,
+        ]}>
+        <CleaningServices />
       </View>
     </View>
   );
