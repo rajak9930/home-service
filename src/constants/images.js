@@ -16,6 +16,9 @@ import categoryEight from '../assets/images/Category-8.png';
 import categoryNine from '../assets/images/Category-9.png';
 import Badge from '../assets/images/Badge.png';
 import Hello from '../assets/images/Hello.png';
+import CleaningOne from '../assets/images/Cleaning-1.png';
+import CleaningTwo from '../assets/images/Cleaning-2.png';
+import CleaningThree from '../assets/images/Cleaning-3.jpg';
 
 export default {
   logo,
@@ -36,4 +39,7 @@ export default {
   categoryNine,
   Badge,
   Hello,
+  CleaningOne,
+  CleaningTwo,
+  CleaningThree,
 };
