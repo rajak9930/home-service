@@ -74,8 +74,13 @@ const CategoryDetails = () => {
         styles.container,
         isDarkMode ? styles.darkContainer : styles.lightContainer,
       ]}>
-      {/* Header with back button and search */}
-      <View style={styles.header}>
+      <View
+        style={[
+          styles.header,
+          {
+            backgroundColor: isDarkMode ? Colors.navBg : Colors.pureWhite,
+          },
+        ]}>
         <View style={styles.searchContainer}>
           <SearchBar placeholder="Search Category" />
         </View>
@@ -132,15 +137,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'orange',
   },
   lightContainer: {
-    // backgroundColor: Colors.primaryLight,
+    backgroundColor: Colors.primaryLight,
   },
   darkContainer: {
-    // backgroundColor: Colors.primaryDark,
+    backgroundColor: Colors.primaryDark,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 16,
+    padding: 12,
   },
   backButton: {
     padding: 8,
