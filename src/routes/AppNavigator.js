@@ -6,6 +6,7 @@ import Splash from '../views/Splash';
 import SignIn from '../views/Auth/SignIn';
 import Main from '../views/Main';
 import Onboarding from '../views/Onboarding';
+import CategoryDetails from '../views/CategoryDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +22,7 @@ const AppNavigator = () => {
         <Stack.Screen name="Onboarding" component={Onboarding} />
         <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="Main" component={Main} />
+        <Stack.Screen name="CategoryDetails" component={CategoryDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );

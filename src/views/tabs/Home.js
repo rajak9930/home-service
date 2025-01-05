@@ -9,6 +9,7 @@ import useTypedSelector from '../../hooks/useTypedSelector';
 import {selectedUser} from '../../redux/auth/authSlice';
 import images from '../../constants/images';
 import Slider from '../../components/Slider';
+import Categories from '../Home/components/Categories';
 
 const Home = () => {
   const theme = useCustomTheme();
@@ -56,6 +57,15 @@ const Home = () => {
           isDarkMode ? styles.darkGreetingBg : styles.lightGreetingBg,
         ]}>
         <Slider />
+      </View>
+
+      {/* Categories */}
+      <View
+        style={[
+          styles.greetingContainer,
+          isDarkMode ? styles.darkGreetingBg : styles.lightGreetingBg,
+        ]}>
+        <Categories />
       </View>
     </View>
   );
