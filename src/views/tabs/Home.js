@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  SafeAreaView,
+} from 'react-native';
 
 import TopBar from '../Home/components/TopBar';
 import SearchBar from '../../components/SearchBar';
@@ -16,74 +23,90 @@ const Home = () => {
   const theme = useCustomTheme();
   const userDetails = useTypedSelector(selectedUser);
   const {name} = userDetails.user.user_metadata;
-
   const isDarkMode = theme === 'dark';
 
   return (
-    <View
+    <SafeAreaView
       style={[
-        styles.mainContainer,
+        styles.safeArea,
         isDarkMode ? styles.darkContainer : styles.lightContainer,
       ]}>
-      <TopBar />
+      <View style={styles.mainContainer}>
+        <TopBar />
 
-      <View
-        style={[
-          styles.greetingContainer,
-          isDarkMode ? styles.darkGreetingBg : styles.lightGreetingBg,
-        ]}>
-        <View style={styles.greeting}>
-          <Text
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          bounces={true}
+          contentContainerStyle={styles.scrollContent}>
+          {/* Greeting Section */}
+          <View
             style={[
-              styles.hello,
-              isDarkMode ? styles.darkText : styles.lightText,
+              styles.greetingContainer,
+              isDarkMode ? styles.darkGreetingBg : styles.lightGreetingBg,
             ]}>
-            {name ? `Hello, ${name}` : 'Hello'}
-          </Text>
-          <Image source={images.Hello} style={styles.helloIcon} />
-        </View>
-        <Text
-          style={[
-            styles.subtitle,
-            isDarkMode ? styles.darkSubtitle : styles.lightSubtitle,
-          ]}>
-          What you are looking for today
-        </Text>
-        <SearchBar />
-      </View>
+            <View style={styles.greeting}>
+              <Text
+                style={[
+                  styles.hello,
+                  isDarkMode ? styles.darkText : styles.lightText,
+                ]}>
+                {name ? `Hello, ${name}` : 'Hello'}
+              </Text>
+              <Image source={images.Hello} style={styles.helloIcon} />
+            </View>
+            <Text
+              style={[
+                styles.subtitle,
+                isDarkMode ? styles.darkSubtitle : styles.lightSubtitle,
+              ]}>
+              What you are looking for today
+            </Text>
+            <SearchBar />
+          </View>
 
-      <View
-        style={[
-          styles.offerContainer,
-          isDarkMode ? styles.darkGreetingBg : styles.lightGreetingBg,
-        ]}>
-        <Slider />
-      </View>
+          {/* Slider Section */}
+          <View
+            style={[
+              styles.offerContainer,
+              isDarkMode ? styles.darkGreetingBg : styles.lightGreetingBg,
+            ]}>
+            <Slider />
+          </View>
 
-      {/* Categories */}
-      <View
-        style={[
-          styles.greetingContainer,
-          isDarkMode ? styles.darkGreetingBg : styles.lightGreetingBg,
-        ]}>
-        <Categories />
-      </View>
+          {/* Categories Section */}
+          <View
+            style={[
+              styles.greetingContainer,
+              isDarkMode ? styles.darkGreetingBg : styles.lightGreetingBg,
+            ]}>
+            <Categories />
+          </View>
 
-      {/* Cleaning Service */}
-      <View
-        style={[
-          styles.greetingContainer,
-          isDarkMode ? styles.darkGreetingBg : styles.lightGreetingBg,
-        ]}>
-        <CleaningServices />
+          {/* Cleaning Services Section */}
+          <View
+            style={[
+              styles.greetingContainer,
+              isDarkMode ? styles.darkGreetingBg : styles.lightGreetingBg,
+              styles.lastContainer,
+            ]}>
+            <CleaningServices />
+          </View>
+        </ScrollView>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+  },
   mainContainer: {
     flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    paddingBottom: 20,
   },
   darkContainer: {
     backgroundColor: Colors.primaryDark,
@@ -141,6 +164,9 @@ const styles = StyleSheet.create({
   },
   lightSubtitle: {
     color: '#172B4D',
+  },
+  lastContainer: {
+    marginBottom: 16,
   },
 });
 
