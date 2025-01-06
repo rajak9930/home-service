@@ -75,39 +75,88 @@ const SubCategory = () => {
       <View style={styles.serviceInfo}>
         <View style={styles.ratingContainer}>
           <Icon name="star" size={16} color="#FFC554" />
-          <Text style={styles.rating}>{item.rating}</Text>
-          <Text style={styles.reviews}>({item.reviews})</Text>
+          <Text
+            style={[
+              styles.rating,
+              {color: isDarkMode ? Colors.pureWhite : '#333'},
+            ]}>
+            {item.rating}
+          </Text>
+          <Text
+            style={[
+              styles.reviews,
+              {
+                color: isDarkMode ? Colors.lightGray : '#666',
+              },
+            ]}>
+            ({item.reviews})
+          </Text>
         </View>
         <Text style={[styles.serviceTitle, isDarkMode && styles.darkText]}>
           {item.title}
         </Text>
         <View style={styles.priceContainer}>
-          <Text style={styles.priceLabel}>Starts From</Text>
+          <Text
+            style={[
+              styles.priceLabel,
+              {
+                color: isDarkMode ? Colors.lightGray : '#666',
+              },
+            ]}>
+            Starts From
+          </Text>
           <View style={styles.priceTag}>
             <Text style={styles.price}>${item.price}</Text>
           </View>
         </View>
       </View>
       <TouchableOpacity style={styles.moreButton}>
-        <IconTwo name="ellipsis-vertical" size={20} color="#666" />
+        <IconTwo name="ellipsis-horizontal" size={20} color="#666" />
       </TouchableOpacity>
     </TouchableOpacity>
   );
 
   const renderGridView = item => (
-    <TouchableOpacity key={item.id} style={styles.gridCard}>
+    <TouchableOpacity
+      key={item.id}
+      style={[
+        styles.gridCard,
+        {backgroundColor: isDarkMode ? Colors.navBg : Colors.pureWhite},
+      ]}>
       <Image source={item.image} style={styles.gridImage} />
       <View style={styles.gridInfo}>
         <View style={styles.ratingContainer}>
           <Icon name="star" size={14} color="#FFC554" />
-          <Text style={styles.rating}>{item.rating}</Text>
-          <Text style={styles.reviews}>({item.reviews})</Text>
+          <Text
+            style={[
+              styles.rating,
+              {color: isDarkMode ? Colors.pureWhite : '#333'},
+            ]}>
+            {item.rating}
+          </Text>
+          <Text
+            style={[
+              styles.reviews,
+              {
+                color: isDarkMode ? Colors.lightGray : '#666',
+              },
+            ]}>
+            ({item.reviews})
+          </Text>
         </View>
         <Text style={[styles.gridTitle, isDarkMode && styles.darkText]}>
           {item.title}
         </Text>
         <View style={styles.gridPriceContainer}>
-          <Text style={styles.priceLabel}>Starts From</Text>
+          <Text
+            style={[
+              styles.priceLabel,
+              {
+                color: isDarkMode ? Colors.lightGray : '#666',
+              },
+            ]}>
+            Starts From
+          </Text>
           <View style={styles.priceTag}>
             <Text style={styles.price}>${item.price}</Text>
           </View>
@@ -154,7 +203,13 @@ const SubCategory = () => {
               {category?.title || 'Appliance Repair'}
             </Text>
           </View>
-          <View style={styles.viewToggle}>
+          <View
+            style={[
+              styles.viewToggle,
+              isDarkMode
+                ? {backgroundColor: Colors.primaryDark}
+                : {backgroundColor: '#F5F5F5'},
+            ]}>
             <TouchableOpacity
               style={[styles.toggleButton, !isGridView && styles.activeToggle]}
               onPress={() => setIsGridView(false)}>
@@ -261,7 +316,7 @@ const styles = StyleSheet.create({
   viewToggle: {
     flexDirection: 'row',
     backgroundColor: '#F5F5F5',
-    borderRadius: 8,
+    borderRadius: 6,
   },
   toggleButton: {
     padding: 8,
@@ -331,6 +386,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     borderRadius: 4,
     alignSelf: 'flex-start',
+    marginTop: 4,
   },
   price: {
     fontSize: 16,
@@ -342,7 +398,7 @@ const styles = StyleSheet.create({
   },
   gridCard: {
     width: '48%',
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
     borderRadius: 12,
     marginBottom: 16,
     overflow: 'hidden',
