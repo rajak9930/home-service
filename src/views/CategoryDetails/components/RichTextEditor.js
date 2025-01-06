@@ -45,17 +45,21 @@ const RichTextEditor = ({
               'bold',
               'italic',
               'underline',
-              'insertEmoji',
-              'insertLink',
+              'unorderedList',
+              'orderedList',
+              'link',
             ]}
             iconMap={{
               bold: () => <Text style={styles.toolbarButtonText}>B</Text>,
               italic: () => <Text style={styles.toolbarButtonText}>I</Text>,
               underline: () => <Text style={styles.toolbarButtonText}>U</Text>,
-              insertEmoji: () => (
-                <Icon name="insert-emoticon" size={20} color="#666" />
+              unorderedList: () => (
+                <Icon name="format-list-bulleted" size={24} color="#666" />
               ),
-              insertLink: () => <Icon name="link" size={20} color="#666" />,
+              orderedList: () => (
+                <Icon name="format-list-numbered" size={24} color="#666" />
+              ),
+              link: () => <Icon name="link" size={24} color="#666" />,
             }}
             style={styles.toolbarContent}
           />
@@ -68,9 +72,11 @@ const RichTextEditor = ({
           placeholder={placeholder}
           initialHeight={200}
           useContainer={true}
+          // eslint-disable-next-line react-native/no-inline-styles
           editorStyle={{
             backgroundColor: '#fff',
-            contentCSSText: 'font-size: 16px; color: #333; padding: 12px;',
+            contentCSSText:
+              'font-size: 16px; color: #333; padding: 12px 0 12px 12px;',
           }}
           style={styles.editor}
         />
