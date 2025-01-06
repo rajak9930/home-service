@@ -16,6 +16,7 @@ import Colors from '../../../constants/colors';
 import LinearGradient from 'react-native-linear-gradient';
 import NumberOfUnits from './NumberOfUnits';
 import {propertyTypes} from '../../../constants/data';
+import {thousandSeparator} from '../../../utils';
 
 const ServiceDetails = () => {
   const route = useRoute();
@@ -31,76 +32,103 @@ const ServiceDetails = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
-        {/* Header Image Section */}
-        <View style={styles.imageContainer}>
-          <Image source={service.image} style={styles.headerImage} />
-          <LinearGradient
-            colors={['transparent', 'rgba(0,0,0,0.7)']}
-            style={styles.gradient}
-          />
-          <TouchableOpacity
-            style={[
-              styles.backButton,
-              {
-                backgroundColor: isDarkMode
-                  ? Colors.primaryDark
-                  : Colors.primaryLight,
-              },
-            ]}
-            onPress={() => navigation.goBack()}>
-            <Icon
-              name="arrow-back"
-              size={24}
-              color={isDarkMode ? Colors.pureWhite : '#333'}
+      <View style={styles.contentContainer}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.scrollContent}>
+          {/* Header Image Section */}
+          <View style={styles.imageContainer}>
+            <Image source={service.image} style={styles.headerImage} />
+            <LinearGradient
+              colors={['transparent', 'rgba(0,0,0,0.7)']}
+              style={styles.gradient}
             />
-          </TouchableOpacity>
-          <View style={styles.ratingContainer}>
-            <Icon name="star" size={13} color="#FFF" />
-            <Text style={styles.ratingText}>{service.rating}</Text>
-          </View>
-          <Text style={styles.serviceTitle}>{service.title}</Text>
-        </View>
-
-        {/* Property Type Section */}
-        <View style={styles.propertyTypeContainer}>
-          <View style={styles.propertyTypeCard}>
-            <View style={styles.sectionHeader}>
-              <View style={styles.indicator} />
-              <Text style={styles.sectionTitle}>Type of Property</Text>
+            <TouchableOpacity
+              style={[
+                styles.backButton,
+                {
+                  backgroundColor: isDarkMode
+                    ? Colors.primaryDark
+                    : Colors.primaryLight,
+                },
+              ]}
+              onPress={() => navigation.goBack()}>
+              <Icon
+                name="arrow-back"
+                size={24}
+                color={isDarkMode ? Colors.pureWhite : '#333'}
+              />
+            </TouchableOpacity>
+            <View style={styles.ratingContainer}>
+              <Icon name="star" size={13} color="#FFF" />
+              <Text style={styles.ratingText}>{service.rating}</Text>
             </View>
-            <View style={styles.propertyTypes}>
-              {propertyTypes.map(type => (
-                <TouchableOpacity
-                  key={type.id}
-                  style={[styles.propertyItem]}
-                  onPress={() => setSelectedProperty(type.id)}>
-                  <View
-                    style={[
-                      styles.iconContainer,
-                      selectedProperty === type.id && styles.selectedProperty,
-                    ]}>
-                    <IconTwo
-                      name={type.icon}
-                      size={29}
-                      color={selectedProperty === type.id ? '#FFF' : '#D1D3D4'}
-                    />
-                  </View>
-                  <Text style={[styles.propertyText]}>{type.title}</Text>
-                </TouchableOpacity>
-              ))}
+            <Text style={styles.serviceTitle}>{service.title}</Text>
+          </View>
+
+          {/* Property Type Section */}
+          <View style={styles.propertyTypeContainer}>
+            <View style={styles.propertyTypeCard}>
+              <View style={styles.sectionHeader}>
+                <View style={styles.indicator} />
+                <Text style={styles.sectionTitle}>Type of Property</Text>
+              </View>
+              <View style={styles.propertyTypes}>
+                {propertyTypes.map(type => (
+                  <TouchableOpacity
+                    key={type.id}
+                    style={[styles.propertyItem]}
+                    onPress={() => setSelectedProperty(type.id)}>
+                    <View
+                      style={[
+                        styles.iconContainer,
+                        selectedProperty === type.id && styles.selectedProperty,
+                      ]}>
+                      <IconTwo
+                        name={type.icon}
+                        size={29}
+                        color={
+                          selectedProperty === type.id ? '#FFF' : '#D1D3D4'
+                        }
+                      />
+                    </View>
+                    <Text style={[styles.propertyText]}>{type.title}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
             </View>
           </View>
-        </View>
 
-        {/* Bedrooms Counter */}
-        <NumberOfUnits
-          units={units}
-          setUnits={setUnits}
-          bedrooms={bedrooms}
-          setBedrooms={setBedrooms}
-        />
-      </ScrollView>
+          {/* Bedrooms Counter */}
+          <NumberOfUnits
+            units={units}
+            setUnits={setUnits}
+            bedrooms={bedrooms}
+            setBedrooms={setBedrooms}
+          />
+
+          {/* Add padding at the bottom to account for the fixed bottom section */}
+          <View style={styles.bottomPadding} />
+        </ScrollView>
+
+        {/* Bottom Section - Outside ScrollView */}
+        <View style={styles.bottomSection}>
+          <View style={styles.totalContainer}>
+            <Text style={styles.totalLabel}>Total:</Text>
+            <Text style={styles.totalAmount}>
+              USD {thousandSeparator(service.price * units)}
+            </Text>
+          </View>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.draftButton}>
+              <Text style={styles.draftButtonText}>Save Draft</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.bookButton}>
+              <Text style={styles.bookButtonText}>Book Now</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
     </SafeAreaView>
   );
 };
@@ -109,6 +137,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.primaryLight,
+  },
+  contentContainer: {
+    flex: 1,
+    position: 'relative',
+  },
+  scrollContent: {
+    flexGrow: 1,
   },
   imageContainer: {
     height: 270,
@@ -133,6 +168,7 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 8,
     backgroundColor: 'white',
+    zIndex: 2,
   },
   ratingContainer: {
     position: 'absolute',
@@ -164,11 +200,12 @@ const styles = StyleSheet.create({
   propertyTypeContainer: {
     paddingHorizontal: 16,
     marginTop: -20,
+    position: 'relative',
+    zIndex: 3,
   },
   propertyTypeCard: {
     backgroundColor: Colors.pureWhite,
     borderRadius: 8,
-    zIndex: 2,
     padding: 16,
     elevation: 2,
     shadowColor: '#000',
@@ -224,6 +261,65 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: Colors.primaryDark,
     fontWeight: '400',
+  },
+  bottomPadding: {
+    height: 30,
+  },
+  bottomSection: {
+    backgroundColor: Colors.pureWhite,
+    // borderTopLeftRadius: 24,
+    // borderTopRightRadius: 24,
+    padding: 16,
+    paddingBottom: 24,
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: -2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
+  totalContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 16,
+  },
+  totalLabel: {
+    fontSize: 16,
+    color: '#666',
+  },
+  totalAmount: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: Colors.primaryDark,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  draftButton: {
+    flex: 1,
+    paddingVertical: 14,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: Colors.primary,
+    alignItems: 'center',
+  },
+  draftButtonText: {
+    color: Colors.primary,
+    fontWeight: '600',
+  },
+  bookButton: {
+    flex: 1,
+    paddingVertical: 14,
+    borderRadius: 12,
+    backgroundColor: Colors.primary,
+    alignItems: 'center',
+  },
+  bookButtonText: {
+    color: Colors.pureWhite,
+    fontWeight: '600',
   },
 });
 
