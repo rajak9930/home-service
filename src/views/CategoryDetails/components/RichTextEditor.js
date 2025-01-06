@@ -1,18 +1,11 @@
 import React, {useRef} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Platform,
-  KeyboardAvoidingView,
-} from 'react-native';
+import {View, Text, StyleSheet, Platform} from 'react-native';
 import {RichEditor, RichToolbar} from 'react-native-pell-rich-editor';
 
 const RichTextEditor = ({
   initialContent = '',
   onChangeContent,
   placeholder = 'Write something...',
-  containerStyle,
 }) => {
   const richText = useRef();
 
@@ -22,13 +15,8 @@ const RichTextEditor = ({
     }
   };
 
-  const keyboardVerticalOffset = Platform.OS === 'ios' ? 60 : 0;
-
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={keyboardVerticalOffset}
-      style={[styles.container, containerStyle]}>
+    <View style={styles.container}>
       <View style={styles.sectionHeader}>
         <View style={styles.indicator} />
         <Text style={styles.sectionTitle}>Description</Text>
@@ -44,8 +32,8 @@ const RichTextEditor = ({
               'bold',
               'italic',
               'underline',
-              'unorderedList',
-              'orderedList',
+              // 'unorderedList',
+              // 'orderedList',
               'link',
             ]}
             style={styles.toolbarContent}
@@ -68,7 +56,7 @@ const RichTextEditor = ({
           style={styles.editor}
         />
       </View>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 

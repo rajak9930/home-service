@@ -5,8 +5,12 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+  Animated,
+  Keyboard,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -30,17 +34,42 @@ const ServiceDetails = () => {
   const [selectedProperty, setSelectedProperty] = useState(2);
   const [units, setUnits] = useState(2);
   const [bedrooms, setBedrooms] = useState(0);
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
   const handleContentChange = content => {
     console.log('Content changed:', content);
   };
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setIsKeyboardVisible(true);
+      },
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setIsKeyboardVisible(false);
+      },
+    );
+
+    // Cleanup listeners on component unmount
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.contentContainer}>
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.scrollContent}>
+          contentContainerStyle={[
+            styles.scrollContent,
+            isKeyboardVisible && styles.scrollContentWithKeyboard,
+          ]}>
           {/* Header Image Section */}
           <View style={styles.imageContainer}>
             <Image source={service.image} style={styles.headerImage} />
@@ -118,27 +147,29 @@ const ServiceDetails = () => {
             placeholder="Write your description here..."
           />
 
-          {/* Add padding at the bottom to account for the fixed bottom section */}
-          <View style={styles.bottomPadding} />
+          {/* Add padding at the bottom only when keyboard is not shown */}
+          {!isKeyboardVisible && <View style={styles.bottomPadding} />}
         </ScrollView>
 
-        {/* Bottom Section - Outside ScrollView */}
-        <View style={styles.bottomSection}>
-          <View style={styles.totalContainer}>
-            <Text style={styles.totalLabel}>Total:</Text>
-            <Text style={styles.totalAmount}>
-              USD {thousandSeparator(service.price * units)}
-            </Text>
-          </View>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.draftButton}>
-              <Text style={styles.draftButtonText}>Save Draft</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.bookButton}>
-              <Text style={styles.bookButtonText}>Book Now</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+        {/* Bottom Section - Hidden when keyboard is visible */}
+        {!isKeyboardVisible && (
+          <Animated.View style={styles.bottomSection}>
+            <View style={styles.totalContainer}>
+              <Text style={styles.totalLabel}>Total:</Text>
+              <Text style={styles.totalAmount}>
+                USD {thousandSeparator(service.price * units)}
+              </Text>
+            </View>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.draftButton}>
+                <Text style={styles.draftButtonText}>Save Draft</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.bookButton}>
+                <Text style={styles.bookButtonText}>Book Now</Text>
+              </TouchableOpacity>
+            </View>
+          </Animated.View>
+        )}
       </View>
     </SafeAreaView>
   );
