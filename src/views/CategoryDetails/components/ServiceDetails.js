@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import IconTwo from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useCustomTheme} from '../../../theme/Theme';
 import Colors from '../../../constants/colors';
+import LinearGradient from 'react-native-linear-gradient';
 
 const propertyTypes = [
   {
@@ -50,6 +51,10 @@ const ServiceDetails = () => {
         {/* Header Image Section */}
         <View style={styles.imageContainer}>
           <Image source={service.image} style={styles.headerImage} />
+          <LinearGradient
+            colors={['transparent', 'rgba(0,0,0,0.7)']}
+            style={styles.gradient}
+          />
           <TouchableOpacity
             style={[
               styles.backButton,
@@ -174,6 +179,14 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode: 'cover',
   },
+  gradient: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: '50%',
+    zIndex: 1,
+  },
   backButton: {
     position: 'absolute',
     top: 16,
@@ -183,7 +196,7 @@ const styles = StyleSheet.create({
   },
   ratingContainer: {
     position: 'absolute',
-    bottom: 90,
+    bottom: 60,
     left: 16,
     flexDirection: 'row',
     alignItems: 'center',
@@ -191,6 +204,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 14,
+    zIndex: 2,
   },
   ratingText: {
     color: '#FFF',
@@ -205,7 +219,7 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontSize: 28,
     fontWeight: 'bold',
-    width: '50%',
+    zIndex: 2,
   },
   section: {
     padding: 16,
