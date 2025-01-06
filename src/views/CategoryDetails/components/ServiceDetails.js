@@ -17,6 +17,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import NumberOfUnits from './NumberOfUnits';
 import {propertyTypes} from '../../../constants/data';
 import {thousandSeparator} from '../../../utils';
+import RichTextEditor from './RichTextEditor';
 
 const ServiceDetails = () => {
   const route = useRoute();
@@ -29,6 +30,10 @@ const ServiceDetails = () => {
   const [selectedProperty, setSelectedProperty] = useState(2);
   const [units, setUnits] = useState(2);
   const [bedrooms, setBedrooms] = useState(0);
+
+  const handleContentChange = content => {
+    console.log('Content changed:', content);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -105,6 +110,12 @@ const ServiceDetails = () => {
             setUnits={setUnits}
             bedrooms={bedrooms}
             setBedrooms={setBedrooms}
+          />
+
+          <RichTextEditor
+            initialContent=""
+            onChangeContent={handleContentChange}
+            placeholder="Write your description here..."
           />
 
           {/* Add padding at the bottom to account for the fixed bottom section */}
