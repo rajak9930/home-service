@@ -14,24 +14,8 @@ import IconTwo from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useCustomTheme} from '../../../theme/Theme';
 import Colors from '../../../constants/colors';
 import LinearGradient from 'react-native-linear-gradient';
-
-const propertyTypes = [
-  {
-    id: 1,
-    title: 'Home',
-    icon: 'home-outline',
-  },
-  {
-    id: 2,
-    title: 'Office',
-    icon: 'office-building',
-  },
-  {
-    id: 3,
-    title: 'Villa',
-    icon: 'store-outline',
-  },
-];
+import NumberOfUnits from './NumberOfUnits';
+import {propertyTypes} from '../../../constants/data';
 
 const ServiceDetails = () => {
   const route = useRoute();
@@ -41,7 +25,9 @@ const ServiceDetails = () => {
   const isDarkMode = theme === 'dark';
   const {service} = route.params;
 
-  const [selectedProperty, setSelectedProperty] = useState(null);
+  const [selectedProperty, setSelectedProperty] = useState(2);
+  const [units, setUnits] = useState(2);
+  const [bedrooms, setBedrooms] = useState(0);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -106,6 +92,9 @@ const ServiceDetails = () => {
             </View>
           </View>
         </View>
+
+        {/* Bedrooms Counter */}
+        <NumberOfUnits />
       </ScrollView>
     </SafeAreaView>
   );

@@ -227,3 +227,21 @@ export const subCategoryList = [
     image: images.AcFour,
   },
 ];
+
+export const propertyTypes = [
+  {
+    id: 1,
+    title: 'Home',
+    icon: 'home-outline',
+  },
+  {
+    id: 2,
+    title: 'Office',
+    icon: 'office-building',
+  },
+  {
+    id: 3,
+    title: 'Villa',
+    icon: 'store-outline',
+  },
+];
