@@ -1,9 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
 
@@ -12,65 +10,7 @@ import {selectedUser} from '../../../redux/auth/authSlice';
 import {useCustomTheme} from '../../../theme/Theme';
 import {setTheme} from '../../../redux/theme/themeSlice';
 import Colors from '../../../constants/colors';
-
-// Icon configuration
-const ICONS = {
-  MaterialIcons,
-  Ionicons,
-  MaterialCommunityIcons,
-};
-
-const DRAWER_ITEMS = [
-  {
-    icon: {
-      type: 'MaterialIcons',
-      name: 'calendar-today',
-    },
-    label: 'Calendar',
-  },
-  {
-    icon: {
-      type: 'MaterialIcons',
-      name: 'payment',
-    },
-    label: 'Payments Methods',
-  },
-  {
-    icon: {
-      type: 'Ionicons',
-      name: 'location-outline',
-    },
-    label: 'Address',
-  },
-  {
-    icon: {
-      type: 'MaterialIcons',
-      name: 'notifications-none',
-    },
-    label: 'Notification',
-  },
-  {
-    icon: {
-      type: 'MaterialCommunityIcons',
-      name: 'ticket-percent-outline',
-    },
-    label: 'Offers',
-  },
-  {
-    icon: {
-      type: 'MaterialIcons',
-      name: 'person-add-alt-1',
-    },
-    label: 'Refer a Friend',
-  },
-  {
-    icon: {
-      type: 'MaterialIcons',
-      name: 'support-agent',
-    },
-    label: 'Support',
-  },
-];
+import {DRAWER_ITEMS, ICONS} from '../../../constants/data';
 
 const IconRenderer = ({type, name, isDarkMode, color = '#fff', size = 21}) => {
   const IconComponent = ICONS[type];

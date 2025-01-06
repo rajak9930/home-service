@@ -1,4 +1,7 @@
 import images from './images';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export const onboarding = [
   {
@@ -128,5 +131,64 @@ export const cleaningData = [
     title: 'Office Cleaning',
     image: images.CleaningThree,
     discount: '15% OFF',
+  },
+];
+
+// Icon configuration
+export const ICONS = {
+  MaterialIcons,
+  Ionicons,
+  MaterialCommunityIcons,
+};
+
+export const DRAWER_ITEMS = [
+  {
+    icon: {
+      type: 'MaterialIcons',
+      name: 'calendar-today',
+    },
+    label: 'Calendar',
+  },
+  {
+    icon: {
+      type: 'MaterialIcons',
+      name: 'payment',
+    },
+    label: 'Payments Methods',
+  },
+  {
+    icon: {
+      type: 'Ionicons',
+      name: 'location-outline',
+    },
+    label: 'Address',
+  },
+  {
+    icon: {
+      type: 'MaterialIcons',
+      name: 'notifications-none',
+    },
+    label: 'Notification',
+  },
+  {
+    icon: {
+      type: 'MaterialCommunityIcons',
+      name: 'ticket-percent-outline',
+    },
+    label: 'Offers',
+  },
+  {
+    icon: {
+      type: 'MaterialIcons',
+      name: 'person-add-alt-1',
+    },
+    label: 'Refer a Friend',
+  },
+  {
+    icon: {
+      type: 'MaterialIcons',
+      name: 'support-agent',
+    },
+    label: 'Support',
   },
 ];
