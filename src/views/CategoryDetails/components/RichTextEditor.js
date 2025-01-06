@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import {RichEditor, RichToolbar} from 'react-native-pell-rich-editor';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import WebView from 'react-native-webview';
 
 const RichTextEditor = ({
   initialContent = '',
@@ -24,7 +23,6 @@ const RichTextEditor = ({
     }
   };
 
-  // Ensure the keyboard avoiding view behaves correctly
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 60 : 0;
 
   return (
@@ -38,7 +36,7 @@ const RichTextEditor = ({
       </View>
 
       <View style={styles.editorContainer}>
-        <View style={styles.toolbar}>
+        <View style={styles.toolbarWrapper}>
           <RichToolbar
             editor={richText}
             selectedIconTint="#6C63FF"
@@ -51,6 +49,9 @@ const RichTextEditor = ({
               'insertLink',
             ]}
             iconMap={{
+              bold: () => <Text style={styles.toolbarButtonText}>B</Text>,
+              italic: () => <Text style={styles.toolbarButtonText}>I</Text>,
+              underline: () => <Text style={styles.toolbarButtonText}>U</Text>,
               insertEmoji: () => (
                 <Icon name="insert-emoticon" size={20} color="#666" />
               ),
@@ -69,7 +70,7 @@ const RichTextEditor = ({
           useContainer={true}
           editorStyle={{
             backgroundColor: '#fff',
-            contentCSSText: 'font-size: 16px; color: #333;',
+            contentCSSText: 'font-size: 16px; color: #333; padding: 12px;',
           }}
           style={styles.editor}
         />
@@ -102,7 +103,7 @@ const styles = StyleSheet.create({
   sectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 8,
   },
   indicator: {
     width: 4,
@@ -119,20 +120,26 @@ const styles = StyleSheet.create({
   editorContainer: {
     backgroundColor: '#fff',
     borderRadius: 8,
-    minHeight: 300,
+    minHeight: 200,
   },
-  toolbar: {
+  toolbarWrapper: {
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
-    marginBottom: 8,
+    paddingHorizontal: 8,
   },
   toolbarContent: {
     backgroundColor: 'transparent',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  toolbarButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#666',
   },
   editor: {
     flex: 1,
     borderRadius: 8,
-    padding: 8,
   },
 });
 
