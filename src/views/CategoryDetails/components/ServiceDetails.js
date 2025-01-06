@@ -94,7 +94,12 @@ const ServiceDetails = () => {
         </View>
 
         {/* Bedrooms Counter */}
-        <NumberOfUnits />
+        <NumberOfUnits
+          units={units}
+          setUnits={setUnits}
+          bedrooms={bedrooms}
+          setBedrooms={setBedrooms}
+        />
       </ScrollView>
     </SafeAreaView>
   );

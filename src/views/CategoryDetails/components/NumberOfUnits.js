@@ -1,29 +1,50 @@
+import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Colors from '../../../constants/colors';
 
-const NumberOfUnits = () => {
-  const [units, setUnits] = useState(2);
-
+const NumberOfUnits = ({units, setUnits, bedrooms, setBedrooms}) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.cardWrapper}>
-        <View style={styles.card}>
-          <Text style={styles.counterLabel}>Number of Units</Text>
-          <View style={styles.counterContainer}>
-            <TouchableOpacity
-              style={styles.counterButton}
-              onPress={() => units > 0 && setUnits(units - 1)}>
-              <Icon name="remove" size={24} color="#666" />
-            </TouchableOpacity>
-            <Text style={styles.counterValue}>{units}</Text>
-            <TouchableOpacity
-              style={[styles.counterButton, styles.incrementButton]}
-              onPress={() => setUnits(units + 1)}>
-              <Icon name="add" size={24} color="#FFF" />
-            </TouchableOpacity>
+    <View>
+      <View style={[styles.container, styles.firstContainer]}>
+        <View style={styles.cardWrapper}>
+          <View style={styles.card}>
+            <Text style={styles.counterLabel}>Number of Units</Text>
+            <View style={styles.counterContainer}>
+              <TouchableOpacity
+                style={styles.counterButton}
+                onPress={() => units > 0 && setUnits(units - 1)}>
+                <Icon name="remove" size={24} color="#666" />
+              </TouchableOpacity>
+              <Text style={styles.counterValue}>{units}</Text>
+              <TouchableOpacity
+                style={[styles.counterButton, styles.incrementButton]}
+                onPress={() => setUnits(units + 1)}>
+                <Icon name="add" size={24} color="#FFF" />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </View>
+      {/* Bedrooms */}
+      <View style={styles.container}>
+        <View style={styles.cardWrapper}>
+          <View style={styles.card}>
+            <Text style={styles.counterLabel}>Number of Bedrooms</Text>
+            <View style={styles.counterContainer}>
+              <TouchableOpacity
+                style={styles.counterButton}
+                onPress={() => bedrooms > 0 && setBedrooms(bedrooms - 1)}>
+                <Icon name="remove" size={24} color="#666" />
+              </TouchableOpacity>
+              <Text style={styles.counterValue}>{bedrooms}</Text>
+              <TouchableOpacity
+                style={[styles.counterButton, styles.incrementButton]}
+                onPress={() => setBedrooms(bedrooms + 1)}>
+                <Icon name="add" size={24} color="#FFF" />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>
@@ -33,7 +54,11 @@ const NumberOfUnits = () => {
 
 const styles = StyleSheet.create({
   container: {
-    margin: 16,
+    marginBottom: 16,
+    marginHorizontal: 16,
+  },
+  firstContainer: {
+    marginTop: 16,
   },
   cardWrapper: {
     backgroundColor: Colors.pureWhite,
@@ -54,7 +79,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   counterLabel: {
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: '600',
   },
   counterContainer: {
@@ -76,7 +101,7 @@ const styles = StyleSheet.create({
   counterValue: {
     fontSize: 20,
     fontWeight: '600',
-    marginHorizontal: 24,
+    marginHorizontal: 19,
   },
 });
 
