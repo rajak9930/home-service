@@ -10,27 +10,9 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/native';
 
-import images from '../../../constants/images';
 import {useCustomTheme} from '../../../theme/Theme';
 import Colors from '../../../constants/colors';
-
-const categoryData = [
-  {
-    id: 1,
-    title: 'AC Repair',
-    image: images.categoryOne,
-  },
-  {
-    id: 2,
-    title: 'Beauty',
-    image: images.categoryTwo,
-  },
-  {
-    id: 3,
-    title: 'Appliance',
-    image: images.categoryThree,
-  },
-];
+import {categoryData} from '../../../constants/data';
 
 const Categories = () => {
   const navigation = useNavigation();

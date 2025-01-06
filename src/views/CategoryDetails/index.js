@@ -7,66 +7,26 @@ import {
   ScrollView,
   SafeAreaView,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 
 import SearchBar from '../../components/SearchBar';
-import images from '../../constants/images';
 import Colors from '../../constants/colors';
 import {useCustomTheme} from '../../theme/Theme';
-
-const categoriesList = [
-  {
-    id: 1,
-    title: 'AC Repair',
-    image: images.categoryOne,
-  },
-  {
-    id: 2,
-    title: 'Beauty',
-    image: images.categoryTwo,
-  },
-  {
-    id: 3,
-    title: 'Appliance',
-    image: images.categoryThree,
-  },
-  {
-    id: 4,
-    title: 'Painting',
-    image: images.categoryFour,
-  },
-  {
-    id: 5,
-    title: 'Cleaning',
-    image: images.categoryFive,
-  },
-  {
-    id: 6,
-    title: 'Plumbing',
-    image: images.categorySix,
-  },
-  {
-    id: 7,
-    title: 'Electronics',
-    image: images.categorySeven,
-  },
-  {
-    id: 8,
-    title: 'Shifting',
-    image: images.categoryEight,
-  },
-  {
-    id: 9,
-    title: "Men's Salon",
-    image: images.categoryNine,
-  },
-];
+import {categoriesList} from '../../constants/data';
 
 const CategoryDetails = () => {
   const navigation = useNavigation();
   const theme = useCustomTheme();
   const isDarkMode = theme === 'dark';
+
+  const [searchText, setSearchText] = useState('');
+
+  const filteredCategories = searchText
+    ? categoriesList.filter(item =>
+        item.title.toLowerCase().includes(searchText.toLowerCase()),
+      )
+    : categoriesList;
 
   return (
     <SafeAreaView
@@ -82,7 +42,11 @@ const CategoryDetails = () => {
           },
         ]}>
         <View style={styles.searchContainer}>
-          <SearchBar placeholder="Search Category" />
+          <SearchBar
+            placeholder="Search Category"
+            searchText={searchText}
+            setSearchText={setSearchText}
+          />
         </View>
       </View>
 
@@ -99,31 +63,42 @@ const CategoryDetails = () => {
                 styles.title,
                 isDarkMode ? styles.darkTitle : styles.lightTitle,
               ]}>
-              All Categories
+              {searchText ? 'Search Results' : 'All Categories'}
             </Text>
           </View>
 
           <View style={styles.gridContainer}>
-            {categoriesList.map(item => (
-              <TouchableOpacity
-                key={item.id}
-                style={styles.gridItem}
-                // onPress={() =>
-                //   navigation.navigate('ServiceDetails', {category: item})
-                // }
-              >
-                <View style={[styles.iconWrapper]}>
-                  <Image source={item.image} style={styles.categoryIcon} />
-                </View>
+            {filteredCategories.length > 0 ? (
+              filteredCategories.map(item => (
+                <TouchableOpacity
+                  key={item.id}
+                  style={styles.gridItem}
+                  onPress={() =>
+                    navigation.navigate('ServiceDetails', {category: item})
+                  }>
+                  <View style={[styles.iconWrapper]}>
+                    <Image source={item.image} style={styles.categoryIcon} />
+                  </View>
+                  <Text
+                    style={[
+                      styles.categoryTitle,
+                      isDarkMode ? styles.darkText : styles.lightText,
+                    ]}>
+                    {item.title}
+                  </Text>
+                </TouchableOpacity>
+              ))
+            ) : (
+              <View style={styles.noResultsContainer}>
                 <Text
                   style={[
-                    styles.categoryTitle,
+                    styles.noResultsText,
                     isDarkMode ? styles.darkText : styles.lightText,
                   ]}>
-                  {item.title}
+                  No categories found
                 </Text>
-              </TouchableOpacity>
-            ))}
+              </View>
+            )}
           </View>
         </View>
       </ScrollView>
@@ -221,6 +196,16 @@ const styles = StyleSheet.create({
   },
   darkText: {
     color: Colors.pureWhite,
+  },
+  noResultsContainer: {
+    width: '100%',
+    paddingVertical: 32,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  noResultsText: {
+    fontSize: 16,
+    fontWeight: '500',
   },
 });
 

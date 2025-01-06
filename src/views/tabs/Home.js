@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -25,6 +25,8 @@ const Home = () => {
   const userDetails = useTypedSelector(selectedUser);
   const {name} = userDetails.user.user_metadata;
   const isDarkMode = theme === 'dark';
+
+  const [searchText, setSearchText] = useState('');
 
   return (
     <SafeAreaView
@@ -61,7 +63,7 @@ const Home = () => {
               ]}>
               What you are looking for today
             </Text>
-            <SearchBar />
+            <SearchBar searchText={searchText} setSearchText={setSearchText} />
           </View>
 
           <View

@@ -9,29 +9,9 @@ import {
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import images from '../../../constants/images';
 import {useCustomTheme} from '../../../theme/Theme';
 import Colors from '../../../constants/colors';
-
-const cleaningData = [
-  {
-    id: 1,
-    title: 'Home Cleaning',
-    image: images.CleaningOne,
-    discount: '10% OFF',
-  },
-  {
-    id: 2,
-    title: 'Carpet Cleaning',
-    image: images.CleaningTwo,
-  },
-  {
-    id: 3,
-    title: 'Office Cleaning',
-    image: images.CleaningThree,
-    discount: '15% OFF',
-  },
-];
+import {cleaningData} from '../../../constants/data';
 
 const CleaningServices = () => {
   const theme = useCustomTheme();

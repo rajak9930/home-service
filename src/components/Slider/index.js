@@ -8,29 +8,9 @@ import {
 import React from 'react';
 import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {sliderData} from '../../constants/data';
 
 const Slider = () => {
-  const sliderData = [
-    {
-      id: 1,
-      title: 'Offer AC Service',
-      discount: '25%',
-      bgColor: '#F0F8FF',
-    },
-    {
-      id: 2,
-      title: 'Offer Cleaning Service',
-      discount: '15%',
-      bgColor: '#FFE4E1',
-    },
-    {
-      id: 3,
-      title: 'Offer Painting Service',
-      discount: '10%',
-      bgColor: '#E0FFF0',
-    },
-  ];
-
   return (
     <View style={styles.container}>
       <View style={styles.wrap}>

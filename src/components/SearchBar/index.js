@@ -5,7 +5,7 @@ import Colors from '../../constants/colors';
 import {useCustomTheme} from '../../theme/Theme';
 import {useNavigation} from '@react-navigation/native';
 
-const SearchBar = ({placeholder}) => {
+const SearchBar = ({placeholder, searchText, setSearchText}) => {
   const theme = useCustomTheme();
   const navigation = useNavigation();
   const isDarkMode = theme === 'dark';
@@ -34,6 +34,8 @@ const SearchBar = ({placeholder}) => {
         ]}
         placeholder={placeholder ? placeholder : 'Search what you need...'}
         placeholderTextColor={isDarkMode ? '#9B9E9F' : '#9CA3AF'}
+        value={searchText}
+        onChangeText={text => setSearchText(text)}
       />
       <View style={styles.searchIconContainer}>
         <Icon name="search" size={24} color="#fff" />
