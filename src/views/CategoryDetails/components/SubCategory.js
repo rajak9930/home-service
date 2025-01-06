@@ -179,8 +179,20 @@ const SubCategory = () => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View
             style={isGridView ? styles.gridContainer : styles.listContainer}>
-            {filteredSubCategories.map(item =>
-              isGridView ? renderGridView(item) : renderListView(item),
+            {filteredSubCategories.length > 0 ? (
+              filteredSubCategories.map(item =>
+                isGridView ? renderGridView(item) : renderListView(item),
+              )
+            ) : (
+              <View style={styles.noResultsContainer}>
+                <Text
+                  style={[
+                    styles.noResultsText,
+                    isDarkMode ? styles.darkText : styles.lightText,
+                  ]}>
+                  No categories found
+                </Text>
+              </View>
             )}
           </View>
         </ScrollView>
@@ -250,7 +262,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#F5F5F5',
     borderRadius: 8,
-    // padding: 4,
   },
   toggleButton: {
     padding: 8,
@@ -267,11 +278,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    // paddingHorizontal: 8,
   },
   serviceCard: {
     flexDirection: 'row',
-    // padding: 12,
     borderBottomWidth: 1,
     borderBottomColor: '#E5E5E5',
     marginBottom: 16,
@@ -314,6 +323,7 @@ const styles = StyleSheet.create({
   priceLabel: {
     fontSize: 12,
     color: '#666',
+    marginBottom: 4,
   },
   priceTag: {
     backgroundColor: '#E8F5E9',
@@ -352,7 +362,9 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 12,
   },
   gridInfo: {
-    padding: 12,
+    // padding: 12,
+    paddingVertical: 12,
+    paddingLeft: 12,
   },
   gridTitle: {
     fontSize: 14,
@@ -362,6 +374,16 @@ const styles = StyleSheet.create({
   },
   gridPriceContainer: {
     marginTop: 4,
+  },
+  noResultsContainer: {
+    width: '100%',
+    paddingVertical: 32,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  noResultsText: {
+    fontSize: 16,
+    fontWeight: '500',
   },
 });
 
