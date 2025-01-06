@@ -74,7 +74,7 @@ const SubCategory = () => {
       <Image source={item.image} style={styles.serviceImage} />
       <View style={styles.serviceInfo}>
         <View style={styles.ratingContainer}>
-          <Icon name="star" size={16} color="#FFD700" />
+          <Icon name="star" size={16} color="#FFC554" />
           <Text style={styles.rating}>{item.rating}</Text>
           <Text style={styles.reviews}>({item.reviews})</Text>
         </View>
@@ -99,7 +99,7 @@ const SubCategory = () => {
       <Image source={item.image} style={styles.gridImage} />
       <View style={styles.gridInfo}>
         <View style={styles.ratingContainer}>
-          <Icon name="star" size={14} color="#FFD700" />
+          <Icon name="star" size={14} color="#FFC554" />
           <Text style={styles.rating}>{item.rating}</Text>
           <Text style={styles.reviews}>({item.reviews})</Text>
         </View>
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
   indicator: {
     width: 4,
     height: 20,
-    backgroundColor: Colors.primary,
+    backgroundColor: '#CABDFF',
     borderRadius: 2,
   },
   title: {
@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#F5F5F5',
     borderRadius: 8,
-    padding: 4,
+    // padding: 4,
   },
   toggleButton: {
     padding: 8,
@@ -267,19 +267,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    paddingHorizontal: 8,
+    // paddingHorizontal: 8,
   },
   serviceCard: {
     flexDirection: 'row',
-    padding: 12,
+    // padding: 12,
     borderBottomWidth: 1,
     borderBottomColor: '#E5E5E5',
+    marginBottom: 16,
+    paddingBottom: 16,
   },
   serviceImage: {
-    width: 80,
-    height: 80,
+    width: 105,
+    height: 105,
     borderRadius: 8,
     marginRight: 12,
+    resizeMode: 'cover',
   },
   serviceInfo: {
     flex: 1,
