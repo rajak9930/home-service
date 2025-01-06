@@ -7,7 +7,6 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import {RichEditor, RichToolbar} from 'react-native-pell-rich-editor';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const RichTextEditor = ({
   initialContent = '',
@@ -49,18 +48,6 @@ const RichTextEditor = ({
               'orderedList',
               'link',
             ]}
-            iconMap={{
-              bold: () => <Text style={styles.toolbarButtonText}>B</Text>,
-              italic: () => <Text style={styles.toolbarButtonText}>I</Text>,
-              underline: () => <Text style={styles.toolbarButtonText}>U</Text>,
-              unorderedList: () => (
-                <Icon name="format-list-bulleted" size={24} color="#666" />
-              ),
-              orderedList: () => (
-                <Icon name="format-list-numbered" size={24} color="#666" />
-              ),
-              link: () => <Icon name="link" size={24} color="#666" />,
-            }}
             style={styles.toolbarContent}
           />
         </View>
@@ -138,11 +125,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  toolbarButtonText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#666',
-  },
+
   editor: {
     flex: 1,
     borderRadius: 8,
