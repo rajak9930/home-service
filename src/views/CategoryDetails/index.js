@@ -74,7 +74,7 @@ const CategoryDetails = () => {
                   key={item.id}
                   style={styles.gridItem}
                   onPress={() =>
-                    navigation.navigate('ServiceDetails', {category: item})
+                    navigation.navigate('SubCategory', {category: item})
                   }>
                   <View style={[styles.iconWrapper]}>
                     <Image source={item.image} style={styles.categoryIcon} />

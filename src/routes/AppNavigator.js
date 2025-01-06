@@ -7,6 +7,7 @@ import SignIn from '../views/Auth/SignIn';
 import Main from '../views/Main';
 import Onboarding from '../views/Onboarding';
 import CategoryDetails from '../views/CategoryDetails';
+import SubCategory from '../views/CategoryDetails/components/SubCategory';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ const AppNavigator = () => {
         <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="Main" component={Main} />
         <Stack.Screen name="CategoryDetails" component={CategoryDetails} />
+        <Stack.Screen name="SubCategory" component={SubCategory} />
       </Stack.Navigator>
     </NavigationContainer>
   );
