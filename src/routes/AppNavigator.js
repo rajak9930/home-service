@@ -8,6 +8,7 @@ import Main from '../views/Main';
 import Onboarding from '../views/Onboarding';
 import CategoryDetails from '../views/CategoryDetails';
 import SubCategory from '../views/CategoryDetails/components/SubCategory';
+import ServiceDetails from '../views/CategoryDetails/components/ServiceDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +26,7 @@ const AppNavigator = () => {
         <Stack.Screen name="Main" component={Main} />
         <Stack.Screen name="CategoryDetails" component={CategoryDetails} />
         <Stack.Screen name="SubCategory" component={SubCategory} />
+        <Stack.Screen name="ServiceDetails" component={ServiceDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );

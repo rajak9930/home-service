@@ -192,3 +192,38 @@ export const DRAWER_ITEMS = [
     label: 'Support',
   },
 ];
+
+export const subCategoryList = [
+  {
+    id: 1,
+    title: 'AC Check-Up',
+    rating: 4.8,
+    reviews: 87,
+    price: 128,
+    image: images.AcOne,
+  },
+  {
+    id: 2,
+    title: 'AC Regular Service',
+    rating: 4.5,
+    reviews: 87,
+    price: 128,
+    image: images.AcTwo,
+  },
+  {
+    id: 3,
+    title: 'AC Installation',
+    rating: 4.5,
+    reviews: 87,
+    price: 170,
+    image: images.AcThree,
+  },
+  {
+    id: 4,
+    title: 'AC Uninstallation',
+    rating: 4.5,
+    reviews: 87,
+    price: 170,
+    image: images.AcFour,
+  },
+];

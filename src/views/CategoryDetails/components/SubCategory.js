@@ -15,42 +15,7 @@ import IconTwo from 'react-native-vector-icons/Ionicons';
 import Colors from '../../../constants/colors';
 import SearchBar from '../../../components/SearchBar';
 import {useCustomTheme} from '../../../theme/Theme';
-import images from '../../../constants/images';
-
-const subCategoryList = [
-  {
-    id: 1,
-    title: 'AC Check-Up',
-    rating: 4.8,
-    reviews: 87,
-    price: 128,
-    image: images.AcOne,
-  },
-  {
-    id: 2,
-    title: 'AC Regular Service',
-    rating: 4.5,
-    reviews: 87,
-    price: 128,
-    image: images.AcTwo,
-  },
-  {
-    id: 3,
-    title: 'AC Installation',
-    rating: 4.5,
-    reviews: 87,
-    price: 170,
-    image: images.AcThree,
-  },
-  {
-    id: 4,
-    title: 'AC Uninstallation',
-    rating: 4.5,
-    reviews: 87,
-    price: 170,
-    image: images.AcFour,
-  },
-];
+import {subCategoryList} from '../../../constants/data';
 
 const SubCategory = () => {
   const route = useRoute();
@@ -70,25 +35,18 @@ const SubCategory = () => {
     : subCategoryList;
 
   const renderListView = item => (
-    <TouchableOpacity key={item.id} style={styles.serviceCard}>
+    <TouchableOpacity
+      key={item.id}
+      style={styles.serviceCard}
+      onPress={() => navigation.navigate('ServiceDetails', {service: item})}>
       <Image source={item.image} style={styles.serviceImage} />
       <View style={styles.serviceInfo}>
         <View style={styles.ratingContainer}>
           <Icon name="star" size={16} color="#FFC554" />
-          <Text
-            style={[
-              styles.rating,
-              {color: isDarkMode ? Colors.pureWhite : '#333'},
-            ]}>
+          <Text style={[styles.rating, isDarkMode && styles.darkRatingText]}>
             {item.rating}
           </Text>
-          <Text
-            style={[
-              styles.reviews,
-              {
-                color: isDarkMode ? Colors.lightGray : '#666',
-              },
-            ]}>
+          <Text style={[styles.reviews, isDarkMode && styles.darkReviewsText]}>
             ({item.reviews})
           </Text>
         </View>
@@ -97,12 +55,7 @@ const SubCategory = () => {
         </Text>
         <View style={styles.priceContainer}>
           <Text
-            style={[
-              styles.priceLabel,
-              {
-                color: isDarkMode ? Colors.lightGray : '#666',
-              },
-            ]}>
+            style={[styles.priceLabel, isDarkMode && styles.darkPriceLabel]}>
             Starts From
           </Text>
           <View style={styles.priceTag}>
@@ -121,26 +74,17 @@ const SubCategory = () => {
       key={item.id}
       style={[
         styles.gridCard,
-        {backgroundColor: isDarkMode ? Colors.navBg : Colors.pureWhite},
-      ]}>
+        isDarkMode ? styles.darkGridCard : styles.lightGridCard,
+      ]}
+      onPress={() => navigation.navigate('ServiceDetails', {service: item})}>
       <Image source={item.image} style={styles.gridImage} />
       <View style={styles.gridInfo}>
         <View style={styles.ratingContainer}>
           <Icon name="star" size={14} color="#FFC554" />
-          <Text
-            style={[
-              styles.rating,
-              {color: isDarkMode ? Colors.pureWhite : '#333'},
-            ]}>
+          <Text style={[styles.rating, isDarkMode && styles.darkRatingText]}>
             {item.rating}
           </Text>
-          <Text
-            style={[
-              styles.reviews,
-              {
-                color: isDarkMode ? Colors.lightGray : '#666',
-              },
-            ]}>
+          <Text style={[styles.reviews, isDarkMode && styles.darkReviewsText]}>
             ({item.reviews})
           </Text>
         </View>
@@ -149,12 +93,7 @@ const SubCategory = () => {
         </Text>
         <View style={styles.gridPriceContainer}>
           <Text
-            style={[
-              styles.priceLabel,
-              {
-                color: isDarkMode ? Colors.lightGray : '#666',
-              },
-            ]}>
+            style={[styles.priceLabel, isDarkMode && styles.darkPriceLabel]}>
             Starts From
           </Text>
           <View style={styles.priceTag}>
@@ -174,9 +113,7 @@ const SubCategory = () => {
       <View
         style={[
           styles.header,
-          {
-            backgroundColor: isDarkMode ? Colors.navBg : Colors.pureWhite,
-          },
+          isDarkMode ? styles.darkHeader : styles.lightHeader,
         ]}>
         <View style={styles.searchContainer}>
           <SearchBar
@@ -187,71 +124,91 @@ const SubCategory = () => {
         </View>
       </View>
 
-      <View
-        style={[
-          styles.contentContainer,
-          isDarkMode ? styles.darkContent : styles.lightContent,
-        ]}>
-        <View style={styles.titleRow}>
-          <View style={styles.titleContainer}>
-            <View style={styles.indicator} />
-            <Text
-              style={[
-                styles.title,
-                isDarkMode ? styles.darkText : styles.lightText,
-              ]}>
-              {category?.title || 'Appliance Repair'}
-            </Text>
-          </View>
+      {category?.title === 'AC Repair' ? (
+        <>
           <View
             style={[
-              styles.viewToggle,
-              isDarkMode
-                ? {backgroundColor: Colors.primaryDark}
-                : {backgroundColor: '#F5F5F5'},
+              styles.contentContainer,
+              isDarkMode ? styles.darkContent : styles.lightContent,
             ]}>
-            <TouchableOpacity
-              style={[styles.toggleButton, !isGridView && styles.activeToggle]}
-              onPress={() => setIsGridView(false)}>
-              <IconTwo
-                name="list"
-                size={20}
-                color={!isGridView ? '#fff' : isDarkMode ? '#fff' : '#333'}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.toggleButton, isGridView && styles.activeToggle]}
-              onPress={() => setIsGridView(true)}>
-              <IconTwo
-                name="grid"
-                size={20}
-                color={isGridView ? '#fff' : isDarkMode ? '#fff' : '#333'}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View
-            style={isGridView ? styles.gridContainer : styles.listContainer}>
-            {filteredSubCategories.length > 0 ? (
-              filteredSubCategories.map(item =>
-                isGridView ? renderGridView(item) : renderListView(item),
-              )
-            ) : (
-              <View style={styles.noResultsContainer}>
+            <View style={styles.titleRow}>
+              <View style={styles.titleContainer}>
+                <View style={styles.indicator} />
                 <Text
                   style={[
-                    styles.noResultsText,
+                    styles.title,
                     isDarkMode ? styles.darkText : styles.lightText,
                   ]}>
-                  No categories found
+                  {category?.title || 'Appliance Repair'}
                 </Text>
               </View>
-            )}
+              <View
+                style={[
+                  styles.viewToggle,
+                  isDarkMode ? styles.darkViewToggle : styles.lightViewToggle,
+                ]}>
+                <TouchableOpacity
+                  style={[
+                    styles.toggleButton,
+                    !isGridView && styles.activeToggle,
+                  ]}
+                  onPress={() => setIsGridView(false)}>
+                  <IconTwo
+                    name="list"
+                    size={20}
+                    color={!isGridView ? '#fff' : isDarkMode ? '#fff' : '#333'}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[
+                    styles.toggleButton,
+                    isGridView && styles.activeToggle,
+                  ]}
+                  onPress={() => setIsGridView(true)}>
+                  <IconTwo
+                    name="grid"
+                    size={20}
+                    color={isGridView ? '#fff' : isDarkMode ? '#fff' : '#333'}
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <View
+                style={
+                  isGridView ? styles.gridContainer : styles.listContainer
+                }>
+                {filteredSubCategories.length > 0 ? (
+                  filteredSubCategories.map(item =>
+                    isGridView ? renderGridView(item) : renderListView(item),
+                  )
+                ) : (
+                  <View style={styles.noResultsContainer}>
+                    <Text
+                      style={[
+                        styles.noResultsText,
+                        isDarkMode ? styles.darkText : styles.lightText,
+                      ]}>
+                      No categories found
+                    </Text>
+                  </View>
+                )}
+              </View>
+            </ScrollView>
           </View>
-        </ScrollView>
-      </View>
+        </>
+      ) : (
+        <View style={styles.noResultsContainer}>
+          <Text
+            style={[
+              styles.noResultsText,
+              isDarkMode ? styles.darkText : styles.lightText,
+            ]}>
+            Coming Soon...
+          </Text>
+        </View>
+      )}
     </SafeAreaView>
   );
 };
@@ -270,6 +227,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 12,
+  },
+  lightHeader: {
+    backgroundColor: Colors.pureWhite,
+  },
+  darkHeader: {
+    backgroundColor: Colors.navBg,
   },
   searchContainer: {
     flex: 1,
@@ -315,8 +278,13 @@ const styles = StyleSheet.create({
   },
   viewToggle: {
     flexDirection: 'row',
-    backgroundColor: '#F5F5F5',
     borderRadius: 6,
+  },
+  lightViewToggle: {
+    backgroundColor: '#F5F5F5',
+  },
+  darkViewToggle: {
+    backgroundColor: Colors.primaryDark,
   },
   toggleButton: {
     padding: 8,
@@ -362,9 +330,15 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#333',
   },
+  darkRatingText: {
+    color: Colors.pureWhite,
+  },
   reviews: {
     fontSize: 14,
     color: '#666',
+  },
+  darkReviewsText: {
+    color: Colors.lightGray,
   },
   serviceTitle: {
     fontSize: 16,
@@ -379,6 +353,9 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#666',
     marginBottom: 4,
+  },
+  darkPriceLabel: {
+    color: Colors.lightGray,
   },
   priceTag: {
     backgroundColor: '#E8F5E9',
@@ -398,7 +375,6 @@ const styles = StyleSheet.create({
   },
   gridCard: {
     width: '48%',
-    // backgroundColor: '#fff',
     borderRadius: 12,
     marginBottom: 16,
     overflow: 'hidden',
@@ -411,6 +387,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 3,
   },
+  lightGridCard: {
+    backgroundColor: Colors.pureWhite,
+  },
+  darkGridCard: {
+    backgroundColor: Colors.navBg,
+  },
   gridImage: {
     width: '100%',
     height: 120,
@@ -418,7 +400,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 12,
   },
   gridInfo: {
-    // padding: 12,
     paddingVertical: 12,
     paddingLeft: 12,
   },
