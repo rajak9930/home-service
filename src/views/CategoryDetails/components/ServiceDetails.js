@@ -87,26 +87,23 @@ const ServiceDetails = () => {
               {propertyTypes.map(type => (
                 <TouchableOpacity
                   key={type.id}
-                  style={[
-                    styles.propertyItem,
-                    selectedProperty === type.id && styles.selectedProperty,
-                  ]}
+                  style={[styles.propertyItem]}
                   onPress={() => setSelectedProperty(type.id)}>
-                  <View style={styles.iconContainer}>
+                  <View
+                    style={[
+                      styles.iconContainer,
+                      selectedProperty === type.id && styles.selectedProperty,
+                      {
+                        borderWidth: selectedProperty === type.id ? 0 : 2,
+                      },
+                    ]}>
                     <IconTwo
                       name={type.icon}
-                      size={24}
-                      color={selectedProperty === type.id ? '#FFF' : '#666'}
+                      size={29}
+                      color={selectedProperty === type.id ? '#FFF' : '#D1D3D4'}
                     />
                   </View>
-                  <Text
-                    style={[
-                      styles.propertyText,
-                      selectedProperty === type.id &&
-                        styles.selectedPropertyText,
-                    ]}>
-                    {type.title}
-                  </Text>
+                  <Text style={[styles.propertyText]}>{type.title}</Text>
                 </TouchableOpacity>
               ))}
             </View>
@@ -197,11 +194,11 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   indicator: {
-    width: 3,
+    width: 4,
     height: 20,
-    backgroundColor: '#6C63FF',
-    borderRadius: 1.5,
-    marginRight: 12,
+    backgroundColor: '#CABDFF',
+    borderRadius: 2,
+    marginRight: 8,
   },
   sectionTitle: {
     fontSize: 18,
@@ -218,25 +215,23 @@ const styles = StyleSheet.create({
     width: '30%',
   },
   iconContainer: {
-    width: 80,
-    height: 80,
-    borderRadius: 20,
-    backgroundColor: '#F5F5F5',
+    width: 70,
+    height: 70,
+    borderRadius: 18,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 8,
+    borderWidth: 1,
+    borderColor: '#D1D3D4',
   },
   selectedProperty: {
     backgroundColor: '#6C63FF',
-    borderRadius: 20,
   },
   propertyText: {
     marginTop: 4,
     fontSize: 14,
-    color: '#666',
-  },
-  selectedPropertyText: {
-    color: '#FFF',
+    color: Colors.primaryDark,
+    fontWeight: '500',
   },
 });
 
