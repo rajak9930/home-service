@@ -42,8 +42,6 @@ const ServiceDetails = () => {
   const {service} = route.params;
 
   const [selectedProperty, setSelectedProperty] = useState(null);
-  const [units, setUnits] = useState(2);
-  const [bedrooms, setBedrooms] = useState(0);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -79,86 +77,39 @@ const ServiceDetails = () => {
         </View>
 
         {/* Property Type Section */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <View style={styles.indicator} />
-            <Text style={styles.sectionTitle}>Type of Property</Text>
-          </View>
-          <View style={styles.propertyTypes}>
-            {propertyTypes.map(type => (
-              <TouchableOpacity
-                key={type.id}
-                style={[
-                  styles.propertyItem,
-                  selectedProperty === type.id && styles.selectedProperty,
-                ]}
-                onPress={() => setSelectedProperty(type.id)}>
-                <IconTwo
-                  name={type.icon}
-                  size={24}
-                  color={selectedProperty === type.id ? '#FFF' : '#666'}
-                />
-                <Text
+        <View style={styles.propertyTypeContainer}>
+          <View style={styles.propertyTypeCard}>
+            <View style={styles.sectionHeader}>
+              <View style={styles.indicator} />
+              <Text style={styles.sectionTitle}>Type of Property</Text>
+            </View>
+            <View style={styles.propertyTypes}>
+              {propertyTypes.map(type => (
+                <TouchableOpacity
+                  key={type.id}
                   style={[
-                    styles.propertyText,
-                    selectedProperty === type.id && styles.selectedPropertyText,
-                  ]}>
-                  {type.title}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View>
-
-        {/* Units Counter */}
-        <View style={styles.section}>
-          <Text style={styles.counterLabel}>Number of Units</Text>
-          <View style={styles.counterContainer}>
-            <TouchableOpacity
-              style={styles.counterButton}
-              onPress={() => units > 0 && setUnits(units - 1)}>
-              <Icon name="remove" size={24} color="#666" />
-            </TouchableOpacity>
-            <Text style={styles.counterValue}>{units}</Text>
-            <TouchableOpacity
-              style={[styles.counterButton, styles.incrementButton]}
-              onPress={() => setUnits(units + 1)}>
-              <Icon name="add" size={24} color="#FFF" />
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        {/* Bedrooms Counter */}
-        <View style={styles.section}>
-          <Text style={styles.counterLabel}>Number of Bedrooms</Text>
-          <View style={styles.counterContainer}>
-            <TouchableOpacity
-              style={styles.counterButton}
-              onPress={() => bedrooms > 0 && setBedrooms(bedrooms - 1)}>
-              <Icon name="remove" size={24} color="#666" />
-            </TouchableOpacity>
-            <Text style={styles.counterValue}>{bedrooms}</Text>
-            <TouchableOpacity
-              style={[styles.counterButton, styles.incrementButton]}
-              onPress={() => setBedrooms(bedrooms + 1)}>
-              <Icon name="add" size={24} color="#FFF" />
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        {/* Bottom Section */}
-        <View style={styles.bottomSection}>
-          <View style={styles.totalContainer}>
-            <Text style={styles.totalLabel}>Total:</Text>
-            <Text style={styles.totalAmount}>USD {service.price}</Text>
-          </View>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.draftButton}>
-              <Text style={styles.draftButtonText}>Save Draft</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.bookButton}>
-              <Text style={styles.bookButtonText}>Book Now</Text>
-            </TouchableOpacity>
+                    styles.propertyItem,
+                    selectedProperty === type.id && styles.selectedProperty,
+                  ]}
+                  onPress={() => setSelectedProperty(type.id)}>
+                  <View style={styles.iconContainer}>
+                    <IconTwo
+                      name={type.icon}
+                      size={24}
+                      color={selectedProperty === type.id ? '#FFF' : '#666'}
+                    />
+                  </View>
+                  <Text
+                    style={[
+                      styles.propertyText,
+                      selectedProperty === type.id &&
+                        styles.selectedPropertyText,
+                    ]}>
+                    {type.title}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -169,7 +120,7 @@ const ServiceDetails = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
+    backgroundColor: '#F5F5F5',
   },
   imageContainer: {
     height: 270,
@@ -191,12 +142,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 16,
     left: 16,
-    padding: 6,
+    padding: 8,
     borderRadius: 8,
+    backgroundColor: 'white',
   },
   ratingContainer: {
     position: 'absolute',
-    bottom: 60,
+    bottom: 70,
     left: 16,
     flexDirection: 'row',
     alignItems: 'center',
@@ -214,125 +166,77 @@ const styles = StyleSheet.create({
   },
   serviceTitle: {
     position: 'absolute',
-    bottom: 20,
+    bottom: 30,
     left: 16,
     color: '#FFF',
     fontSize: 28,
     fontWeight: 'bold',
     zIndex: 2,
   },
-  section: {
+  propertyTypeContainer: {
+    paddingHorizontal: 16,
+    marginTop: -20,
+  },
+  propertyTypeCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 8,
+    zIndex: 2,
     padding: 16,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
   sectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 24,
   },
   indicator: {
-    width: 4,
+    width: 3,
     height: 20,
     backgroundColor: '#6C63FF',
-    borderRadius: 2,
-    marginRight: 8,
+    borderRadius: 1.5,
+    marginRight: 12,
   },
   sectionTitle: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '600',
+    color: '#333',
   },
   propertyTypes: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 16,
+    paddingHorizontal: 8,
   },
   propertyItem: {
     alignItems: 'center',
-    justifyContent: 'center',
-    width: 100,
-    height: 100,
+    width: '30%',
+  },
+  iconContainer: {
+    width: 80,
+    height: 80,
     borderRadius: 20,
     backgroundColor: '#F5F5F5',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 8,
   },
   selectedProperty: {
     backgroundColor: '#6C63FF',
+    borderRadius: 20,
   },
   propertyText: {
-    marginTop: 8,
+    marginTop: 4,
+    fontSize: 14,
     color: '#666',
   },
   selectedPropertyText: {
     color: '#FFF',
-  },
-  counterLabel: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 16,
-  },
-  counterContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  counterButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 8,
-    backgroundColor: '#F5F5F5',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  incrementButton: {
-    backgroundColor: '#6C63FF',
-  },
-  counterValue: {
-    fontSize: 20,
-    fontWeight: '600',
-    marginHorizontal: 24,
-  },
-  bottomSection: {
-    padding: 16,
-    borderTopWidth: 1,
-    borderTopColor: '#E5E5E5',
-  },
-  totalContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 16,
-  },
-  totalLabel: {
-    fontSize: 16,
-    color: '#666',
-  },
-  totalAmount: {
-    fontSize: 18,
-    fontWeight: '700',
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    gap: 12,
-  },
-  draftButton: {
-    flex: 1,
-    paddingVertical: 14,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#6C63FF',
-    alignItems: 'center',
-  },
-  draftButtonText: {
-    color: '#6C63FF',
-    fontWeight: '600',
-  },
-  bookButton: {
-    flex: 1,
-    paddingVertical: 14,
-    borderRadius: 8,
-    backgroundColor: '#6C63FF',
-    alignItems: 'center',
-  },
-  bookButtonText: {
-    color: '#FFF',
-    fontWeight: '600',
   },
 });
 
