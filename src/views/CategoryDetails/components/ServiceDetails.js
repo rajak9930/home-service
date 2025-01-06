@@ -93,9 +93,6 @@ const ServiceDetails = () => {
                     style={[
                       styles.iconContainer,
                       selectedProperty === type.id && styles.selectedProperty,
-                      {
-                        borderWidth: selectedProperty === type.id ? 0 : 2,
-                      },
                     ]}>
                     <IconTwo
                       name={type.icon}
@@ -117,7 +114,7 @@ const ServiceDetails = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: Colors.primaryLight,
   },
   imageContainer: {
     height: 270,
@@ -156,7 +153,7 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
   ratingText: {
-    color: '#FFF',
+    color: Colors.pureWhite,
     marginLeft: 4,
     fontWeight: '600',
     fontSize: 12,
@@ -165,7 +162,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 30,
     left: 16,
-    color: '#FFF',
+    color: Colors.pureWhite,
     fontSize: 28,
     fontWeight: 'bold',
     zIndex: 2,
@@ -175,7 +172,7 @@ const styles = StyleSheet.create({
     marginTop: -20,
   },
   propertyTypeCard: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.pureWhite,
     borderRadius: 8,
     zIndex: 2,
     padding: 16,
@@ -221,17 +218,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 8,
-    borderWidth: 1,
-    borderColor: '#D1D3D4',
+    borderColor: Colors.darkLightGray,
+    borderWidth: 2,
   },
   selectedProperty: {
-    backgroundColor: '#6C63FF',
+    backgroundColor: Colors.primary,
+    borderWidth: 0,
   },
   propertyText: {
     marginTop: 4,
     fontSize: 14,
     color: Colors.primaryDark,
-    fontWeight: '500',
+    fontWeight: '400',
   },
 });
 
