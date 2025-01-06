@@ -20,6 +20,9 @@ import CleaningOne from '../assets/images/Cleaning-1.png';
 import CleaningTwo from '../assets/images/Cleaning-2.png';
 import CleaningThree from '../assets/images/Cleaning-3.jpg';
 import Appliance from '../assets/images/Appliance.png';
+import AcOne from '../assets/images/Ac-1.png';
+import AcTwo from '../assets/images/Ac-2.png';
+import AcThree from '../assets/images/Ac-3.png';
 
 export default {
   logo,
@@ -44,4 +47,7 @@ export default {
   CleaningTwo,
   CleaningThree,
   Appliance,
+  AcOne,
+  AcTwo,
+  AcThree,
 };
