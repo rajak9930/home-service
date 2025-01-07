@@ -177,16 +177,52 @@ const ServiceDetails = () => {
 
         {/* Bottom Section - Hidden when keyboard is visible */}
         {!isKeyboardVisible && (
-          <Animated.View style={styles.bottomSection}>
+          <Animated.View
+            style={[
+              styles.bottomSection,
+              {
+                backgroundColor: isDarkMode ? '#0F1621' : Colors.pureWhite,
+              },
+            ]}>
             <View style={styles.totalContainer}>
-              <Text style={styles.totalLabel}>Total:</Text>
-              <Text style={styles.totalAmount}>
+              <Text
+                style={[
+                  styles.totalLabel,
+                  {
+                    color: isDarkMode ? Colors.darkLightGray : '#666',
+                  },
+                ]}>
+                Total:
+              </Text>
+              <Text
+                style={[
+                  styles.totalAmount,
+                  {
+                    color: isDarkMode ? Colors.pureWhite : Colors.primaryDark,
+                  },
+                ]}>
                 USD {thousandSeparator(service.price * units)}
               </Text>
             </View>
             <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.draftButton}>
-                <Text style={styles.draftButtonText}>Save Draft</Text>
+              <TouchableOpacity
+                style={[
+                  styles.draftButton,
+                  {
+                    backgroundColor: isDarkMode ? '#272D37' : Colors.pureWhite,
+                    borderColor: isDarkMode ? '#535763' : Colors.primary,
+                    borderWidth: isDarkMode ? 2 : 1,
+                  },
+                ]}>
+                <Text
+                  style={[
+                    styles.draftButtonText,
+                    {
+                      color: isDarkMode ? Colors.darkLightGray : Colors.primary,
+                    },
+                  ]}>
+                  Save Draft
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.bookButton}>
                 <Text style={styles.bookButtonText}>Book Now</Text>

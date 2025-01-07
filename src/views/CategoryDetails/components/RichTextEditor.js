@@ -1,6 +1,8 @@
 import React, {useRef} from 'react';
 import {View, Text, StyleSheet, Platform} from 'react-native';
 import {RichEditor, RichToolbar} from 'react-native-pell-rich-editor';
+import {useCustomTheme} from '../../../theme/Theme';
+import Colors from '../../../constants/colors';
 
 const RichTextEditor = ({
   initialContent = '',
@@ -8,6 +10,9 @@ const RichTextEditor = ({
   placeholder = 'Write something...',
 }) => {
   const richText = useRef();
+  const theme = useCustomTheme();
+
+  const isDarkMode = theme === 'dark';
 
   const handleChange = text => {
     if (onChangeContent) {
@@ -16,13 +21,33 @@ const RichTextEditor = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: isDarkMode ? Colors.navBg : Colors.pureWhite,
+        },
+      ]}>
       <View style={styles.sectionHeader}>
         <View style={styles.indicator} />
-        <Text style={styles.sectionTitle}>Description</Text>
+        <Text
+          style={[
+            styles.sectionTitle,
+            {
+              color: isDarkMode ? Colors.pureWhite : '#333',
+            },
+          ]}>
+          Description
+        </Text>
       </View>
 
-      <View style={styles.editorContainer}>
+      <View
+        style={[
+          styles.editorContainer,
+          {
+            backgroundColor: isDarkMode ? '#29303C' : Colors.pureWhite,
+          },
+        ]}>
         <View style={styles.toolbarWrapper}>
           <RichToolbar
             editor={richText}
@@ -49,9 +74,10 @@ const RichTextEditor = ({
           useContainer={true}
           // eslint-disable-next-line react-native/no-inline-styles
           editorStyle={{
-            backgroundColor: '#fff',
-            contentCSSText:
-              'font-size: 16px; color: #333; padding: 12px 0 12px 12px;',
+            backgroundColor: isDarkMode ? '#29303C' : Colors.pureWhite,
+            contentCSSText: `font-size: 16px; color: ${
+              isDarkMode ? Colors.pureWhite : '#333'
+            }; padding: 12px 0 12px 12px;`,
           }}
           style={styles.editor}
         />
@@ -84,7 +110,7 @@ const styles = StyleSheet.create({
   sectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 16,
   },
   indicator: {
     width: 4,
