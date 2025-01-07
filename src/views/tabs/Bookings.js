@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primaryDark,
   },
   wrap: {
+    marginBottom: 16,
     flex: 1,
     borderRadius: 8,
     marginHorizontal: 16,
