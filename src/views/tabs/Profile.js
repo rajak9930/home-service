@@ -1,16 +1,67 @@
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import React from 'react';
+import {WEB_CLIENT_ID} from '@env';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Alert,
+  ActivityIndicator,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {supabase} from '../../supabase/supabaseClient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useDispatch} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 
 import useTypedSelector from '../../hooks/useTypedSelector';
-import {selectedUser} from '../../redux/auth/authSlice';
+import {selectedUser, setUser} from '../../redux/auth/authSlice';
 import Colors from '../../constants/colors';
 import {useCustomTheme} from '../../theme/Theme';
 
 const Profile = () => {
-  const userDetails = useTypedSelector(selectedUser);
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
   const theme = useCustomTheme();
+
+  const userDetails = useTypedSelector(selectedUser);
   const isDarkMode = theme === 'dark';
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const configureGoogleSignIn = async () => {
+      try {
+        await GoogleSignin.configure({
+          webClientId: WEB_CLIENT_ID,
+          offlineAccess: true,
+          scopes: ['profile', 'email'],
+        });
+      } catch (error) {
+        console.error('Google Sign In configuration error:', error);
+      }
+    };
+
+    configureGoogleSignIn();
+  }, []);
+
+  const handleSignOut = async () => {
+    setIsLoading(true);
+    try {
+      await GoogleSignin.signOut();
+      await supabase.auth.signOut();
+      await AsyncStorage.removeItem('user');
+      dispatch(setUser(null));
+      navigation.replace('SignIn');
+    } catch (error) {
+      console.error('Error signing out:', error);
+      Alert.alert('Error', 'Failed to logout');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <View
@@ -95,9 +146,18 @@ const Profile = () => {
               : Colors.primaryLight,
           },
         ]}>
-        <TouchableOpacity style={styles.logoutButton}>
-          <Icon name="log-out-outline" size={24} color="#FF4B55" />
-          <Text style={styles.logoutText}>Logout</Text>
+        <TouchableOpacity
+          style={styles.logoutButton}
+          onPress={handleSignOut}
+          disabled={isLoading}>
+          {!isLoading && (
+            <Icon name="log-out-outline" size={24} color="#FF4B55" />
+          )}
+          {isLoading ? (
+            <ActivityIndicator color="#FF4B55" />
+          ) : (
+            <Text style={styles.logoutText}>Logout</Text>
+          )}
         </TouchableOpacity>
       </View>
     </View>

@@ -23,7 +23,7 @@ import ApplianceRepair from '../Home/components/ApplianceRepair';
 const Home = () => {
   const theme = useCustomTheme();
   const userDetails = useTypedSelector(selectedUser);
-  const {name} = userDetails.user.user_metadata;
+  const name = userDetails?.user?.user_metadata?.name || '';
   const isDarkMode = theme === 'dark';
 
   const [searchText, setSearchText] = useState('');
