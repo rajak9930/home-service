@@ -82,7 +82,7 @@ const ServiceDetails = () => {
         )}
 
         <ScrollView
-          style={{opacity: isBottomSheetVisible ? 0.7 : 1}}
+          style={{opacity: isBottomSheetVisible ? 0.3 : 1}}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={[
             styles.scrollContent,
@@ -186,7 +186,7 @@ const ServiceDetails = () => {
             style={[
               styles.bottomSection,
               isDarkMode ? styles.darkBottomSection : styles.lightBottomSection,
-              {opacity: isBottomSheetVisible ? 0.7 : 1},
+              {opacity: isBottomSheetVisible ? 0.3 : 1},
             ]}>
             <View style={styles.totalContainer}>
               <Text

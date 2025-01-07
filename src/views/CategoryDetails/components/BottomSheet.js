@@ -3,17 +3,44 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Colors from '../../../constants/colors';
+import {useCustomTheme} from '../../../theme/Theme';
 
 const BottomSheet = ({setIsBottomSheetVisible, service, units}) => {
+  const theme = useCustomTheme();
+
+  const isDarkMode = theme === 'dark';
+
   return (
-    <View style={styles.bottomSheetWrapper}>
+    <View
+      style={[
+        styles.bottomSheetWrapper,
+        isDarkMode ? styles.darkCard : styles.lightCard,
+      ]}>
       <View style={styles.bottomSheet}>
         <View style={styles.bottomSheetHeader}>
-          <Text style={styles.bottomSheetTitle}>Select your Date & Time?</Text>
+          <View style={styles.sectionHeader}>
+            <View style={styles.indicator} />
+            <Text
+              style={[
+                styles.bottomSheetTitle,
+                isDarkMode ? styles.darkText : styles.lightText,
+              ]}>
+              Select your Date & Time?
+            </Text>
+          </View>
           <TouchableOpacity
             onPress={() => setIsBottomSheetVisible(false)}
-            style={styles.closeButton}>
-            <Icon name="close" size={24} color="#000" />
+            style={[
+              styles.closeButton,
+              {
+                backgroundColor: isDarkMode ? '#29303C' : '#EFEFEF',
+              },
+            ]}>
+            <Icon
+              name="close"
+              size={24}
+              color={isDarkMode ? Colors.pureWhite : '#333'}
+            />
           </TouchableOpacity>
         </View>
 
@@ -42,10 +69,29 @@ const BottomSheet = ({setIsBottomSheetVisible, service, units}) => {
         {/* Bottom Actions */}
         <View style={styles.bottomSheetFooter}>
           <View style={styles.totalRow}>
-            <Text style={styles.totalText}>Total:</Text>
-            <Text style={styles.priceText}>USD {service.price * units}</Text>
+            <Text
+              style={[
+                styles.totalText,
+                isDarkMode ? styles.darkTotalLabel : styles.lightTotalLabel,
+              ]}>
+              Total:
+            </Text>
+            <Text
+              style={[
+                styles.priceText,
+                isDarkMode ? styles.darkTotalAmount : styles.lightTotalAmount,
+              ]}>
+              USD {service.price * units}
+            </Text>
           </View>
-          <TouchableOpacity style={styles.continueButton}>
+          <TouchableOpacity
+            style={[
+              styles.continueButton,
+              styles.continueButtonText,
+              {
+                backgroundColor: isDarkMode ? '#29303C' : Colors.primary,
+              },
+            ]}>
             <Text style={styles.continueButtonText}>Continue</Text>
           </TouchableOpacity>
         </View>
@@ -60,7 +106,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: 'white',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: 20,
@@ -73,19 +118,56 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 8,
   },
+  darkCard: {
+    backgroundColor: Colors.navBg,
+  },
+  lightCard: {
+    backgroundColor: Colors.pureWhite,
+  },
+  darkText: {
+    color: Colors.pureWhite,
+  },
+  lightText: {
+    color: '#333',
+  },
+  darkTotalAmount: {
+    color: Colors.pureWhite,
+  },
+  lightTotalAmount: {
+    color: Colors.primaryDark,
+  },
+  darkTotalLabel: {
+    color: Colors.darkLightGray,
+  },
+  lightTotalLabel: {
+    color: '#666',
+  },
   bottomSheetHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 24,
   },
+  sectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  indicator: {
+    width: 4,
+    height: 20,
+    backgroundColor: '#CABDFF',
+    borderRadius: 2,
+    marginRight: 8,
+  },
   bottomSheetTitle: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: '600',
     color: '#000',
   },
   closeButton: {
     padding: 8,
+    // backgroundColor: '#EFEFEF',
+    borderRadius: 50,
   },
   datePickerButton: {
     flexDirection: 'row',
