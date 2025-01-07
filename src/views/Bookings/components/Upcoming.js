@@ -74,6 +74,9 @@ const styles = StyleSheet.create({
   darkSubText: {
     color: Colors.darkLightGray,
   },
+  darkText: {
+    color: Colors.pureWhite,
+  },
   viewServicesButton: {
     backgroundColor: Colors.primary,
     paddingHorizontal: 24,
