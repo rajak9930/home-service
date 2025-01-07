@@ -1,5 +1,6 @@
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
+
 import Colors from '../../constants/colors';
 import {useCustomTheme} from '../../theme/Theme';
 import Draft from '../Bookings/components/Draft';
@@ -31,17 +32,32 @@ const Bookings = () => {
         </Text>
       </View>
 
-      <View style={styles.tabsHeader}>
+      <View
+        style={[
+          styles.tabsHeader,
+          {
+            backgroundColor: isDarkMode ? Colors.navBg : Colors.pureWhite,
+          },
+        ]}>
         <View style={styles.tabContainer}>
           {tabs.map(tab => (
             <TouchableOpacity
               key={tab.id}
-              style={[styles.tab, activeTab === tab.id && styles.activeTab]}
+              style={[
+                styles.tab,
+                isDarkMode ? styles.darkTab : styles.lightTab,
+                activeTab === tab.id &&
+                  (isDarkMode ? styles.darkActiveTab : styles.lightActiveTab),
+              ]}
               onPress={() => setActiveTab(tab.id)}>
               <Text
                 style={[
                   styles.tabText,
-                  activeTab === tab.id && styles.activeTabText,
+                  isDarkMode ? styles.darkTabText : styles.lightTabText,
+                  activeTab === tab.id &&
+                    (isDarkMode
+                      ? styles.darkActiveTabText
+                      : styles.lightActiveTabText),
                 ]}>
                 {tab.label}
               </Text>
@@ -49,11 +65,14 @@ const Bookings = () => {
           ))}
         </View>
       </View>
-      {/* Header */}
-      <View style={styles.wrap}>
-        {/* Tabs */}
 
-        {/* Content */}
+      <View
+        style={[
+          styles.wrap,
+          {
+            backgroundColor: isDarkMode ? Colors.navBg : Colors.pureWhite,
+          },
+        ]}>
         <View style={styles.bodyWrap}>
           {activeTab === 'upcoming' ? (
             <Upcoming />
@@ -119,24 +138,44 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 8,
   },
+
   tab: {
     paddingHorizontal: 20,
     paddingVertical: 8,
     borderRadius: 8,
     marginRight: 8,
   },
-  activeTab: {
-    backgroundColor: '#ECE9FF',
+  lightTab: {
+    backgroundColor: 'transparent',
+  },
+  darkTab: {
+    backgroundColor: 'transparent',
+  },
+  lightActiveTab: {
+    backgroundColor: Colors.primary + '20',
+  },
+  darkActiveTab: {
+    backgroundColor: '#3B414D',
   },
   tabText: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#666',
   },
-  activeTabText: {
-    color: '#6C63FF',
+  lightTabText: {
+    color: Colors.lightGray,
+  },
+  darkTabText: {
+    color: Colors.darkLightGray,
+  },
+  lightActiveTabText: {
+    color: Colors.primary,
     fontWeight: '600',
   },
+  darkActiveTabText: {
+    color: Colors.pureWhite,
+    fontWeight: '600',
+  },
+
   indicator: {
     width: 4,
     height: 20,
