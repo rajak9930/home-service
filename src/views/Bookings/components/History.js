@@ -10,7 +10,7 @@ const History = () => {
   const isDarkMode = theme === 'dark';
 
   return (
-    <View style={[styles.container]}>
+    <View style={styles.container}>
       <View style={styles.emptyContainer}>
         <View style={styles.iconContainer}>
           <Icon name="time-outline" size={50} color={Colors.primary} />
