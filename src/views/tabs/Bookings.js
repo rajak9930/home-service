@@ -69,18 +69,12 @@ const Bookings = () => {
           {tabs.map(tab => (
             <TouchableOpacity
               key={tab.id}
-              style={[
-                styles.tab,
-                activeTab === tab.id && styles.activeTab,
-                isDarkMode && styles.darkTab,
-                activeTab === tab.id && isDarkMode && styles.darkActiveTab,
-              ]}
+              style={[styles.tab, activeTab === tab.id && styles.activeTab]}
               onPress={() => setActiveTab(tab.id)}>
               <Text
                 style={[
                   styles.tabText,
                   activeTab === tab.id && styles.activeTabText,
-                  isDarkMode && styles.darkTabText,
                 ]}>
                 {tab.label}
               </Text>
@@ -127,6 +121,29 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  tabContainer: {
+    flexDirection: 'row',
+    paddingHorizontal: 16,
+    marginBottom: 20,
+  },
+  tab: {
+    paddingHorizontal: 20,
+    paddingVertical: 8,
+    borderRadius: 8,
+    marginRight: 8,
+  },
+  activeTab: {
+    backgroundColor: '#ECE9FF', // Light purple background
+  },
+  tabText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#666',
+  },
+  activeTabText: {
+    color: '#6C63FF', // Purple text color
+    fontWeight: '600',
+  },
   indicator: {
     width: 4,
     height: 20,
@@ -142,38 +159,7 @@ const styles = StyleSheet.create({
   darkText: {
     color: Colors.pureWhite,
   },
-  tabContainer: {
-    flexDirection: 'row',
-    paddingHorizontal: 16,
-    marginBottom: 20,
-    backgroundColor: 'orange',
-  },
-  tab: {
-    paddingHorizontal: 20,
-    paddingVertical: 8,
-    borderRadius: 20,
-    marginRight: 8,
-    backgroundColor: '#F5F5F5',
-  },
-  darkTab: {
-    backgroundColor: '#272D37',
-  },
-  activeTab: {
-    backgroundColor: Colors.primary,
-  },
-  darkActiveTab: {
-    backgroundColor: Colors.primary,
-  },
-  tabText: {
-    color: '#666',
-    fontWeight: '500',
-  },
-  darkTabText: {
-    color: Colors.pureWhite,
-  },
-  activeTabText: {
-    color: Colors.pureWhite,
-  },
+
   emptyContainer: {
     flex: 1,
     alignItems: 'center',
