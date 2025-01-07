@@ -13,9 +13,10 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import IconTwo from 'react-native-vector-icons/MaterialCommunityIcons';
+import LinearGradient from 'react-native-linear-gradient';
+
 import {useCustomTheme} from '../../../theme/Theme';
 import Colors from '../../../constants/colors';
-import LinearGradient from 'react-native-linear-gradient';
 import NumberOfUnits from './NumberOfUnits';
 import {propertyTypes} from '../../../constants/data';
 import {thousandSeparator} from '../../../utils';
@@ -63,9 +64,7 @@ const ServiceDetails = () => {
     <SafeAreaView
       style={[
         styles.container,
-        {
-          backgroundColor: isDarkMode ? '#15162E' : Colors.primaryLight,
-        },
+        isDarkMode ? styles.darkContainer : styles.lightContainer,
       ]}>
       <View style={styles.contentContainer}>
         <ScrollView
@@ -81,13 +80,11 @@ const ServiceDetails = () => {
               colors={['transparent', 'rgba(0,0,0,0.7)']}
               style={[
                 styles.gradient,
-                {
-                  height: isDarkMode ? '100%' : '50%',
-                },
+                isDarkMode ? styles.darkGradient : styles.lightGradient,
               ]}
             />
             <TouchableOpacity
-              style={[styles.backButton]}
+              style={styles.backButton}
               onPress={() => navigation.goBack()}>
               <Icon name="arrow-back" size={24} color={Colors.primaryDark} />
             </TouchableOpacity>
@@ -103,18 +100,14 @@ const ServiceDetails = () => {
             <View
               style={[
                 styles.propertyTypeCard,
-                {
-                  backgroundColor: isDarkMode ? Colors.navBg : Colors.pureWhite,
-                },
+                isDarkMode ? styles.darkCard : styles.lightCard,
               ]}>
               <View style={styles.sectionHeader}>
                 <View style={styles.indicator} />
                 <Text
                   style={[
                     styles.sectionTitle,
-                    {
-                      color: isDarkMode ? Colors.pureWhite : '#333',
-                    },
+                    isDarkMode ? styles.darkText : styles.lightText,
                   ]}>
                   Type of Property
                 </Text>
@@ -123,23 +116,16 @@ const ServiceDetails = () => {
                 {propertyTypes.map(type => (
                   <TouchableOpacity
                     key={type.id}
-                    style={[styles.propertyItem]}
+                    style={styles.propertyItem}
                     onPress={() => setSelectedProperty(type.id)}>
                     <View
                       style={[
                         styles.iconContainer,
-                        {
-                          borderColor: isDarkMode
-                            ? '#535763'
-                            : Colors.darkLightGray,
-                          backgroundColor: isDarkMode
-                            ? '#272D37'
-                            : Colors.pureWhite,
-                        },
-                        selectedProperty === type.id && {
-                          backgroundColor: Colors.primary,
-                          borderWidth: 0,
-                        },
+                        isDarkMode
+                          ? styles.darkIconContainer
+                          : styles.lightIconContainer,
+                        selectedProperty === type.id &&
+                          styles.selectedIconContainer,
                       ]}>
                       <IconTwo
                         name={type.icon}
@@ -152,11 +138,9 @@ const ServiceDetails = () => {
                     <Text
                       style={[
                         styles.propertyText,
-                        {
-                          color: isDarkMode
-                            ? Colors.pureWhite
-                            : Colors.primaryDark,
-                        },
+                        isDarkMode
+                          ? styles.darkPropertyText
+                          : styles.lightPropertyText,
                       ]}>
                       {type.title}
                     </Text>
@@ -166,7 +150,6 @@ const ServiceDetails = () => {
             </View>
           </View>
 
-          {/* Bedrooms Counter */}
           <NumberOfUnits
             units={units}
             setUnits={setUnits}
@@ -180,35 +163,27 @@ const ServiceDetails = () => {
             placeholder="Write your description here..."
           />
 
-          {/* Add padding at the bottom only when keyboard is not shown */}
           {!isKeyboardVisible && <View style={styles.bottomPadding} />}
         </ScrollView>
 
-        {/* Bottom Section - Hidden when keyboard is visible */}
         {!isKeyboardVisible && (
           <Animated.View
             style={[
               styles.bottomSection,
-              {
-                backgroundColor: isDarkMode ? '#0F1621' : Colors.pureWhite,
-              },
+              isDarkMode ? styles.darkBottomSection : styles.lightBottomSection,
             ]}>
             <View style={styles.totalContainer}>
               <Text
                 style={[
                   styles.totalLabel,
-                  {
-                    color: isDarkMode ? Colors.darkLightGray : '#666',
-                  },
+                  isDarkMode ? styles.darkTotalLabel : styles.lightTotalLabel,
                 ]}>
                 Total:
               </Text>
               <Text
                 style={[
                   styles.totalAmount,
-                  {
-                    color: isDarkMode ? Colors.pureWhite : Colors.primaryDark,
-                  },
+                  isDarkMode ? styles.darkTotalAmount : styles.lightTotalAmount,
                 ]}>
                 USD {thousandSeparator(service.price * units)}
               </Text>
@@ -217,18 +192,14 @@ const ServiceDetails = () => {
               <TouchableOpacity
                 style={[
                   styles.draftButton,
-                  {
-                    backgroundColor: isDarkMode ? '#272D37' : Colors.pureWhite,
-                    borderColor: isDarkMode ? '#535763' : Colors.primary,
-                    borderWidth: isDarkMode ? 2 : 1,
-                  },
+                  isDarkMode ? styles.darkDraftButton : styles.lightDraftButton,
                 ]}>
                 <Text
                   style={[
                     styles.draftButtonText,
-                    {
-                      color: isDarkMode ? Colors.darkLightGray : Colors.primary,
-                    },
+                    isDarkMode
+                      ? styles.darkDraftButtonText
+                      : styles.lightDraftButtonText,
                   ]}>
                   Save Draft
                 </Text>
@@ -247,7 +218,12 @@ const ServiceDetails = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  lightContainer: {
     backgroundColor: Colors.primaryLight,
+  },
+  darkContainer: {
+    backgroundColor: '#15162E',
   },
   contentContainer: {
     flex: 1,
@@ -424,6 +400,76 @@ const styles = StyleSheet.create({
   bookButtonText: {
     color: Colors.pureWhite,
     fontWeight: '600',
+  },
+  lightGradient: {
+    height: '50%',
+  },
+  darkGradient: {
+    height: '100%',
+  },
+  darkCard: {
+    backgroundColor: Colors.navBg,
+  },
+  lightCard: {
+    backgroundColor: Colors.pureWhite,
+  },
+  darkText: {
+    color: Colors.pureWhite,
+  },
+  lightText: {
+    color: '#333',
+  },
+  darkIconContainer: {
+    borderColor: '#535763',
+    backgroundColor: '#272D37',
+  },
+  lightIconContainer: {
+    borderColor: Colors.darkLightGray,
+    backgroundColor: Colors.pureWhite,
+  },
+  selectedIconContainer: {
+    backgroundColor: Colors.primary,
+    borderWidth: 0,
+  },
+  darkPropertyText: {
+    color: Colors.pureWhite,
+  },
+  lightPropertyText: {
+    color: Colors.primaryDark,
+  },
+  darkBottomSection: {
+    backgroundColor: '#0F1621',
+  },
+  lightBottomSection: {
+    backgroundColor: Colors.pureWhite,
+  },
+  darkTotalLabel: {
+    color: Colors.darkLightGray,
+  },
+  lightTotalLabel: {
+    color: '#666',
+  },
+  darkTotalAmount: {
+    color: Colors.pureWhite,
+  },
+  lightTotalAmount: {
+    color: Colors.primaryDark,
+  },
+  darkDraftButton: {
+    backgroundColor: '#272D37',
+    borderColor: '#535763',
+    borderWidth: 2,
+  },
+  lightDraftButton: {
+    backgroundColor: Colors.pureWhite,
+    borderColor: Colors.primary,
+    borderWidth: 1,
+  },
+  darkDraftButtonText: {
+    color: Colors.darkLightGray,
+  },
+  lightDraftButtonText: {
+    color: Colors.primary,
   },
 });
 
