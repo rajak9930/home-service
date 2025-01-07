@@ -12,7 +12,13 @@ import {setTheme} from '../../../redux/theme/themeSlice';
 import Colors from '../../../constants/colors';
 import {DRAWER_ITEMS, ICONS} from '../../../constants/data';
 
-const IconRenderer = ({type, name, isDarkMode, color = '#fff', size = 21}) => {
+const IconRenderer = ({
+  type,
+  name,
+  isDarkMode,
+  color = Colors.pureWhite,
+  size = 21,
+}) => {
   const IconComponent = ICONS[type];
   return (
     <IconComponent
@@ -106,7 +112,7 @@ const CustomDrawer = props => {
             <IconRenderer
               type="Ionicons"
               name="sunny-outline"
-              color={!isDarkMode ? '#6C63FF' : '#fff'}
+              color={!isDarkMode ? '#6C63FF' : Colors.pureWhite}
               size={20}
             />
             <Text
@@ -126,7 +132,7 @@ const CustomDrawer = props => {
             <IconRenderer
               type="Ionicons"
               name="moon-outline"
-              color={isDarkMode ? '#fff' : '#fff'}
+              color={isDarkMode ? Colors.pureWhite : Colors.pureWhite}
               size={20}
             />
             <Text
@@ -134,7 +140,7 @@ const CustomDrawer = props => {
                 styles.themeOptionText,
                 // eslint-disable-next-line react-native/no-inline-styles
                 {
-                  color: isDarkMode ? '#fff' : '#fff',
+                  color: isDarkMode ? Colors.pureWhite : Colors.pureWhite,
                 },
               ]}>
               Dark
@@ -168,7 +174,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   profileName: {
-    color: '#fff',
+    color: Colors.pureWhite,
     fontSize: 18,
     fontWeight: '600',
   },
@@ -187,7 +193,7 @@ const styles = StyleSheet.create({
     marginVertical: -3,
   },
   drawerLabel: {
-    color: '#fff',
+    color: Colors.pureWhite,
     fontSize: 14,
     fontWeight: '400',
   },
@@ -202,7 +208,7 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   themeText: {
-    color: '#fff',
+    color: Colors.pureWhite,
     fontSize: 16,
   },
   themeSwitcher: {
@@ -222,10 +228,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   activeThemeOption: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.pureWhite,
   },
   themeOptionText: {
-    color: '#fff',
+    color: Colors.pureWhite,
     marginLeft: 8,
     fontSize: 14,
   },

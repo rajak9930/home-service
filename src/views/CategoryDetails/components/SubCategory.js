@@ -156,7 +156,13 @@ const SubCategory = () => {
                   <IconTwo
                     name="list"
                     size={20}
-                    color={!isGridView ? '#fff' : isDarkMode ? '#fff' : '#333'}
+                    color={
+                      !isGridView
+                        ? Colors.pureWhite
+                        : isDarkMode
+                        ? Colors.pureWhite
+                        : '#333'
+                    }
                   />
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -168,7 +174,13 @@ const SubCategory = () => {
                   <IconTwo
                     name="grid"
                     size={20}
-                    color={isGridView ? '#fff' : isDarkMode ? '#fff' : '#333'}
+                    color={
+                      isGridView
+                        ? Colors.pureWhite
+                        : isDarkMode
+                        ? Colors.pureWhite
+                        : '#333'
+                    }
                   />
                 </TouchableOpacity>
               </View>

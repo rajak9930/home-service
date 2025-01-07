@@ -37,6 +37,7 @@ const NumberOfUnits = ({units, setUnits, bedrooms, setBedrooms}) => {
                   {
                     borderColor: isDarkMode ? '#535763' : Colors.darkLightGray,
                     backgroundColor: isDarkMode ? '#272D37' : Colors.pureWhite,
+                    borderWidth: isDarkMode ? 2 : 0,
                   },
                 ]}
                 onPress={() => units > 0 && setUnits(units - 1)}>
@@ -94,6 +95,7 @@ const NumberOfUnits = ({units, setUnits, bedrooms, setBedrooms}) => {
                         backgroundColor: isDarkMode
                           ? '#272D37'
                           : Colors.pureWhite,
+                        borderWidth: isDarkMode ? 2 : 0,
                       },
                     ]}
                     onPress={() => bedrooms > 0 && setBedrooms(bedrooms - 1)}>
@@ -170,7 +172,7 @@ const styles = StyleSheet.create({
   counterButton: {
     width: 40,
     height: 40,
-    borderRadius: 8,
+    borderRadius: 12,
     backgroundColor: '#F5F5F5',
     alignItems: 'center',
     justifyContent: 'center',

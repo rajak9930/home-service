@@ -88,7 +88,7 @@ const RichTextEditor = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.pureWhite,
     borderRadius: 12,
     padding: 16,
     marginHorizontal: 16,
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   editorContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.pureWhite,
     borderRadius: 8,
     minHeight: 170,
   },

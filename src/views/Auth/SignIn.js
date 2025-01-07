@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
   googleButton: {
     width: '100%',
     marginTop: 20,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.pureWhite,
     paddingVertical: 12,
     borderRadius: 10,
     borderWidth: 1,

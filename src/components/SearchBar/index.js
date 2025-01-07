@@ -38,7 +38,7 @@ const SearchBar = ({placeholder, searchText, setSearchText}) => {
         onChangeText={text => setSearchText(text)}
       />
       <View style={styles.searchIconContainer}>
-        <Icon name="search" size={24} color="#fff" />
+        <Icon name="search" size={24} color={Colors.pureWhite} />
       </View>
     </View>
   );

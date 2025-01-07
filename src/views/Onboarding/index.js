@@ -113,7 +113,7 @@ const Onboarding = () => {
                 <TouchableOpacity
                   style={styles.nextButton}
                   onPress={handleNext}>
-                  <Icon name="right" size={20} color="#fff" />
+                  <Icon name="right" size={20} color={Colors.pureWhite} />
                 </TouchableOpacity>
               )}
             </View>
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   buttonText: {
-    color: '#fff',
+    color: Colors.pureWhite,
     fontSize: 16,
     fontWeight: '600',
   },
