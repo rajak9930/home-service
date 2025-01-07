@@ -37,6 +37,8 @@ const ServiceDetails = () => {
   const [bedrooms, setBedrooms] = useState(0);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(null);
 
   const handleContentChange = content => {
     console.log('Content changed:', content);
@@ -235,6 +237,10 @@ const ServiceDetails = () => {
           setIsBottomSheetVisible={setIsBottomSheetVisible}
           service={service}
           units={units}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+          selectedTime={selectedTime}
+          setSelectedTime={setSelectedTime}
         />
       )}
     </SafeAreaView>

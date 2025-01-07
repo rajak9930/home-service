@@ -5,48 +5,60 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 import Colors from '../../../constants/colors';
 import {useCustomTheme} from '../../../theme/Theme';
+import {formatDate, formatTime} from '../../../utils';
 
-const BottomSheet = ({setIsBottomSheetVisible, service, units}) => {
+const BottomSheet = ({
+  setIsBottomSheetVisible,
+  service,
+  units,
+  selectedDate,
+  setSelectedDate,
+  selectedTime,
+  setSelectedTime,
+}) => {
   const theme = useCustomTheme();
 
   const isDarkMode = theme === 'dark';
 
-  const [date, setDate] = useState(new Date());
-  const [time, setTime] = useState(new Date());
+  // const [selectedDate, setSelectedDate] = useState(null);
+  // const [selectedTime, setSelectedTime] = useState(null);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
 
-  // Format date for display
-  const formatDate = date => {
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  };
-
-  // Format time for display
-  const formatTime = time => {
-    return time.toLocaleTimeString('en-US', {
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  };
-
-  // Date picker handlers
-  const onDateChange = (event, selectedDate) => {
+  // Date picker handler
+  const onDateChange = (event, selected) => {
     setShowDatePicker(Platform.OS === 'ios');
-    if (selectedDate) {
-      setDate(selectedDate);
+    if (selected) {
+      setSelectedDate(selected);
     }
   };
 
-  // Time picker handlers
-  const onTimeChange = (event, selectedTime) => {
+  // Time picker handler
+  const onTimeChange = (event, selected) => {
     setShowTimePicker(Platform.OS === 'ios');
-    if (selectedTime) {
-      setTime(selectedTime);
+    if (selected) {
+      setSelectedTime(selected);
     }
+  };
+
+  // Get display text for date button
+  const getDateDisplayText = () => {
+    return selectedDate ? formatDate(selectedDate) : 'Select your Date';
+  };
+
+  const getEndTime = startTime => {
+    const endTime = new Date(startTime);
+    endTime.setHours(endTime.getHours() + 1);
+    return endTime;
+  };
+
+  const getTimeDisplayText = () => {
+    if (!selectedTime) {
+      return 'Select your Time';
+    }
+
+    const endTime = getEndTime(selectedTime);
+    return `${formatTime(selectedTime)} - ${formatTime(endTime)}`;
   };
 
   return (
@@ -56,6 +68,7 @@ const BottomSheet = ({setIsBottomSheetVisible, service, units}) => {
         isDarkMode ? styles.darkCard : styles.lightCard,
       ]}>
       <View style={styles.bottomSheet}>
+        {/* Header Section */}
         <View style={styles.bottomSheetHeader}>
           <View style={styles.sectionHeader}>
             <View style={styles.indicator} />
@@ -92,9 +105,7 @@ const BottomSheet = ({setIsBottomSheetVisible, service, units}) => {
           </View>
           <View>
             <Text style={styles.datePickerLabel}>DATE</Text>
-            <Text style={styles.datePickerValue}>
-              {date ? formatDate(date) : 'Select your Date'}
-            </Text>
+            <Text style={styles.datePickerValue}>{getDateDisplayText()}</Text>
           </View>
         </TouchableOpacity>
 
@@ -107,32 +118,28 @@ const BottomSheet = ({setIsBottomSheetVisible, service, units}) => {
           </View>
           <View>
             <Text style={styles.timePickerLabel}>TIME</Text>
-            <Text style={styles.timePickerValue}>
-              {time ? formatTime(time) : 'Select your Time'}
-            </Text>
+            <Text style={styles.timePickerValue}>{getTimeDisplayText()}</Text>
           </View>
         </TouchableOpacity>
 
-        {/* Date Picker */}
+        {/* Date Picker Modal */}
         {showDatePicker && (
           <DateTimePicker
-            value={date}
+            value={selectedDate || new Date()}
             mode="date"
             display={Platform.OS === 'ios' ? 'spinner' : 'default'}
             onChange={onDateChange}
             minimumDate={new Date()}
-            style={styles.datePicker}
           />
         )}
 
-        {/* Time Picker */}
+        {/* Time Picker Modal */}
         {showTimePicker && (
           <DateTimePicker
-            value={time}
+            value={selectedTime || new Date()}
             mode="time"
             display={Platform.OS === 'ios' ? 'spinner' : 'default'}
             onChange={onTimeChange}
-            style={styles.timePicker}
             minuteInterval={30}
           />
         )}
