@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 16,
     marginBottom: 20,
+    backgroundColor: 'orange',
   },
   tab: {
     paddingHorizontal: 20,
