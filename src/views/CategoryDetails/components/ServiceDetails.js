@@ -130,7 +130,18 @@ const ServiceDetails = () => {
                     <View
                       style={[
                         styles.iconContainer,
-                        selectedProperty === type.id && styles.selectedProperty,
+                        {
+                          borderColor: isDarkMode
+                            ? '#535763'
+                            : Colors.darkLightGray,
+                          backgroundColor: isDarkMode
+                            ? '#272D37'
+                            : Colors.pureWhite,
+                        },
+                        selectedProperty === type.id && {
+                          backgroundColor: Colors.primary,
+                          borderWidth: 0,
+                        },
                       ]}>
                       <IconTwo
                         name={type.icon}
