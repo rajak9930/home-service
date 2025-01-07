@@ -62,7 +62,13 @@ const ServiceDetails = () => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={[
+        styles.container,
+        {
+          backgroundColor: isDarkMode ? '#15162E' : Colors.primaryLight,
+        },
+      ]}>
       <View style={styles.contentContainer}>
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -75,7 +81,12 @@ const ServiceDetails = () => {
             <Image source={service.image} style={styles.headerImage} />
             <LinearGradient
               colors={['transparent', 'rgba(0,0,0,0.7)']}
-              style={styles.gradient}
+              style={[
+                styles.gradient,
+                {
+                  height: isDarkMode ? '100%' : '50%',
+                },
+              ]}
             />
             <TouchableOpacity
               style={[
@@ -102,10 +113,24 @@ const ServiceDetails = () => {
 
           {/* Property Type Section */}
           <View style={styles.propertyTypeContainer}>
-            <View style={styles.propertyTypeCard}>
+            <View
+              style={[
+                styles.propertyTypeCard,
+                {
+                  backgroundColor: isDarkMode ? Colors.navBg : Colors.pureWhite,
+                },
+              ]}>
               <View style={styles.sectionHeader}>
                 <View style={styles.indicator} />
-                <Text style={styles.sectionTitle}>Type of Property</Text>
+                <Text
+                  style={[
+                    styles.sectionTitle,
+                    {
+                      color: isDarkMode ? Colors.pureWhite : '#333',
+                    },
+                  ]}>
+                  Type of Property
+                </Text>
               </View>
               <View style={styles.propertyTypes}>
                 {propertyTypes.map(type => (
@@ -126,7 +151,17 @@ const ServiceDetails = () => {
                         }
                       />
                     </View>
-                    <Text style={[styles.propertyText]}>{type.title}</Text>
+                    <Text
+                      style={[
+                        styles.propertyText,
+                        {
+                          color: isDarkMode
+                            ? Colors.pureWhite
+                            : Colors.primaryDark,
+                        },
+                      ]}>
+                      {type.title}
+                    </Text>
                   </TouchableOpacity>
                 ))}
               </View>

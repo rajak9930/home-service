@@ -3,21 +3,48 @@ import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Colors from '../../../constants/colors';
+import {useCustomTheme} from '../../../theme/Theme';
 
 const NumberOfUnits = ({units, setUnits, bedrooms, setBedrooms}) => {
+  const theme = useCustomTheme();
+
+  const isDarkMode = theme === 'dark';
+
   return (
     <View>
       <View style={[styles.container, styles.firstContainer]}>
-        <View style={styles.cardWrapper}>
+        <View
+          style={[
+            styles.cardWrapper,
+            {
+              backgroundColor: isDarkMode ? Colors.navBg : Colors.pureWhite,
+            },
+          ]}>
           <View style={styles.card}>
-            <Text style={styles.counterLabel}>Number of Units</Text>
+            <Text
+              style={[
+                styles.counterLabel,
+                {
+                  color: isDarkMode ? Colors.pureWhite : '#333',
+                },
+              ]}>
+              Number of Units
+            </Text>
             <View style={styles.counterContainer}>
               <TouchableOpacity
                 style={styles.counterButton}
                 onPress={() => units > 0 && setUnits(units - 1)}>
                 <Icon name="remove" size={24} color="#666" />
               </TouchableOpacity>
-              <Text style={styles.counterValue}>{units}</Text>
+              <Text
+                style={[
+                  styles.counterValue,
+                  {
+                    color: isDarkMode ? Colors.pureWhite : '#333',
+                  },
+                ]}>
+                {units}
+              </Text>
               <TouchableOpacity
                 style={[styles.counterButton, styles.incrementButton]}
                 onPress={() => setUnits(units + 1)}>
@@ -25,29 +52,54 @@ const NumberOfUnits = ({units, setUnits, bedrooms, setBedrooms}) => {
               </TouchableOpacity>
             </View>
           </View>
-        </View>
-      </View>
-      {/* Bedrooms */}
-      <View style={styles.container}>
-        <View style={styles.cardWrapper}>
-          <View style={styles.card}>
-            <Text style={styles.counterLabel}>Number of Bedrooms</Text>
-            <View style={styles.counterContainer}>
-              <TouchableOpacity
-                style={styles.counterButton}
-                onPress={() => bedrooms > 0 && setBedrooms(bedrooms - 1)}>
-                <Icon name="remove" size={24} color="#666" />
-              </TouchableOpacity>
-              <Text style={styles.counterValue}>{bedrooms}</Text>
-              <TouchableOpacity
-                style={[styles.counterButton, styles.incrementButton]}
-                onPress={() => setBedrooms(bedrooms + 1)}>
-                <Icon name="add" size={24} color="#FFF" />
-              </TouchableOpacity>
+
+          <View>
+            <View>
+              <View
+                style={[
+                  styles.card,
+                  {
+                    marginBottom: 0,
+                    borderBottomWidth: 0,
+                    paddingBottom: 0,
+                  },
+                ]}>
+                <Text
+                  style={[
+                    styles.counterLabel,
+                    {
+                      color: isDarkMode ? Colors.pureWhite : '#333',
+                    },
+                  ]}>
+                  Number of Bedrooms
+                </Text>
+                <View style={styles.counterContainer}>
+                  <TouchableOpacity
+                    style={styles.counterButton}
+                    onPress={() => bedrooms > 0 && setBedrooms(bedrooms - 1)}>
+                    <Icon name="remove" size={24} color="#666" />
+                  </TouchableOpacity>
+                  <Text
+                    style={[
+                      styles.counterValue,
+                      {
+                        color: isDarkMode ? Colors.pureWhite : '#333',
+                      },
+                    ]}>
+                    {bedrooms}
+                  </Text>
+                  <TouchableOpacity
+                    style={[styles.counterButton, styles.incrementButton]}
+                    onPress={() => setBedrooms(bedrooms + 1)}>
+                    <Icon name="add" size={24} color="#FFF" />
+                  </TouchableOpacity>
+                </View>
+              </View>
             </View>
           </View>
         </View>
       </View>
+      {/* Bedrooms */}
     </View>
   );
 };
@@ -77,6 +129,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#F5F5F5',
+    paddingBottom: 16,
+    marginBottom: 16,
   },
   counterLabel: {
     fontSize: 15,
