@@ -33,7 +33,11 @@ const CustomDrawer = props => {
   const theme = useCustomTheme();
   const dispatch = useDispatch();
   const userDetails = useTypedSelector(selectedUser);
-  const {name, email, picture} = userDetails.user.user_metadata;
+  const {
+    name = '',
+    email = '',
+    picture = '',
+  } = userDetails?.user?.user_metadata || {};
 
   const isDarkMode = theme === 'dark';
 
