@@ -247,9 +247,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333',
   },
-  googleWrap: {
-    width: '100%',
-  },
   googleButton: {
     width: '100%',
     marginTop: 20,

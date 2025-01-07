@@ -122,10 +122,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 12,
   },
-  backButton: {
-    padding: 8,
-    marginRight: 8,
-  },
   searchContainer: {
     flex: 1,
   },

@@ -360,10 +360,6 @@ const styles = StyleSheet.create({
     borderColor: Colors.darkLightGray,
     borderWidth: 2,
   },
-  selectedProperty: {
-    backgroundColor: Colors.primary,
-    borderWidth: 0,
-  },
   propertyText: {
     marginTop: 4,
     fontSize: 14,
