@@ -117,7 +117,7 @@ const SubCategory = () => {
         ]}>
         <View style={styles.searchContainer}>
           <SearchBar
-            placeholder="Search Category"
+            placeholder="Search Sub Category"
             searchText={searchText}
             setSearchText={setSearchText}
           />

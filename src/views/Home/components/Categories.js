@@ -55,8 +55,20 @@ const Categories = () => {
 
       {/* See All Button */}
       <TouchableOpacity style={styles.categoryWrapper} onPress={handleSeeAll}>
-        <View style={[styles.iconContainer, styles.iconBG]}>
-          <Icon name="arrow-right" size={27} color="#48465B" />
+        <View
+          style={[
+            styles.iconContainer,
+            {
+              backgroundColor: isDarkMode ? '#3B414D' : '#F5F5F5',
+              borderColor: isDarkMode ? '#6F767E' : '#ECECEC',
+              borderWidth: isDarkMode ? 1 : 1,
+            },
+          ]}>
+          <Icon
+            name="arrow-right"
+            size={27}
+            color={isDarkMode ? '#6F767E' : '#48465B'}
+          />
         </View>
         <Text
           style={[
@@ -87,9 +99,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
-  },
-  iconBG: {
-    backgroundColor: '#F5F5F5',
   },
   categoryImage: {
     width: 59,
