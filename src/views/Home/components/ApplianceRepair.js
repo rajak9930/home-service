@@ -10,7 +10,7 @@ const ApplianceRepair = () => {
   const isDarkMode = theme === 'dark';
 
   return (
-    <View style={styles.container}>
+    <View>
       <View style={styles.titleContainer}>
         <View style={styles.indicator} />
         <Text
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    marginBottom: 16,
+    marginBottom: 8,
   },
   indicator: {
     width: 4,

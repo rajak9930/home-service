@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
   indicator: {
     width: 4,
     height: 20,
-    backgroundColor: Colors.primary,
+    backgroundColor: '#CABDFF',
     borderRadius: 2,
     marginRight: 8,
   },

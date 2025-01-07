@@ -95,6 +95,9 @@ const Home = () => {
             style={[
               styles.greetingContainer,
               isDarkMode ? styles.darkGreetingBg : styles.lightGreetingBg,
+              {
+                marginTop: 0,
+              },
             ]}>
             <ApplianceRepair />
           </View>
