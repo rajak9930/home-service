@@ -45,7 +45,7 @@ const RichTextEditor = ({
           initialContentHTML={initialContent}
           onChange={handleChange}
           placeholder={placeholder}
-          initialHeight={200}
+          initialHeight={170}
           useContainer={true}
           // eslint-disable-next-line react-native/no-inline-styles
           editorStyle={{
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 12,
     padding: 16,
-    margin: 16,
+    marginHorizontal: 16,
     ...Platform.select({
       ios: {
         shadowColor: '#000',
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   editorContainer: {
     backgroundColor: '#fff',
     borderRadius: 8,
-    minHeight: 200,
+    minHeight: 170,
   },
   toolbarWrapper: {
     borderBottomWidth: 1,
