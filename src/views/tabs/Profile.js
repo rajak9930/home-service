@@ -17,51 +17,45 @@ const Profile = () => {
         styles.container,
         isDarkMode ? styles.darkContainer : styles.lightContainer,
       ]}>
-      <View style={styles.wrap}>
-        {/* Header */}
-        <View style={styles.header}>
-          <View style={styles.titleContainer}>
-            <View style={styles.indicator} />
-            <Text style={[styles.title, isDarkMode && styles.darkText]}>
-              Profile
-            </Text>
-          </View>
-          <TouchableOpacity style={styles.editButton}>
-            <Text style={styles.editText}>Edit Profile</Text>
-            <Icon name="create-outline" size={20} color={Colors.primary} />
-          </TouchableOpacity>
-        </View>
+      <View style={styles.titleContainer}>
+        <View style={styles.indicator} />
+        <Text style={[styles.title, isDarkMode && styles.darkText]}>
+          Profile
+        </Text>
+      </View>
 
-        {/* Profile Info */}
-        <View style={styles.profileSection}>
-          <Image
-            source={{uri: userDetails?.user?.user_metadata?.picture}}
-            style={styles.profileImage}
-          />
-          <View style={styles.nameContainer}>
-            <Text style={[styles.name, isDarkMode && styles.darkText]}>
-              {userDetails?.user?.user_metadata?.full_name}
-            </Text>
-            <Text style={styles.username}>
-              @
-              {userDetails?.user?.user_metadata?.name
-                ?.toLowerCase()
-                .replace(/\s/g, '')}
-            </Text>
+      <View style={styles.tabsHeader}>
+        <View style={styles.tabContainer}>
+          <View style={styles.profileSection}>
+            <Image
+              source={{uri: userDetails?.user?.user_metadata?.picture}}
+              style={styles.profileImage}
+            />
+            <View>
+              <Text style={[styles.name, isDarkMode && styles.darkText]}>
+                {userDetails?.user?.user_metadata?.full_name}
+              </Text>
+              <Text style={styles.username}>
+                @
+                {userDetails?.user?.user_metadata?.name
+                  ?.toLowerCase()
+                  .replace(/\s/g, '')}
+              </Text>
+            </View>
           </View>
         </View>
+      </View>
+
+      <View style={styles.wrap}>
+        {/* Profile Info */}
 
         {/* Details Sections */}
         <View style={styles.detailsContainer}>
           <View style={styles.detailItem}>
             <Text style={styles.detailLabel}>Phone Number</Text>
             <View style={styles.detailValue}>
-              {/* <Image
-                source={require('../../assets/images/us-flag.png')}
-                style={styles.flagIcon}
-              /> */}
               <Text style={[styles.detailText, isDarkMode && styles.darkText]}>
-                +1 {userDetails?.user?.phone || '64 012 3456'}
+                +92 {userDetails?.user?.phone || '313 4866442'}
               </Text>
             </View>
           </View>
@@ -80,15 +74,6 @@ const Profile = () => {
             <View style={styles.detailValue}>
               <Text style={[styles.detailText, isDarkMode && styles.darkText]}>
                 Male
-              </Text>
-            </View>
-          </View>
-
-          <View style={styles.detailItem}>
-            <Text style={styles.detailLabel}>Date of Birth</Text>
-            <View style={styles.detailValue}>
-              <Text style={[styles.detailText, isDarkMode && styles.darkText]}>
-                Not Set
               </Text>
             </View>
           </View>
@@ -119,15 +104,30 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     marginVertical: 16,
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 24,
+  tabsHeader: {
+    marginHorizontal: 16,
+    borderRadius: 8,
+    backgroundColor: Colors.pureWhite,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
+  tabContainer: {
+    flexDirection: 'row',
+    padding: 16,
+  },
+
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingHorizontal: 16,
+    marginBottom: 16,
+    marginTop: 16,
   },
   indicator: {
     width: 4,
@@ -141,65 +141,57 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#333',
   },
-  editButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  editText: {
-    color: Colors.primary,
-    marginRight: 4,
-    fontSize: 16,
-  },
+
   profileSection: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 32,
   },
   profileImage: {
-    width: 80,
-    height: 80,
+    width: 75,
+    height: 75,
     borderRadius: 40,
     marginRight: 16,
   },
-  nameContainer: {
-    flex: 1,
-  },
+
   name: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#333',
-    marginBottom: 4,
   },
   username: {
     fontSize: 16,
     color: '#666',
   },
   detailsContainer: {
-    backgroundColor: '#F8F9FA',
-    borderRadius: 12,
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingTop: 16,
+    borderRadius: 8,
+    backgroundColor: Colors.pureWhite,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
   detailItem: {
     marginBottom: 24,
   },
   detailLabel: {
-    fontSize: 16,
-    color: '#666',
+    fontSize: 15,
+    color: Colors.black,
     marginBottom: 8,
   },
   detailValue: {
-    backgroundColor: '#fff',
+    backgroundColor: '#F5F5F5',
     padding: 16,
     borderRadius: 8,
     flexDirection: 'row',
     alignItems: 'center',
   },
-  flagIcon: {
-    width: 24,
-    height: 24,
-    marginRight: 8,
-    borderRadius: 12,
-  },
+
   detailText: {
     fontSize: 16,
     color: '#333',

@@ -31,20 +31,7 @@ const Bookings = () => {
         </Text>
       </View>
 
-      <View
-        style={{
-          marginHorizontal: 16,
-          borderRadius: 8,
-          backgroundColor: Colors.pureWhite,
-          elevation: 2,
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 2,
-          },
-          shadowOpacity: 0.1,
-          shadowRadius: 4,
-        }}>
+      <View style={styles.tabsHeader}>
         <View style={styles.tabContainer}>
           {tabs.map(tab => (
             <TouchableOpacity
@@ -90,6 +77,19 @@ const styles = StyleSheet.create({
   },
   darkContainer: {
     backgroundColor: Colors.primaryDark,
+  },
+  tabsHeader: {
+    marginHorizontal: 16,
+    borderRadius: 8,
+    backgroundColor: Colors.pureWhite,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
   wrap: {
     marginBottom: 16,
