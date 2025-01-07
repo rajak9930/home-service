@@ -1,6 +1,7 @@
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import React from 'react';
+import {View, Text, StyleSheet, TouchableOpacity, Platform} from 'react-native';
+import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 import Colors from '../../../constants/colors';
 import {useCustomTheme} from '../../../theme/Theme';
@@ -9,6 +10,44 @@ const BottomSheet = ({setIsBottomSheetVisible, service, units}) => {
   const theme = useCustomTheme();
 
   const isDarkMode = theme === 'dark';
+
+  const [date, setDate] = useState(new Date());
+  const [time, setTime] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showTimePicker, setShowTimePicker] = useState(false);
+
+  // Format date for display
+  const formatDate = date => {
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  };
+
+  // Format time for display
+  const formatTime = time => {
+    return time.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
+  // Date picker handlers
+  const onDateChange = (event, selectedDate) => {
+    setShowDatePicker(Platform.OS === 'ios');
+    if (selectedDate) {
+      setDate(selectedDate);
+    }
+  };
+
+  // Time picker handlers
+  const onTimeChange = (event, selectedTime) => {
+    setShowTimePicker(Platform.OS === 'ios');
+    if (selectedTime) {
+      setTime(selectedTime);
+    }
+  };
 
   return (
     <View
@@ -45,26 +84,58 @@ const BottomSheet = ({setIsBottomSheetVisible, service, units}) => {
         </View>
 
         {/* Date Selection */}
-        <TouchableOpacity style={styles.datePickerButton}>
+        <TouchableOpacity
+          style={styles.datePickerButton}
+          onPress={() => setShowDatePicker(true)}>
           <View style={styles.datePickerIcon}>
             <Icon name="calendar-outline" size={24} color="#666" />
           </View>
           <View>
             <Text style={styles.datePickerLabel}>DATE</Text>
-            <Text style={styles.datePickerValue}>Select your Date</Text>
+            <Text style={styles.datePickerValue}>
+              {date ? formatDate(date) : 'Select your Date'}
+            </Text>
           </View>
         </TouchableOpacity>
 
         {/* Time Selection */}
-        <TouchableOpacity style={styles.timePickerButton}>
+        <TouchableOpacity
+          style={styles.timePickerButton}
+          onPress={() => setShowTimePicker(true)}>
           <View style={styles.timePickerIcon}>
             <Icon name="time-outline" size={24} color="#666" />
           </View>
           <View>
             <Text style={styles.timePickerLabel}>TIME</Text>
-            <Text style={styles.timePickerValue}>Select your Time</Text>
+            <Text style={styles.timePickerValue}>
+              {time ? formatTime(time) : 'Select your Time'}
+            </Text>
           </View>
         </TouchableOpacity>
+
+        {/* Date Picker */}
+        {showDatePicker && (
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+            onChange={onDateChange}
+            minimumDate={new Date()}
+            style={styles.datePicker}
+          />
+        )}
+
+        {/* Time Picker */}
+        {showTimePicker && (
+          <DateTimePicker
+            value={time}
+            mode="time"
+            display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+            onChange={onTimeChange}
+            style={styles.timePicker}
+            minuteInterval={30}
+          />
+        )}
 
         {/* Bottom Actions */}
         <View style={styles.bottomSheetFooter}>
