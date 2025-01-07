@@ -32,9 +32,19 @@ const NumberOfUnits = ({units, setUnits, bedrooms, setBedrooms}) => {
             </Text>
             <View style={styles.counterContainer}>
               <TouchableOpacity
-                style={styles.counterButton}
+                style={[
+                  styles.counterButton,
+                  {
+                    borderColor: isDarkMode ? '#535763' : Colors.darkLightGray,
+                    backgroundColor: isDarkMode ? '#272D37' : Colors.pureWhite,
+                  },
+                ]}
                 onPress={() => units > 0 && setUnits(units - 1)}>
-                <Icon name="remove" size={24} color="#666" />
+                <Icon
+                  name="remove"
+                  size={24}
+                  color={isDarkMode ? Colors.pureWhite : '#333'}
+                />
               </TouchableOpacity>
               <Text
                 style={[
@@ -75,9 +85,23 @@ const NumberOfUnits = ({units, setUnits, bedrooms, setBedrooms}) => {
                 </Text>
                 <View style={styles.counterContainer}>
                   <TouchableOpacity
-                    style={styles.counterButton}
+                    style={[
+                      styles.counterButton,
+                      {
+                        borderColor: isDarkMode
+                          ? '#535763'
+                          : Colors.darkLightGray,
+                        backgroundColor: isDarkMode
+                          ? '#272D37'
+                          : Colors.pureWhite,
+                      },
+                    ]}
                     onPress={() => bedrooms > 0 && setBedrooms(bedrooms - 1)}>
-                    <Icon name="remove" size={24} color="#666" />
+                    <Icon
+                      name="remove"
+                      size={24}
+                      color={isDarkMode ? Colors.pureWhite : '#333'}
+                    />
                   </TouchableOpacity>
                   <Text
                     style={[

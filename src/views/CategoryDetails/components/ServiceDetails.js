@@ -5,8 +5,6 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-  KeyboardAvoidingView,
-  Platform,
   Animated,
   Keyboard,
 } from 'react-native';
