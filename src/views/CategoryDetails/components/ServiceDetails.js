@@ -39,9 +39,11 @@ const ServiceDetails = () => {
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
+  const [description, setDescription] = useState('');
 
   const handleContentChange = content => {
-    console.log('Content changed:', content);
+    // console.log('Content changed:', content);
+    setDescription(content);
   };
 
   useEffect(() => {
@@ -211,7 +213,17 @@ const ServiceDetails = () => {
                 style={[
                   styles.draftButton,
                   isDarkMode ? styles.darkDraftButton : styles.lightDraftButton,
-                ]}>
+                ]}
+                onPress={() => {
+                  const data = {
+                    service,
+                    selectedProperty,
+                    units,
+                    bedrooms,
+                    description,
+                  };
+                  console.log('Draft saved', data);
+                }}>
                 <Text
                   style={[
                     styles.draftButtonText,
