@@ -4,6 +4,9 @@ import images from '../../constants/images';
 import Colors from '../../constants/colors';
 import {useCustomTheme} from '../../theme/Theme';
 import {useNavigation} from '@react-navigation/native';
+import Draft from '../Bookings/components/Draft';
+import Upcoming from '../Bookings/components/Upcoming';
+import History from '../Bookings/components/History';
 
 const Bookings = () => {
   const navigation = useNavigation();
@@ -83,7 +86,15 @@ const Bookings = () => {
         </View>
 
         {/* Content */}
-        {renderContent()}
+        <View style={styles.bodyWrap}>
+          {activeTab === 'upcoming' ? (
+            <Upcoming />
+          ) : activeTab === 'history' ? (
+            <History />
+          ) : (
+            <Draft />
+          )}
+        </View>
       </View>
     </View>
   );
@@ -198,6 +209,9 @@ const styles = StyleSheet.create({
     color: Colors.pureWhite,
     fontSize: 16,
     fontWeight: '600',
+  },
+  bodyWrap: {
+    flex: 1,
   },
 });
 

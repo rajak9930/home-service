@@ -40,17 +40,13 @@ const Upcoming = () => {
     return null;
   };
 
-  return (
-    <View
-      style={{
-        flex: 1,
-      }}>
-      {renderContent()}
-    </View>
-  );
+  return <View style={styles.wrap}>{renderContent()}</View>;
 };
 
 const styles = StyleSheet.create({
+  wrap: {
+    flex: 1,
+  },
   emptyContainer: {
     flex: 1,
     alignItems: 'center',
