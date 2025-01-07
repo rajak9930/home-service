@@ -24,18 +24,27 @@ const Bookings = () => {
         styles.container,
         isDarkMode ? styles.darkContainer : styles.lightContainer,
       ]}>
-      {/* Header */}
-      <View style={styles.wrap}>
-        <View style={styles.header}>
-          <View style={styles.titleContainer}>
-            <View style={styles.indicator} />
-            <Text style={[styles.title, isDarkMode && styles.darkText]}>
-              Bookings
-            </Text>
-          </View>
-        </View>
+      <View style={styles.titleContainer}>
+        <View style={styles.indicator} />
+        <Text style={[styles.title, isDarkMode && styles.darkText]}>
+          Bookings
+        </Text>
+      </View>
 
-        {/* Tabs */}
+      <View
+        style={{
+          marginHorizontal: 16,
+          borderRadius: 8,
+          backgroundColor: Colors.pureWhite,
+          elevation: 2,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.1,
+          shadowRadius: 4,
+        }}>
         <View style={styles.tabContainer}>
           {tabs.map(tab => (
             <TouchableOpacity
@@ -52,6 +61,10 @@ const Bookings = () => {
             </TouchableOpacity>
           ))}
         </View>
+      </View>
+      {/* Header */}
+      <View style={styles.wrap}>
+        {/* Tabs */}
 
         {/* Content */}
         <View style={styles.bodyWrap}>
@@ -82,7 +95,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 8,
     marginHorizontal: 16,
-    marginVertical: 16,
+    marginTop: 8,
     backgroundColor: Colors.pureWhite,
     elevation: 2,
     shadowColor: '#000',
@@ -93,17 +106,17 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
   },
-  header: {
-    padding: 16,
-  },
+
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingHorizontal: 16,
+    marginBottom: 16,
+    marginTop: 16,
   },
   tabContainer: {
     flexDirection: 'row',
-    paddingHorizontal: 16,
-    marginBottom: 20,
+    padding: 8,
   },
   tab: {
     paddingHorizontal: 20,
@@ -112,7 +125,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   activeTab: {
-    backgroundColor: '#ECE9FF', // Light purple background
+    backgroundColor: '#ECE9FF',
   },
   tabText: {
     fontSize: 16,
@@ -120,7 +133,7 @@ const styles = StyleSheet.create({
     color: '#666',
   },
   activeTabText: {
-    color: '#6C63FF', // Purple text color
+    color: '#6C63FF',
     fontWeight: '600',
   },
   indicator: {
