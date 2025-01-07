@@ -11,7 +11,6 @@ const RichTextEditor = ({
 }) => {
   const richText = useRef();
   const theme = useCustomTheme();
-
   const isDarkMode = theme === 'dark';
 
   const handleChange = text => {
@@ -24,18 +23,14 @@ const RichTextEditor = ({
     <View
       style={[
         styles.container,
-        {
-          backgroundColor: isDarkMode ? Colors.navBg : Colors.pureWhite,
-        },
+        isDarkMode ? styles.darkContainer : styles.lightContainer,
       ]}>
       <View style={styles.sectionHeader}>
         <View style={styles.indicator} />
         <Text
           style={[
             styles.sectionTitle,
-            {
-              color: isDarkMode ? Colors.pureWhite : '#333',
-            },
+            isDarkMode ? styles.darkText : styles.lightText,
           ]}>
           Description
         </Text>
@@ -44,23 +39,14 @@ const RichTextEditor = ({
       <View
         style={[
           styles.editorContainer,
-          {
-            backgroundColor: isDarkMode ? '#29303C' : Colors.pureWhite,
-          },
+          isDarkMode ? styles.darkEditorBg : styles.lightEditorBg,
         ]}>
         <View style={styles.toolbarWrapper}>
           <RichToolbar
             editor={richText}
             selectedIconTint="#6C63FF"
             iconTint="#666"
-            actions={[
-              'bold',
-              'italic',
-              'underline',
-              // 'unorderedList',
-              // 'orderedList',
-              'link',
-            ]}
+            actions={['bold', 'italic', 'underline', 'link']}
             style={styles.toolbarContent}
           />
         </View>
@@ -72,13 +58,9 @@ const RichTextEditor = ({
           placeholder={placeholder}
           initialHeight={170}
           useContainer={true}
-          // eslint-disable-next-line react-native/no-inline-styles
-          editorStyle={{
-            backgroundColor: isDarkMode ? '#29303C' : Colors.pureWhite,
-            contentCSSText: `font-size: 16px; color: ${
-              isDarkMode ? Colors.pureWhite : '#333'
-            }; padding: 12px 0 12px 12px;`,
-          }}
+          editorStyle={
+            isDarkMode ? styles.darkEditorStyle : styles.lightEditorStyle
+          }
           style={styles.editor}
         />
       </View>
@@ -88,7 +70,6 @@ const RichTextEditor = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.pureWhite,
     borderRadius: 12,
     padding: 16,
     marginHorizontal: 16,
@@ -107,6 +88,12 @@ const styles = StyleSheet.create({
       },
     }),
   },
+  lightContainer: {
+    backgroundColor: Colors.pureWhite,
+  },
+  darkContainer: {
+    backgroundColor: Colors.navBg,
+  },
   sectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -122,12 +109,22 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
     fontWeight: '600',
+  },
+  lightText: {
     color: '#333',
   },
+  darkText: {
+    color: Colors.pureWhite,
+  },
   editorContainer: {
-    backgroundColor: Colors.pureWhite,
     borderRadius: 8,
     minHeight: 170,
+  },
+  lightEditorBg: {
+    backgroundColor: Colors.pureWhite,
+  },
+  darkEditorBg: {
+    backgroundColor: '#29303C',
   },
   toolbarWrapper: {
     borderBottomWidth: 1,
@@ -139,10 +136,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-
   editor: {
     flex: 1,
     borderRadius: 8,
+  },
+  lightEditorStyle: {
+    backgroundColor: Colors.pureWhite,
+    contentCSSText: 'font-size: 16px; color: #333; padding: 12px 0 12px 12px;',
+  },
+  darkEditorStyle: {
+    backgroundColor: '#29303C',
+    contentCSSText: `font-size: 16px; color: ${Colors.pureWhite}; padding: 12px 0 12px 12px;`,
   },
 });
 
