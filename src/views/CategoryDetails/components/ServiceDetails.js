@@ -89,20 +89,9 @@ const ServiceDetails = () => {
               ]}
             />
             <TouchableOpacity
-              style={[
-                styles.backButton,
-                {
-                  backgroundColor: isDarkMode
-                    ? Colors.primaryDark
-                    : Colors.primaryLight,
-                },
-              ]}
+              style={[styles.backButton]}
               onPress={() => navigation.goBack()}>
-              <Icon
-                name="arrow-back"
-                size={24}
-                color={isDarkMode ? Colors.pureWhite : '#333'}
-              />
+              <Icon name="arrow-back" size={24} color={Colors.primaryDark} />
             </TouchableOpacity>
             <View style={styles.ratingContainer}>
               <Icon name="star" size={13} color="#FFF" />
@@ -242,9 +231,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 16,
     left: 16,
-    padding: 8,
-    borderRadius: 8,
-    backgroundColor: 'white',
     zIndex: 2,
   },
   ratingContainer: {
