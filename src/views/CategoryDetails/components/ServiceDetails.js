@@ -14,6 +14,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import IconTwo from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
+import {BlurView} from '@react-native-community/blur';
 
 import {useCustomTheme} from '../../../theme/Theme';
 import Colors from '../../../constants/colors';
@@ -21,6 +22,7 @@ import NumberOfUnits from './NumberOfUnits';
 import {propertyTypes} from '../../../constants/data';
 import {thousandSeparator} from '../../../utils';
 import RichTextEditor from './RichTextEditor';
+import BottomSheet from './BottomSheet';
 
 const ServiceDetails = () => {
   const route = useRoute();
@@ -34,6 +36,7 @@ const ServiceDetails = () => {
   const [units, setUnits] = useState(2);
   const [bedrooms, setBedrooms] = useState(0);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+  const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
 
   const handleContentChange = content => {
     console.log('Content changed:', content);
@@ -66,8 +69,20 @@ const ServiceDetails = () => {
         styles.container,
         isDarkMode ? styles.darkContainer : styles.lightContainer,
       ]}>
+      {/* Main Content with Blur */}
+
       <View style={styles.contentContainer}>
+        {isBottomSheetVisible && (
+          <BlurView
+            style={StyleSheet.absoluteFill}
+            blurType={isDarkMode ? 'dark' : 'light'}
+            blurAmount={3}
+            reducedTransparencyFallbackColor="white"
+          />
+        )}
+
         <ScrollView
+          style={{opacity: isBottomSheetVisible ? 0.7 : 1}}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={[
             styles.scrollContent,
@@ -171,6 +186,7 @@ const ServiceDetails = () => {
             style={[
               styles.bottomSection,
               isDarkMode ? styles.darkBottomSection : styles.lightBottomSection,
+              {opacity: isBottomSheetVisible ? 0.7 : 1},
             ]}>
             <View style={styles.totalContainer}>
               <Text
@@ -204,13 +220,23 @@ const ServiceDetails = () => {
                   Save Draft
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.bookButton}>
+              <TouchableOpacity
+                style={styles.bookButton}
+                onPress={() => setIsBottomSheetVisible(true)}>
                 <Text style={styles.bookButtonText}>Book Now</Text>
               </TouchableOpacity>
             </View>
           </Animated.View>
         )}
       </View>
+      {/* Bottom Sheet */}
+      {isBottomSheetVisible && (
+        <BottomSheet
+          setIsBottomSheetVisible={setIsBottomSheetVisible}
+          service={service}
+          units={units}
+        />
+      )}
     </SafeAreaView>
   );
 };
