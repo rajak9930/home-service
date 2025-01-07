@@ -7,7 +7,6 @@ import {useCustomTheme} from '../../../theme/Theme';
 
 const NumberOfUnits = ({units, setUnits, bedrooms, setBedrooms}) => {
   const theme = useCustomTheme();
-
   const isDarkMode = theme === 'dark';
 
   return (
@@ -16,17 +15,13 @@ const NumberOfUnits = ({units, setUnits, bedrooms, setBedrooms}) => {
         <View
           style={[
             styles.cardWrapper,
-            {
-              backgroundColor: isDarkMode ? Colors.navBg : Colors.pureWhite,
-            },
+            isDarkMode ? styles.darkCardWrapper : styles.lightCardWrapper,
           ]}>
           <View style={styles.card}>
             <Text
               style={[
                 styles.counterLabel,
-                {
-                  color: isDarkMode ? Colors.pureWhite : '#333',
-                },
+                isDarkMode ? styles.darkText : styles.lightText,
               ]}>
               Number of Units
             </Text>
@@ -34,11 +29,9 @@ const NumberOfUnits = ({units, setUnits, bedrooms, setBedrooms}) => {
               <TouchableOpacity
                 style={[
                   styles.counterButton,
-                  {
-                    borderColor: isDarkMode ? '#535763' : Colors.darkLightGray,
-                    backgroundColor: isDarkMode ? '#272D37' : Colors.pureWhite,
-                    borderWidth: isDarkMode ? 2 : 0,
-                  },
+                  isDarkMode
+                    ? styles.darkCounterButton
+                    : styles.lightCounterButton,
                 ]}
                 onPress={() => units > 0 && setUnits(units - 1)}>
                 <Icon
@@ -50,9 +43,7 @@ const NumberOfUnits = ({units, setUnits, bedrooms, setBedrooms}) => {
               <Text
                 style={[
                   styles.counterValue,
-                  {
-                    color: isDarkMode ? Colors.pureWhite : '#333',
-                  },
+                  isDarkMode ? styles.darkText : styles.lightText,
                 ]}>
                 {units}
               </Text>
@@ -65,67 +56,46 @@ const NumberOfUnits = ({units, setUnits, bedrooms, setBedrooms}) => {
           </View>
 
           <View>
-            <View>
-              <View
+            <View style={styles.noPaddingCard}>
+              <Text
                 style={[
-                  styles.card,
-                  {
-                    marginBottom: 0,
-                    borderBottomWidth: 0,
-                    paddingBottom: 0,
-                  },
+                  styles.counterLabel,
+                  isDarkMode ? styles.darkText : styles.lightText,
                 ]}>
+                Number of Bedrooms
+              </Text>
+              <View style={styles.counterContainer}>
+                <TouchableOpacity
+                  style={[
+                    styles.counterButton,
+                    isDarkMode
+                      ? styles.darkCounterButton
+                      : styles.lightCounterButton,
+                  ]}
+                  onPress={() => bedrooms > 0 && setBedrooms(bedrooms - 1)}>
+                  <Icon
+                    name="remove"
+                    size={24}
+                    color={isDarkMode ? Colors.pureWhite : '#333'}
+                  />
+                </TouchableOpacity>
                 <Text
                   style={[
-                    styles.counterLabel,
-                    {
-                      color: isDarkMode ? Colors.pureWhite : '#333',
-                    },
+                    styles.counterValue,
+                    isDarkMode ? styles.darkText : styles.lightText,
                   ]}>
-                  Number of Bedrooms
+                  {bedrooms}
                 </Text>
-                <View style={styles.counterContainer}>
-                  <TouchableOpacity
-                    style={[
-                      styles.counterButton,
-                      {
-                        borderColor: isDarkMode
-                          ? '#535763'
-                          : Colors.darkLightGray,
-                        backgroundColor: isDarkMode
-                          ? '#272D37'
-                          : Colors.pureWhite,
-                        borderWidth: isDarkMode ? 2 : 0,
-                      },
-                    ]}
-                    onPress={() => bedrooms > 0 && setBedrooms(bedrooms - 1)}>
-                    <Icon
-                      name="remove"
-                      size={24}
-                      color={isDarkMode ? Colors.pureWhite : '#333'}
-                    />
-                  </TouchableOpacity>
-                  <Text
-                    style={[
-                      styles.counterValue,
-                      {
-                        color: isDarkMode ? Colors.pureWhite : '#333',
-                      },
-                    ]}>
-                    {bedrooms}
-                  </Text>
-                  <TouchableOpacity
-                    style={[styles.counterButton, styles.incrementButton]}
-                    onPress={() => setBedrooms(bedrooms + 1)}>
-                    <Icon name="add" size={24} color="#FFF" />
-                  </TouchableOpacity>
-                </View>
+                <TouchableOpacity
+                  style={[styles.counterButton, styles.incrementButton]}
+                  onPress={() => setBedrooms(bedrooms + 1)}>
+                  <Icon name="add" size={24} color="#FFF" />
+                </TouchableOpacity>
               </View>
             </View>
           </View>
         </View>
       </View>
-      {/* Bedrooms */}
     </View>
   );
 };
@@ -139,7 +109,6 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   cardWrapper: {
-    backgroundColor: Colors.pureWhite,
     borderRadius: 8,
     padding: 16,
     elevation: 2,
@@ -151,6 +120,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
   },
+  lightCardWrapper: {
+    backgroundColor: Colors.pureWhite,
+  },
+  darkCardWrapper: {
+    backgroundColor: Colors.navBg,
+  },
   card: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -160,9 +135,23 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     marginBottom: 16,
   },
+  noPaddingCard: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 0,
+    borderBottomWidth: 0,
+    paddingBottom: 0,
+  },
   counterLabel: {
     fontSize: 15,
     fontWeight: '600',
+  },
+  lightText: {
+    color: '#333',
+  },
+  darkText: {
+    color: Colors.pureWhite,
   },
   counterContainer: {
     flexDirection: 'row',
@@ -173,9 +162,17 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 12,
-    backgroundColor: '#F5F5F5',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  lightCounterButton: {
+    backgroundColor: Colors.pureWhite,
+    borderWidth: 0,
+  },
+  darkCounterButton: {
+    backgroundColor: '#272D37',
+    borderColor: '#535763',
+    borderWidth: 2,
   },
   incrementButton: {
     backgroundColor: '#6C63FF',
