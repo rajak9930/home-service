@@ -167,7 +167,8 @@ const styles = StyleSheet.create({
   },
   lightCounterButton: {
     backgroundColor: Colors.pureWhite,
-    borderWidth: 0,
+    borderWidth: 1,
+    borderColor: '#E5E5E5',
   },
   darkCounterButton: {
     backgroundColor: '#272D37',
