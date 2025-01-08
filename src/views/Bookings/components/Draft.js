@@ -46,16 +46,18 @@ const Draft = () => {
           <View style={styles.iconContainer}>
             <Icon
               name="document-text-outline"
-              size={60}
-              color={isDarkMode ? Colors.primary : '#8B95A5'}
+              size={50}
+              color={Colors.primary}
             />
           </View>
           <Text style={[styles.noDraftText, isDarkMode && styles.darkText]}>
             No Draft Services
           </Text>
           <Text style={[styles.subText, isDarkMode && styles.darkSubText]}>
-            You haven’t saved any drafts yet. Save a service booking to manage
-            it later.
+            You don't have any saved drafts yet.
+          </Text>
+          <Text style={[styles.subText, isDarkMode && styles.darkSubText]}>
+            Save a service booking as draft to see it here.
           </Text>
         </View>
       </View>
@@ -138,26 +140,27 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   iconContainer: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: '#F3F4F6',
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: '#ECE9FF',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
   },
   noDraftText: {
-    fontSize: 22,
-    fontWeight: '600',
+    fontSize: 20,
+    fontWeight: 'bold',
     color: Colors.black,
-    marginBottom: 10,
+    marginBottom: 8,
   },
   subText: {
     fontSize: 14,
-    color: '#7D8597',
+    color: Colors.lightGray,
     textAlign: 'center',
-    lineHeight: 22,
+    lineHeight: 24,
   },
+
   draftCard: {
     flexDirection: 'row',
     borderRadius: 12,
