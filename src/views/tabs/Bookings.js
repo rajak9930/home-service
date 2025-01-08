@@ -69,9 +69,9 @@ const Bookings = () => {
       <View
         style={[
           styles.wrap,
-          {
-            backgroundColor: isDarkMode ? Colors.navBg : Colors.pureWhite,
-          },
+          // {
+          //   backgroundColor: isDarkMode ? Colors.navBg : Colors.pureWhite,
+          // },
         ]}>
         <View style={styles.bodyWrap}>
           {activeTab === 'upcoming' ? (
@@ -113,18 +113,6 @@ const styles = StyleSheet.create({
   wrap: {
     marginBottom: 16,
     flex: 1,
-    borderRadius: 8,
-    marginHorizontal: 16,
-    marginTop: 8,
-    backgroundColor: Colors.pureWhite,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
   },
 
   titleContainer: {

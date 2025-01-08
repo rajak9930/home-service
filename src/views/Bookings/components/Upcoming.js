@@ -1,4 +1,11 @@
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import IconOne from 'react-native-vector-icons/Ionicons';
@@ -40,10 +47,11 @@ const Upcoming = () => {
   }
 
   return (
-    <View style={[styles.wrap, isDarkMode && styles.darkWrap]}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      style={[styles.wrap, isDarkMode && styles.darkWrap]}>
       {futureBookings.map((booking, index) => {
         const referenceCode = `${new Date().getTime()}`;
-
         return (
           <View
             key={index}
@@ -117,7 +125,7 @@ const Upcoming = () => {
           </View>
         );
       })}
-    </View>
+    </ScrollView>
   );
 };
 
@@ -278,7 +286,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
     padding: 9,
     borderRadius: 12,
-    marginTop: 8,
   },
   callButtonText: {
     color: Colors.pureWhite,
