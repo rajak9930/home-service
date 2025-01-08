@@ -6,6 +6,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import Colors from '../../../constants/colors';
 import {useCustomTheme} from '../../../theme/Theme';
 import {formatDate, formatTime} from '../../../utils';
+import Toast from 'react-native-toast-message';
 
 const BottomSheet = ({
   setIsBottomSheetVisible,
@@ -174,6 +175,11 @@ const BottomSheet = ({
             onPress={() => {
               if (selectedDate && selectedTime) {
                 serviceBooked();
+              } else {
+                Toast.show({
+                  type: 'error',
+                  text1: 'Please select Date & Time',
+                });
               }
             }}>
             <Text style={styles.continueButtonText}>Continue</Text>
