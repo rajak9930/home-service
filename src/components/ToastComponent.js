@@ -1,48 +1,39 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import Toast from 'react-native-toast-message';
-import Icon from 'react-native-vector-icons/Ionicons';
-import IconTwo from 'react-native-vector-icons/AntDesign';
-import IconThree from 'react-native-vector-icons/Octicons';
 
 import Colors from '../constants/colors';
-import {useCustomTheme} from '../theme/Theme';
+import images from '../constants/images';
 
-const SuccessToast = ({text1}) => (
-  <View style={[styles.toast, styles.infoToast]}>
-    <View style={styles.iconContainer}>
-      <IconThree name="issue-closed" size={24} color="#46d061" />
+const ToastBase = ({style, subtitle}) => (
+  <View style={[styles.toast, style]}>
+    <View
+      style={[styles.leftBorder, {backgroundColor: style.leftBorderColor}]}
+    />
+    <View style={styles.content}>
+      <Image source={images.Branding} style={styles.branding} />
+      <Text style={styles.subtitle}>{subtitle}</Text>
     </View>
-    <Text style={styles.toastText}>{text1}</Text>
   </View>
 );
 
-const WarningToast = ({text1}) => (
-  <View style={[styles.toast, styles.warningToast]}>
-    <View style={styles.iconContainer}>
-      <IconTwo name="exclamationcircleo" size={20} color="#c8741c" />
-    </View>
-    <Text style={styles.toastText}>{text1}</Text>
-  </View>
+const SuccessToast = ({text1}) => (
+  <ToastBase style={styles.successToast} title="Success" subtitle={text1} />
 );
 
 const ErrorToast = ({text1}) => (
-  <View style={[styles.toast, styles.errorToast]}>
-    <View style={styles.iconContainer}>
-      <Icon name="warning-outline" size={24} color="#e72324" />
-    </View>
-    <Text style={styles.toastText}>{text1}</Text>
-  </View>
+  <ToastBase style={styles.infoToast} title="Error" subtitle={text1} />
+);
+
+const WarningToast = ({text1}) => (
+  <ToastBase style={styles.warningToast} title="Warning" subtitle={text1} />
 );
 
 const ToastComponent = () => {
-  const theme = useCustomTheme();
-  const isDarkMode = theme === 'dark';
-
   const toastConfig = {
     success: SuccessToast,
-    warning: WarningToast,
     error: ErrorToast,
+    warning: WarningToast,
   };
 
   return <Toast config={toastConfig} visibilityTime={2500} />;
@@ -51,34 +42,48 @@ const ToastComponent = () => {
 const styles = StyleSheet.create({
   toast: {
     flexDirection: 'row',
-    alignItems: 'center',
     margin: 16,
-    borderRadius: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
+    borderRadius: 4,
+    backgroundColor: Colors.pureWhite,
     shadowColor: Colors.black,
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
-    backgroundColor: 'red',
+    overflow: 'hidden',
+  },
+  branding: {
+    width: 25,
+    height: 25,
+    marginRight: 12,
+    resizeMode: 'contain',
+  },
+  leftBorder: {
+    width: 5,
+    borderTopLeftRadius: 4,
+    borderBottomLeftRadius: 4,
+  },
+  content: {
+    flex: 1,
+    padding: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  subtitle: {
+    fontSize: 14,
+    color: Colors.black,
+  },
+  successToast: {
+    backgroundColor: '#F5F5F5',
+    leftBorderColor: '#4CAF50',
   },
   infoToast: {
-    backgroundColor: '#f0f9f4',
+    backgroundColor: '#F5F5F5',
+    leftBorderColor: '#e72324',
   },
   warningToast: {
-    backgroundColor: '#feeedb',
-  },
-  errorToast: {
-    backgroundColor: '#fce5e6',
-  },
-  iconContainer: {
-    marginRight: 12,
-  },
-  toastText: {
-    fontSize: 15,
-    color: Colors.black,
-    flex: 1,
+    backgroundColor: '#F5F5F5',
+    leftBorderColor: '#FFC107',
   },
 });
 
