@@ -186,10 +186,11 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   card: {
-    margin: 16,
+    marginHorizontal: 16,
+    marginTop: 12,
     padding: 16,
     backgroundColor: Colors.pureWhite,
-    borderRadius: 12,
+    borderRadius: 8,
     elevation: 2,
   },
   darkCard: {

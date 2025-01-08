@@ -130,8 +130,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
   },
   scrollContent: {
-    padding: 12,
-    // paddingBottom: 20,
+    paddingHorizontal: 16,
   },
   emptyContainer: {
     flex: 1,
@@ -163,8 +162,7 @@ const styles = StyleSheet.create({
 
   draftCard: {
     flexDirection: 'row',
-    borderRadius: 12,
-    marginBottom: 16,
+    borderRadius: 8,
     backgroundColor: Colors.white,
     elevation: 4,
     shadowColor: Colors.black,
@@ -172,6 +170,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 6,
     overflow: 'hidden',
+    marginTop: 16,
   },
   serviceImage: {
     width: 120,
