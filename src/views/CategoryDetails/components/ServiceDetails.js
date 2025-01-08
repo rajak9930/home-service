@@ -62,13 +62,18 @@ const ServiceDetails = () => {
       selectedDate,
       selectedTime,
     };
-    console.log('Service booked', data);
     dispatch(setBookedService(data));
     AsyncStorage.setItem('bookedService', JSON.stringify(data));
 
     setTimeout(() => {
-      navigation.navigate('Bookings');
+      navigation.navigate('Main', {
+        screen: 'TabNavigator',
+        params: {
+          screen: 'Bookings',
+        },
+      });
     }, 1000);
+    setIsBottomSheetVisible(false);
   };
 
   const handleContentChange = content => {

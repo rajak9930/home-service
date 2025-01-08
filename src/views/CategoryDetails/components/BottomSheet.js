@@ -174,7 +174,6 @@ const BottomSheet = ({
             onPress={() => {
               if (selectedDate && selectedTime) {
                 serviceBooked();
-                setIsBottomSheetVisible(false);
               }
             }}>
             <Text style={styles.continueButtonText}>Continue</Text>

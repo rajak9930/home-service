@@ -4,10 +4,16 @@ import Colors from '../../../constants/colors';
 import images from '../../../constants/images';
 import {useNavigation} from '@react-navigation/native';
 import {useCustomTheme} from '../../../theme/Theme';
+import useTypedSelector from '../../../hooks/useTypedSelector';
+import {selectedBookedService} from '../../../redux/bookedService/bookedServiceSlice';
 
 const Upcoming = () => {
   const navigation = useNavigation();
   const theme = useCustomTheme();
+
+  const futureBookings = useTypedSelector(selectedBookedService);
+
+  console.log('futureBookings', futureBookings);
   const isDarkMode = theme === 'dark';
 
   const [bookings, setBookings] = useState([]); // Empty array for now
