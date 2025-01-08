@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderBottomColor: '#EFEFEF',
     borderBottomWidth: 1,
-    paddingBottom: 12,
+    paddingBottom: 16,
   },
   serviceIcon: {
     width: 43,
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginVertical: 16,
+    marginVertical: 14,
   },
   row: {
     flexDirection: 'row',

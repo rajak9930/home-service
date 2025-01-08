@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
     right: -4,
   },
   darkCard: {
-    backgroundColor: '#1F1F1F',
+    backgroundColor: Colors.navBg,
   },
   darkText: {
     color: Colors.white,
