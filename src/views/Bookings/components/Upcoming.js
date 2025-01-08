@@ -62,7 +62,6 @@ const Upcoming = () => {
               </View>
             </View>
 
-            {/* Status Section */}
             <View style={styles.rowStatus}>
               <Text style={styles.label}>Status</Text>
               <View style={styles.statusBadge}>
@@ -70,7 +69,6 @@ const Upcoming = () => {
               </View>
             </View>
 
-            {/* Schedule Section */}
             <View style={styles.row}>
               <View style={styles.iconWrapper}>
                 <IconOne
@@ -94,26 +92,32 @@ const Upcoming = () => {
               </View>
             </View>
 
-            {/* Provider Section */}
-            <View style={styles.row}>
-              <View style={styles.serviceIcon}>
-                <Text style={styles.serviceIconText}>W</Text>
-              </View>
+            <View style={styles.rowLast}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                <View style={styles.serviceIcon}>
+                  <Text style={styles.serviceIconText}>W</Text>
+                </View>
 
-              <View>
-                <Text
-                  style={[styles.providerName, isDarkMode && styles.darkText]}>
-                  Westinghouse
-                </Text>
-                <Text style={styles.schedule}>Service provider</Text>
+                <View>
+                  <Text
+                    style={[
+                      styles.providerName,
+                      isDarkMode && styles.darkText,
+                    ]}>
+                    Westinghouse
+                  </Text>
+                  <Text style={styles.schedule}>Service provider</Text>
+                </View>
               </View>
+              <TouchableOpacity style={styles.callButton}>
+                <IconOne name="call" size={19} color={Colors.pureWhite} />
+                <Text style={styles.callButtonText}>Call</Text>
+              </TouchableOpacity>
             </View>
-
-            {/* Call Button */}
-            <TouchableOpacity style={styles.callButton}>
-              <IconOne name="call" size={24} color={Colors.pureWhite} />
-              <Text style={styles.callButtonText}>Call</Text>
-            </TouchableOpacity>
           </View>
         );
       })}
@@ -189,14 +193,13 @@ const styles = StyleSheet.create({
   },
   headerSection: {
     flexDirection: 'row',
-    // marginBottom: 24,
     borderBottomColor: '#EFEFEF',
     borderBottomWidth: 1,
     paddingBottom: 12,
   },
   serviceIcon: {
-    width: 48,
-    height: 48,
+    width: 43,
+    height: 43,
     borderRadius: 24,
     backgroundColor: '#FFE5D9',
     justifyContent: 'center',
@@ -232,6 +235,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 16,
   },
+  rowLast: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   statusBadge: {
     backgroundColor: '#E8F5E9',
     paddingHorizontal: 8,
@@ -259,26 +267,19 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.black,
   },
-  providerIcon: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-  },
+
   providerName: {
     fontSize: 16,
     fontWeight: '500',
     color: Colors.black,
   },
-  providerLabel: {
-    color: Colors.lightGray,
-    fontSize: 14,
-  },
+
   callButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: Colors.primary,
-    padding: 12,
+    padding: 9,
     borderRadius: 8,
     marginTop: 8,
   },
