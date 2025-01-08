@@ -42,8 +42,6 @@ const ServiceDetails = () => {
   const {service} = route.params;
   const draftService = useTypedSelector(selectedDraftService);
 
-  console.log('Draft Service:', draftService);
-
   const [selectedProperty, setSelectedProperty] = useState(2);
   const [units, setUnits] = useState(2);
   const [bedrooms, setBedrooms] = useState(0);
@@ -93,7 +91,7 @@ const ServiceDetails = () => {
     AsyncStorage.setItem('draftService', JSON.stringify(newData));
 
     Toast.show({
-      type: isExisting ? 'warning' : 'success',
+      type: isExisting ? 'success' : 'success',
       text1: isExisting
         ? 'Service removed from drafts'
         : 'Service saved to drafts',
