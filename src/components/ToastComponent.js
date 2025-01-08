@@ -4,38 +4,45 @@ import Toast from 'react-native-toast-message';
 import Icon from 'react-native-vector-icons/Ionicons';
 import IconTwo from 'react-native-vector-icons/AntDesign';
 import IconThree from 'react-native-vector-icons/Octicons';
+
 import Colors from '../constants/colors';
 import {useCustomTheme} from '../theme/Theme';
+
+const SuccessToast = ({text1}) => (
+  <View style={[styles.toast, styles.infoToast]}>
+    <View style={styles.iconContainer}>
+      <IconThree name="issue-closed" size={24} color="#46d061" />
+    </View>
+    <Text style={styles.toastText}>{text1}</Text>
+  </View>
+);
+
+const WarningToast = ({text1}) => (
+  <View style={[styles.toast, styles.warningToast]}>
+    <View style={styles.iconContainer}>
+      <IconTwo name="exclamationcircleo" size={20} color="#c8741c" />
+    </View>
+    <Text style={styles.toastText}>{text1}</Text>
+  </View>
+);
+
+const ErrorToast = ({text1}) => (
+  <View style={[styles.toast, styles.errorToast]}>
+    <View style={styles.iconContainer}>
+      <Icon name="warning-outline" size={24} color="#e72324" />
+    </View>
+    <Text style={styles.toastText}>{text1}</Text>
+  </View>
+);
 
 const ToastComponent = () => {
   const theme = useCustomTheme();
   const isDarkMode = theme === 'dark';
 
   const toastConfig = {
-    success: ({text1}) => (
-      <View style={[styles.toast, styles.infoToast]}>
-        <View style={styles.iconContainer}>
-          <IconThree name="issue-closed" size={24} color="#46d061" />
-        </View>
-        <Text style={styles.toastText}>{text1}</Text>
-      </View>
-    ),
-    warning: ({text1}) => (
-      <View style={[styles.toast, styles.warningToast]}>
-        <View style={styles.iconContainer}>
-          <IconTwo name="exclamationcircleo" size={20} color="#c8741c" />
-        </View>
-        <Text style={styles.toastText}>{text1}</Text>
-      </View>
-    ),
-    error: ({text1}) => (
-      <View style={[styles.toast, styles.errorToast]}>
-        <View style={styles.iconContainer}>
-          <Icon name="warning-outline" size={24} color="#e72324" />
-        </View>
-        <Text style={styles.toastText}>{text1}</Text>
-      </View>
-    ),
+    success: SuccessToast,
+    warning: WarningToast,
+    error: ErrorToast,
   };
 
   return <Toast config={toastConfig} visibilityTime={2500} />;
