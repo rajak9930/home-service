@@ -8,6 +8,7 @@ import images from '../../../constants/images';
 import {useCustomTheme} from '../../../theme/Theme';
 import useTypedSelector from '../../../hooks/useTypedSelector';
 import {selectedBookedService} from '../../../redux/bookedService/bookedServiceSlice';
+import {formatDateEnd, formatTimeWithEnd} from '../../../utils';
 
 const Upcoming = () => {
   const navigation = useNavigation();
@@ -80,13 +81,8 @@ const Upcoming = () => {
               <View>
                 <Text
                   style={[styles.scheduleText, isDarkMode && styles.darkText]}>
-                  {new Date(booking.selectedDate).toLocaleString('en-US', {
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    hour12: true,
-                    month: 'short',
-                    day: 'numeric',
-                  })}
+                  {formatTimeWithEnd(booking.selectedTime)},{' '}
+                  {formatDateEnd(booking.selectedDate)}
                 </Text>
                 <Text style={styles.schedule}>Schedule</Text>
               </View>
@@ -264,8 +260,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   scheduleText: {
-    fontSize: 16,
+    fontSize: 14,
     color: Colors.black,
+    fontWeight: '500',
   },
 
   providerName: {
@@ -280,7 +277,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: Colors.primary,
     padding: 9,
-    borderRadius: 8,
+    borderRadius: 12,
     marginTop: 8,
   },
   callButtonText: {
