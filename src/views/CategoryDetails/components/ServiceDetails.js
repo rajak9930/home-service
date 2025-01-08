@@ -23,14 +23,26 @@ import {propertyTypes} from '../../../constants/data';
 import {thousandSeparator} from '../../../utils';
 import RichTextEditor from './RichTextEditor';
 import BottomSheet from './BottomSheet';
+import {useDispatch} from 'react-redux';
+import {
+  selectedDraftService,
+  setDraftService,
+} from '../../../redux/draftService/draftServiceSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import useTypedSelector from '../../../hooks/useTypedSelector';
+import Toast from 'react-native-toast-message';
 
 const ServiceDetails = () => {
   const route = useRoute();
   const theme = useCustomTheme();
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const isDarkMode = theme === 'dark';
   const {service} = route.params;
+  const draftService = useTypedSelector(selectedDraftService);
+
+  console.log('Draft Service:', draftService);
 
   const [selectedProperty, setSelectedProperty] = useState(2);
   const [units, setUnits] = useState(2);
@@ -66,6 +78,31 @@ const ServiceDetails = () => {
       keyboardDidHideListener.remove();
     };
   }, []);
+
+  const handleSavedDraft = data => {
+    const isExisting = draftService?.some(
+      item => item.service.id === service.id,
+    );
+
+    dispatch(setDraftService(data));
+
+    const newData = isExisting
+      ? draftService.filter(item => item.service.id !== service.id)
+      : [...(draftService || []), data];
+
+    AsyncStorage.setItem('draftService', JSON.stringify(newData));
+
+    Toast.show({
+      type: isExisting ? 'warning' : 'success',
+      text1: isExisting
+        ? 'Service removed from drafts'
+        : 'Service saved to drafts',
+    });
+  };
+
+  const isDraftSaved = draftService?.some(
+    item => item.service.id === service.id,
+  );
 
   return (
     <SafeAreaView
@@ -220,9 +257,8 @@ const ServiceDetails = () => {
                     selectedProperty,
                     units,
                     bedrooms,
-                    description,
                   };
-                  console.log('Draft saved', data);
+                  handleSavedDraft(data);
                 }}>
                 <Text
                   style={[
@@ -231,7 +267,7 @@ const ServiceDetails = () => {
                       ? styles.darkDraftButtonText
                       : styles.lightDraftButtonText,
                   ]}>
-                  Save Draft
+                  {isDraftSaved ? 'Remove Draft' : 'Save Draft'}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity

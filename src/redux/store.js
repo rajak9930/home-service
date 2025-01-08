@@ -5,17 +5,19 @@ import {persistStore, persistReducer} from 'redux-persist';
 import {apiSlice} from './api/apiSlice';
 import authReducer from './auth/authSlice';
 import themeReducer from './theme/themeSlice';
+import draftServiceReducer from './draftService/draftServiceSlice';
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['auth', 'theme'], // Changed to persist auth state
+  whitelist: ['auth', 'theme', 'draftService'], // Changed to persist auth state
 };
 
 const rootReducer = combineReducers({
   [apiSlice.reducerPath]: apiSlice.reducer,
   auth: authReducer,
   theme: themeReducer,
+  draftService: draftServiceReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
