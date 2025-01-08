@@ -6,11 +6,12 @@ import {apiSlice} from './api/apiSlice';
 import authReducer from './auth/authSlice';
 import themeReducer from './theme/themeSlice';
 import draftServiceReducer from './draftService/draftServiceSlice';
+import bookedServiceReducer from './bookedService/bookedServiceSlice';
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['auth', 'theme', 'draftService'], // Changed to persist auth state
+  whitelist: ['auth', 'theme', 'draftService', 'bookedService'], // Changed to persist auth state
 };
 
 const rootReducer = combineReducers({
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   theme: themeReducer,
   draftService: draftServiceReducer,
+  bookedService: bookedServiceReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

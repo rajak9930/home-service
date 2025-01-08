@@ -31,6 +31,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useTypedSelector from '../../../hooks/useTypedSelector';
 import Toast from 'react-native-toast-message';
+import {setBookedService} from '../../../redux/bookedService/bookedServiceSlice';
 
 const ServiceDetails = () => {
   const route = useRoute();
@@ -50,6 +51,25 @@ const ServiceDetails = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [description, setDescription] = useState('');
+
+  const serviceBooked = () => {
+    const data = {
+      service,
+      selectedProperty,
+      units,
+      bedrooms,
+      description,
+      selectedDate,
+      selectedTime,
+    };
+    console.log('Service booked', data);
+    dispatch(setBookedService(data));
+    AsyncStorage.setItem('bookedService', JSON.stringify(data));
+
+    setTimeout(() => {
+      navigation.navigate('Bookings');
+    }, 1000);
+  };
 
   const handleContentChange = content => {
     // console.log('Content changed:', content);
@@ -287,6 +307,7 @@ const ServiceDetails = () => {
           setSelectedDate={setSelectedDate}
           selectedTime={selectedTime}
           setSelectedTime={setSelectedTime}
+          serviceBooked={serviceBooked}
         />
       )}
     </SafeAreaView>

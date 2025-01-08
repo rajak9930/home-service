@@ -15,6 +15,7 @@ const BottomSheet = ({
   setSelectedDate,
   selectedTime,
   setSelectedTime,
+  serviceBooked,
 }) => {
   const theme = useCustomTheme();
 
@@ -169,7 +170,13 @@ const BottomSheet = ({
               {
                 backgroundColor: isDarkMode ? '#29303C' : Colors.primary,
               },
-            ]}>
+            ]}
+            onPress={() => {
+              if (selectedDate && selectedTime) {
+                serviceBooked();
+                setIsBottomSheetVisible(false);
+              }
+            }}>
             <Text style={styles.continueButtonText}>Continue</Text>
           </TouchableOpacity>
         </View>
