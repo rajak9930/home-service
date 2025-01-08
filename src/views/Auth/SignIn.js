@@ -7,7 +7,6 @@ import {
   Image,
   TouchableOpacity,
   Animated,
-  Alert,
   ActivityIndicator,
 } from 'react-native';
 import {
@@ -23,6 +22,7 @@ import Colors from '../../constants/colors';
 import {supabase} from '../../supabase/supabaseClient';
 import {setUser} from '../../redux/auth/authSlice';
 import {useCustomTheme} from '../../theme/Theme';
+import Toast from 'react-native-toast-message';
 
 const SignIn = () => {
   const logoOpacity = useRef(new Animated.Value(0)).current;
@@ -97,10 +97,6 @@ const SignIn = () => {
   }, []);
 
   const handleGoogleSignIn = async () => {
-    if (isLoading) {
-      return;
-    }
-
     setIsLoading(true);
     try {
       await GoogleSignin.hasPlayServices();
@@ -126,13 +122,25 @@ const SignIn = () => {
       }
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        Alert.alert('User cancelled the login flow');
+        Toast.show({
+          type: 'error',
+          text1: 'User cancelled the login flow',
+        });
       } else if (error.code === statusCodes.IN_PROGRESS) {
-        Alert.alert('Operation in progress');
+        Toast.show({
+          type: 'error',
+          text1: 'Operation in progress',
+        });
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        Alert.alert('Play services not available or outdated');
+        Toast.show({
+          type: 'error',
+          text1: 'Play services not available or outdated',
+        });
       } else {
-        Alert.alert('Error', `${error.message}\nCode: ${error.code}`);
+        Toast.show({
+          type: 'error',
+          text1: `${error.message}\nCode: ${error.code}`,
+        });
         console.error('Detailed error:', error);
       }
     } finally {

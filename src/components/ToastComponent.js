@@ -36,7 +36,7 @@ const ToastComponent = () => {
     warning: WarningToast,
   };
 
-  return <Toast config={toastConfig} visibilityTime={2500} />;
+  return <Toast config={toastConfig} visibilityTime={3000} />;
 };
 
 const styles = StyleSheet.create({

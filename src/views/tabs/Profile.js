@@ -20,6 +20,7 @@ import useTypedSelector from '../../hooks/useTypedSelector';
 import {selectedUser, setUser} from '../../redux/auth/authSlice';
 import Colors from '../../constants/colors';
 import {useCustomTheme} from '../../theme/Theme';
+import Toast from 'react-native-toast-message';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -57,7 +58,10 @@ const Profile = () => {
       navigation.replace('SignIn');
     } catch (error) {
       console.error('Error signing out:', error);
-      Alert.alert('Error', 'Failed to logout');
+      Toast.show({
+        type: 'error',
+        text1: 'Failed to logout',
+      });
     } finally {
       setIsLoading(false);
     }
