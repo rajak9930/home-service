@@ -25,6 +25,7 @@ import AcTwo from '../assets/images/AC-2.png';
 import AcThree from '../assets/images/AC-3.png';
 import AcFour from '../assets/images/AC-4.png';
 import Upcoming from '../assets/images/Upcoming.png';
+import Branding from '../assets/images/Branding.png';
 
 export default {
   logo,
@@ -54,4 +55,5 @@ export default {
   AcThree,
   AcFour,
   Upcoming,
+  Branding,
 };

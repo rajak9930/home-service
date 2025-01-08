@@ -1,39 +1,77 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import Toast from 'react-native-toast-message';
-
-const toastConfig = {
-  success: ({text1}) => (
-    <View style={styles.toast}>
-      <Text style={styles.toastText}>{text1}</Text>
-    </View>
-  ),
-  error: ({text1}) => (
-    <View style={styles.errorToast}>
-      <Text style={styles.toastText}>{text1}</Text>
-    </View>
-  ),
-};
+import Icon from 'react-native-vector-icons/Ionicons';
+import IconTwo from 'react-native-vector-icons/AntDesign';
+import IconThree from 'react-native-vector-icons/Octicons';
+import Colors from '../constants/colors';
+import {useCustomTheme} from '../theme/Theme';
 
 const ToastComponent = () => {
+  const theme = useCustomTheme();
+  const isDarkMode = theme === 'dark';
+
+  const toastConfig = {
+    success: ({text1}) => (
+      <View style={[styles.toast, styles.infoToast]}>
+        <View style={styles.iconContainer}>
+          <IconThree name="issue-closed" size={24} color="#46d061" />
+        </View>
+        <Text style={styles.toastText}>{text1}</Text>
+      </View>
+    ),
+    warning: ({text1}) => (
+      <View style={[styles.toast, styles.warningToast]}>
+        <View style={styles.iconContainer}>
+          <IconTwo name="exclamationcircleo" size={20} color="#c8741c" />
+        </View>
+        <Text style={styles.toastText}>{text1}</Text>
+      </View>
+    ),
+    error: ({text1}) => (
+      <View style={[styles.toast, styles.errorToast]}>
+        <View style={styles.iconContainer}>
+          <Icon name="warning-outline" size={24} color="#e72324" />
+        </View>
+        <Text style={styles.toastText}>{text1}</Text>
+      </View>
+    ),
+  };
+
   return <Toast config={toastConfig} visibilityTime={2500} />;
 };
 
 const styles = StyleSheet.create({
   toast: {
-    backgroundColor: '#039694',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    margin: 16,
+    borderRadius: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    shadowColor: Colors.black,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+    backgroundColor: 'red',
+  },
+  infoToast: {
+    backgroundColor: '#f0f9f4',
+  },
+  warningToast: {
+    backgroundColor: '#feeedb',
   },
   errorToast: {
-    // backgroundColor: Colors.PRIMARY,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 5,
+    backgroundColor: '#fce5e6',
+  },
+  iconContainer: {
+    marginRight: 12,
   },
   toastText: {
-    // color: Colors.WHITE,
+    fontSize: 15,
+    color: Colors.black,
+    flex: 1,
   },
 });
 
