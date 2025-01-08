@@ -26,7 +26,13 @@ const Upcoming = () => {
 
   if (!futureBookings?.length) {
     return (
-      <View style={styles.emptyContainer}>
+      <View
+        style={[
+          styles.emptyContainer,
+          {
+            backgroundColor: isDarkMode ? Colors.navBg : Colors.pureWhite,
+          },
+        ]}>
         <Image source={images.Upcoming} style={styles.emptyImage} />
         <Text style={[styles.noOrderText, isDarkMode && styles.darkText]}>
           No Upcoming Order
@@ -138,6 +144,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 20,
+    // new
+    backgroundColor: Colors.pureWhite,
+    marginBottom: 16,
+    borderRadius: 8,
+    marginHorizontal: 16,
+    marginTop: 8,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
   emptyImage: {
     width: 100,

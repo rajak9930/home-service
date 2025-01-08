@@ -42,7 +42,13 @@ const Draft = () => {
   if (!draftService?.length) {
     return (
       <View style={styles.container}>
-        <View style={styles.emptyContainer}>
+        <View
+          style={[
+            styles.emptyContainer,
+            {
+              backgroundColor: isDarkMode ? Colors.navBg : Colors.pureWhite,
+            },
+          ]}>
           <View style={styles.iconContainer}>
             <Icon
               name="document-text-outline"
@@ -137,6 +143,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 20,
+    // new
+    backgroundColor: Colors.pureWhite,
+    marginBottom: 16,
+    borderRadius: 8,
+    marginHorizontal: 16,
+    marginTop: 8,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
   iconContainer: {
     width: 100,
