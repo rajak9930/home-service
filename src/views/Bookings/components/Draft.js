@@ -35,7 +35,7 @@ const Draft = () => {
 
     Toast.show({
       type: 'success',
-      text1: 'Service removed from drafts',
+      text2: 'Service removed from drafts',
     });
   };
 

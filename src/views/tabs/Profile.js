@@ -60,7 +60,7 @@ const Profile = () => {
       console.error('Error signing out:', error);
       Toast.show({
         type: 'error',
-        text1: 'Failed to logout',
+        text2: 'Failed to logout',
       });
     } finally {
       setIsLoading(false);

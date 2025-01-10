@@ -178,7 +178,7 @@ const BottomSheet = ({
               } else {
                 Toast.show({
                   type: 'error',
-                  text1: 'Please select Date & Time',
+                  text2: 'Please select Date & Time',
                 });
               }
             }}>

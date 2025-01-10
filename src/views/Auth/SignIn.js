@@ -124,22 +124,22 @@ const SignIn = () => {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         Toast.show({
           type: 'error',
-          text1: 'User cancelled the login flow',
+          text2: 'User cancelled the login flow',
         });
       } else if (error.code === statusCodes.IN_PROGRESS) {
         Toast.show({
           type: 'error',
-          text1: 'Operation in progress',
+          text2: 'Operation in progress',
         });
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
         Toast.show({
           type: 'error',
-          text1: 'Play services not available or outdated',
+          text2: 'Play services not available or outdated',
         });
       } else {
         Toast.show({
           type: 'error',
-          text1: `${error.message}\nCode: ${error.code}`,
+          text2: `${error.message}\nCode: ${error.code}`,
         });
         console.error('Detailed error:', error);
       }

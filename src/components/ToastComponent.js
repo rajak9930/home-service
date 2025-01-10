@@ -30,10 +30,6 @@ const toastConfig = {
 const ToastBase = ({type, title, subtitle}) => {
   const config = toastConfig[type];
 
-  console.log('type', type);
-  console.log('subtitle', subtitle);
-  console.log('title', title);
-
   return (
     <View style={styles.toastContainer}>
       <LinearGradient
@@ -55,36 +51,36 @@ const ToastBase = ({type, title, subtitle}) => {
   );
 };
 
-const ErrorToast = ({text1, text2}) => (
+const ErrorToast = ({text2}) => (
   <ToastBase
     type="error"
-    title={text1 || 'This is error message'}
+    title={'This is error message'}
     subtitle={
       text2 || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...'
     }
   />
 );
 
-const SuccessToast = ({text1, text2}) => (
+const SuccessToast = ({text2}) => (
   <ToastBase
     type="success"
-    title={text1 || 'Success'}
+    title={'Success'}
     subtitle={text2 || 'Operation completed successfully'}
   />
 );
 
-const WarningToast = ({text1, text2}) => (
+const WarningToast = ({text2}) => (
   <ToastBase
     type="warning"
-    title={text1 || 'Warning'}
+    title={'Warning'}
     subtitle={text2 || 'Please check your input and try again'}
   />
 );
 
-const InfoToast = ({text1, text2}) => (
+const InfoToast = ({text2}) => (
   <ToastBase
     type="info"
-    title={text1 || 'Information'}
+    title={'Information'}
     subtitle={text2 || "Here's something you should know"}
   />
 );
