@@ -116,8 +116,9 @@ const ServiceDetails = () => {
     AsyncStorage.setItem('draftService', JSON.stringify(newData));
 
     Toast.show({
-      type: isExisting ? 'success' : 'success',
-      text1: isExisting
+      type: isExisting ? 'warning' : 'success',
+      text1: isExisting ? 'Warning' : 'Success',
+      text2: isExisting
         ? 'Service removed from drafts'
         : 'Service saved to drafts',
     });
