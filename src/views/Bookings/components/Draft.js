@@ -34,7 +34,7 @@ const Draft = () => {
     await AsyncStorage.setItem('draftService', JSON.stringify(updatedDrafts));
 
     Toast.show({
-      type: 'success',
+      type: 'warning',
       text2: 'Service removed from drafts',
     });
   };

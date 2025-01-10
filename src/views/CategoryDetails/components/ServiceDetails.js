@@ -117,7 +117,6 @@ const ServiceDetails = () => {
 
     Toast.show({
       type: isExisting ? 'warning' : 'success',
-      text1: isExisting ? 'Warning' : 'Success',
       text2: isExisting
         ? 'Service removed from drafts'
         : 'Service saved to drafts',

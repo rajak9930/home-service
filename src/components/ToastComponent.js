@@ -93,7 +93,7 @@ const ToastComponent = () => {
     info: InfoToast,
   };
 
-  return <Toast config={config} visibilityTime={3000} />;
+  return <Toast config={config} visibilityTime={3000} swipeable={false} />;
 };
 
 const styles = StyleSheet.create({
