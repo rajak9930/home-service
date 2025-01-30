@@ -9,6 +9,7 @@ import Onboarding from '../views/Onboarding';
 import CategoryDetails from '../views/CategoryDetails';
 import SubCategory from '../views/CategoryDetails/components/SubCategory';
 import ServiceDetails from '../views/CategoryDetails/components/ServiceDetails';
+import AppLanguage from '../views/AppLanguage';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +22,7 @@ const AppNavigator = () => {
           headerShown: false,
         }}>
         <Stack.Screen name="Splash" component={Splash} />
+        <Stack.Screen name="AppLanguage" component={AppLanguage} />
         <Stack.Screen name="Onboarding" component={Onboarding} />
         <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="Main" component={Main} />

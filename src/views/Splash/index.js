@@ -14,14 +14,21 @@ const Splash = () => {
 
   useEffect(() => {
     checkAuth();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const checkAuth = async () => {
     const userData = await AsyncStorage.getItem('user');
+    const language = await AsyncStorage.getItem('language');
     const parsedUser = userData ? JSON.parse(userData) : null;
+
     setTimeout(() => {
-      navigation.replace(parsedUser ? 'Main' : 'Onboarding');
+      if (!language) {
+        navigation.replace('AppLanguage');
+      } else if (parsedUser) {
+        navigation.replace('Main');
+      } else {
+        navigation.replace('Onboarding');
+      }
     }, 2000);
   };
 
