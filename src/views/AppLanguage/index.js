@@ -28,11 +28,9 @@ const AppLanguage = () => {
   const handleLanguageSelect = async language => {
     setSelectedLanguage(language);
 
-    const newLanguage = i18n.language === 'en' ? 'ar' : 'en';
-
-    await AsyncStorage.setItem('language', newLanguage);
-    dispatch(setLanguage(newLanguage));
-    await i18n.changeLanguage(newLanguage);
+    await AsyncStorage.setItem('language', language);
+    dispatch(setLanguage(language));
+    await i18n.changeLanguage(language);
 
     navigation.replace('Onboarding');
   };

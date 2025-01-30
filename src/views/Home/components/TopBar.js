@@ -49,7 +49,7 @@ const TopBar = () => {
           </Text>
           <View style={styles.addressContainer}>
             <Text style={[styles.addressText, themedStyles.textPrimary]}>
-              15A, James Street
+              {t('topBar.street')}
             </Text>
             <Icon
               name="keyboard-arrow-down"

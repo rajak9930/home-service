@@ -31,5 +31,6 @@ export default {
     currentLocation: 'الموقع الحالي',
     points: 'نقاط',
     bronze: 'برونزي',
+    street: '15A، شارع جيمس',
   },
 };

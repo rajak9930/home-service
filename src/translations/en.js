@@ -32,5 +32,6 @@ export default {
     currentLocation: 'CURRENT LOCATION',
     points: 'POINTS',
     bronze: 'BRONZE',
+    street: '15A, James Street',
   },
 };
