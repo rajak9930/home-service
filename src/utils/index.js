@@ -1,3 +1,5 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export const thousandSeparator = price => {
   return price?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
@@ -49,3 +51,9 @@ export function formatDateEnd(isoDate) {
 
   return `${day} ${month} ${year}`;
 }
+
+export const getDirection = async () => {
+  const storedLanguage = await AsyncStorage.getItem('language');
+
+  return storedLanguage === 'ar' ? 'rtl' : 'ltr';
+};

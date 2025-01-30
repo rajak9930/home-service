@@ -7,12 +7,14 @@ import {useTranslation} from 'react-i18next';
 import images from '../../../constants/images';
 import {useCustomTheme} from '../../../theme/Theme';
 import Colors from '../../../constants/colors';
+import useDirection from '../../../hooks/useDirection';
 
 const TopBar = () => {
   const theme = useCustomTheme();
   const navigation = useNavigation();
   const isDarkMode = theme === 'dark';
   const {t} = useTranslation();
+  const {isRTL} = useDirection();
 
   const themedStyles = getThemedStyles(isDarkMode);
 
@@ -27,9 +29,14 @@ const TopBar = () => {
         themedStyles.headerBackground,
         {
           borderBottomColor: isDarkMode ? 'transparent' : '#eee',
+          flexDirection: isRTL ? 'row-reverse' : 'row',
         },
       ]}>
-      <View style={styles.leftSection}>
+      <View
+        style={[
+          styles.leftSection,
+          {flexDirection: isRTL ? 'row-reverse' : 'row'},
+        ]}>
         <TouchableOpacity
           onPress={handleDrawerOpen}
           style={styles.menuButton}
