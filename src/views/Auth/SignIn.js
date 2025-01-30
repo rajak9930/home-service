@@ -23,6 +23,7 @@ import {supabase} from '../../supabase/supabaseClient';
 import {setUser} from '../../redux/auth/authSlice';
 import {useCustomTheme} from '../../theme/Theme';
 import Toast from 'react-native-toast-message';
+import {useTranslation} from 'react-i18next';
 
 const SignIn = () => {
   const logoOpacity = useRef(new Animated.Value(0)).current;
@@ -35,6 +36,7 @@ const SignIn = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const theme = useCustomTheme();
+  const {t} = useTranslation();
   const isDarkMode = theme === 'dark';
 
   const [isLoading, setIsLoading] = useState(false);
@@ -153,7 +155,7 @@ const SignIn = () => {
       return (
         <View style={styles.googleButtonContent}>
           <ActivityIndicator size="small" color="#333" />
-          <Text style={styles.googleButtonText}>Signing in...</Text>
+          <Text style={styles.googleButtonText}>{t('signIn.signingIn')}</Text>
         </View>
       );
     }
@@ -165,7 +167,9 @@ const SignIn = () => {
           style={styles.googleIcon}
           resizeMode="contain"
         />
-        <Text style={styles.googleButtonText}>Continue with Google</Text>
+        <Text style={styles.googleButtonText}>
+          {t('signIn.continueWithGoogle')}
+        </Text>
       </View>
     );
   };
@@ -192,7 +196,7 @@ const SignIn = () => {
           isDarkMode ? {color: Colors.white} : {color: '#333'},
           {opacity: welcomeOpacity},
         ]}>
-        Welcome back! Glad to see you, Again
+        {t('signIn.welcomeBack')}
       </Animated.Text>
 
       <Animated.View
@@ -211,22 +215,6 @@ const SignIn = () => {
           activeOpacity={0.8}
           disabled={isLoading}>
           {renderGoogleButtonContent()}
-        </TouchableOpacity>
-      </Animated.View>
-
-      <Animated.View
-        style={{
-          opacity: guestButtonOpacity,
-          transform: [{translateY: guestButtonTranslateY}],
-        }}>
-        <TouchableOpacity style={styles.guest} disabled={isLoading}>
-          <Text
-            style={[
-              styles.guestText,
-              isDarkMode ? {color: Colors.black} : {color: '#666'},
-            ]}>
-            Continue as guest
-          </Text>
         </TouchableOpacity>
       </Animated.View>
     </View>
@@ -288,18 +276,6 @@ const styles = StyleSheet.create({
   googleButtonText: {
     fontSize: 16,
     color: '#333',
-    fontWeight: '500',
-  },
-  guest: {
-    backgroundColor: '#EFEFEF',
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 10,
-    marginTop: 20,
-  },
-  guestText: {
-    fontSize: 16,
-    color: '#666',
     fontWeight: '500',
   },
 });

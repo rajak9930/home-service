@@ -20,4 +20,10 @@ export default {
       },
     },
   },
+  // todo: Auth Screen
+  signIn: {
+    welcomeBack: 'مرحباً بعودتك! سعيد برؤيتك مرة أخرى',
+    continueWithGoogle: 'المتابعة باستخدام جوجل',
+    signingIn: 'جاري تسجيل الدخول...',
+  },
 };

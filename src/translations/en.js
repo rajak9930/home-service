@@ -21,4 +21,10 @@ export default {
       },
     },
   },
+  // todo: Auth Screen
+  signIn: {
+    welcomeBack: 'Welcome back! Glad to see you, Again',
+    continueWithGoogle: 'Continue with Google',
+    signingIn: 'Signing in...',
+  },
 };
