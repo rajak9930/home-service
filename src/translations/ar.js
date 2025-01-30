@@ -32,5 +32,7 @@ export default {
     points: 'نقاط',
     bronze: 'برونزي',
     street: '15A، شارع جيمس',
+    title: 'ما الذي تبحث عنه اليوم',
+    hello: 'مرحباً',
   },
 };

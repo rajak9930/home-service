@@ -19,12 +19,16 @@ import Slider from '../../components/Slider';
 import Categories from '../Home/components/Categories';
 import CleaningServices from '../Home/components/CleaningServices';
 import ApplianceRepair from '../Home/components/ApplianceRepair';
+import {useTranslation} from 'react-i18next';
+import useDirection from '../../hooks/useDirection';
 
 const Home = () => {
   const theme = useCustomTheme();
   const userDetails = useTypedSelector(selectedUser);
   const name = userDetails?.user?.user_metadata?.name || '';
   const isDarkMode = theme === 'dark';
+  const {t} = useTranslation();
+  const {isRTL} = useDirection();
 
   const [searchText, setSearchText] = useState('');
 
@@ -46,13 +50,17 @@ const Home = () => {
               styles.greetingContainer,
               isDarkMode ? styles.darkGreetingBg : styles.lightGreetingBg,
             ]}>
-            <View style={styles.greeting}>
+            <View
+              style={[
+                styles.greeting,
+                {flexDirection: isRTL ? 'row-reverse' : 'row'},
+              ]}>
               <Text
                 style={[
                   styles.hello,
                   isDarkMode ? styles.darkText : styles.lightText,
                 ]}>
-                {name ? `Hello, ${name}` : 'Hello'}
+                {t('topBar.hello')}, {name ? `${name}` : ''}
               </Text>
               <Image source={images.Hello} style={styles.helloIcon} />
             </View>
@@ -60,8 +68,12 @@ const Home = () => {
               style={[
                 styles.subtitle,
                 isDarkMode ? styles.darkSubtitle : styles.lightSubtitle,
+                {
+                  textAlign: isRTL ? 'right' : 'left',
+                  alignSelf: isRTL ? 'flex-end' : 'flex-start',
+                },
               ]}>
-              What you are looking for today
+              {t('topBar.title')}
             </Text>
             <SearchBar searchText={searchText} setSearchText={setSearchText} />
           </View>
@@ -95,9 +107,6 @@ const Home = () => {
             style={[
               styles.greetingContainer,
               isDarkMode ? styles.darkGreetingBg : styles.lightGreetingBg,
-              {
-                marginTop: 0,
-              },
             ]}>
             <ApplianceRepair />
           </View>

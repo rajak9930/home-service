@@ -33,5 +33,7 @@ export default {
     points: 'POINTS',
     bronze: 'BRONZE',
     street: '15A, James Street',
+    title: 'What you are looking for today',
+    hello: 'Hello',
   },
 };

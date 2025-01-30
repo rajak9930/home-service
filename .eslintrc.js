@@ -9,5 +9,6 @@ module.exports = {
     'react/no-unescaped-entities': 'off', // Disable unescaped entities error
     'react-hooks/exhaustive-deps': 'off', // Disable exhaustive deps warning
     'react-native/no-unused-styles': 'error', // Add this rule
+    'react-native/no-inline-styles': 'off', // Disable inline styles error
   },
 };
