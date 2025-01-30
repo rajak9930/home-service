@@ -1,20 +1,38 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  StatusBar,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useTranslation} from 'react-i18next';
+import {useDispatch} from 'react-redux';
 
 import Colors from '../../constants/colors';
 import {useCustomTheme} from '../../theme/Theme';
+import {setLanguage} from '../../redux/language/languageSlice';
 
 const AppLanguage = () => {
   const navigation = useNavigation();
+  const {i18n} = useTranslation();
+  const dispatch = useDispatch();
   const theme = useCustomTheme();
+
   const isDarkMode = theme === 'dark';
+
   const [selectedLanguage, setSelectedLanguage] = useState(null);
 
   const handleLanguageSelect = async language => {
     setSelectedLanguage(language);
-    await AsyncStorage.setItem('language', language);
+
+    const newLanguage = i18n.language === 'en' ? 'ar' : 'en';
+
+    await AsyncStorage.setItem('language', newLanguage);
+    dispatch(setLanguage(newLanguage));
+    await i18n.changeLanguage(newLanguage);
 
     navigation.replace('Onboarding');
   };
@@ -27,8 +45,9 @@ const AppLanguage = () => {
           backgroundColor: isDarkMode ? Colors.primaryDark : Colors.primary,
         },
       ]}>
+      <StatusBar barStyle="light-content" backgroundColor={Colors.primary} />
+
       <Text style={styles.title}>Select Your Language</Text>
-      <Text style={styles.titleArabic}>اختر لغتك</Text>
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
@@ -37,13 +56,16 @@ const AppLanguage = () => {
             selectedLanguage === 'en' && styles.selectedButton,
           ]}
           onPress={() => handleLanguageSelect('en')}>
-          <Text
-            style={[
-              styles.buttonText,
-              selectedLanguage === 'en' && styles.selectedButtonText,
-            ]}>
-            English
-          </Text>
+          <View style={styles.buttonContent}>
+            <Text style={styles.flagText}>🇺🇸</Text>
+            <Text
+              style={[
+                styles.buttonText,
+                selectedLanguage === 'en' && styles.selectedButtonText,
+              ]}>
+              English
+            </Text>
+          </View>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -52,13 +74,16 @@ const AppLanguage = () => {
             selectedLanguage === 'ar' && styles.selectedButton,
           ]}
           onPress={() => handleLanguageSelect('ar')}>
-          <Text
-            style={[
-              styles.buttonText,
-              selectedLanguage === 'ar' && styles.selectedButtonText,
-            ]}>
-            العربية
-          </Text>
+          <View style={styles.buttonContent}>
+            <Text style={styles.flagText}>🇸🇦</Text>
+            <Text
+              style={[
+                styles.buttonText,
+                selectedLanguage === 'ar' && styles.selectedButtonText,
+              ]}>
+              العربية
+            </Text>
+          </View>
         </TouchableOpacity>
       </View>
     </View>
@@ -73,12 +98,6 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#fff',
-    marginBottom: 10,
-  },
-  titleArabic: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#fff',
@@ -103,13 +122,22 @@ const styles = StyleSheet.create({
   selectedButton: {
     backgroundColor: Colors.secondary,
   },
+
+  selectedButtonText: {
+    color: '#fff',
+  },
+  buttonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  flagText: {
+    fontSize: 20,
+  },
   buttonText: {
     fontSize: 18,
     fontWeight: '600',
     color: Colors.primary,
-  },
-  selectedButtonText: {
-    color: '#fff',
   },
 });
 
