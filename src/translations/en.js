@@ -36,4 +36,20 @@ export default {
     title: 'What you are looking for today',
     hello: 'Hello',
   },
+  // todo: Drawer
+  drawer: {
+    calendar: 'Calendar',
+    payments: 'Payment Methods',
+    address: 'Address',
+    notification: 'Notification',
+    offers: 'Offers',
+    referFriend: 'Refer a Friend',
+    support: 'Support',
+    colorScheme: 'Color Scheme',
+    languagePreference: 'Language Preference',
+    light: 'Light',
+    dark: 'Dark',
+    english: 'English',
+    arabic: 'Arabic',
+  },
 };

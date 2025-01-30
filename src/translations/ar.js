@@ -35,4 +35,20 @@ export default {
     title: 'ما الذي تبحث عنه اليوم',
     hello: 'مرحباً',
   },
+  // todo: Drawer
+  drawer: {
+    calendar: 'التقويم',
+    payments: 'طرق الدفع',
+    address: 'العنوان',
+    notification: 'الإشعارات',
+    offers: 'العروض',
+    referFriend: 'دعوة صديق',
+    support: 'الدعم',
+    colorScheme: 'نظام الألوان',
+    languagePreference: 'تفضيل اللغة',
+    light: 'فاتح',
+    dark: 'داكن',
+    english: 'English',
+    arabic: 'العربية',
+  },
 };
