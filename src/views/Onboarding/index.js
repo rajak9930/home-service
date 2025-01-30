@@ -10,8 +10,8 @@ import {
 import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 
-import {onboarding} from '../../constants/data';
 import Colors from '../../constants/colors';
 import images from '../../constants/images';
 import {useCustomTheme} from '../../theme/Theme';
@@ -22,13 +22,35 @@ const Onboarding = () => {
   const navigation = useNavigation();
   const swiperRef = useRef(null);
   const theme = useCustomTheme();
+  const {t} = useTranslation();
+
+  const onboardingData = [
+    {
+      id: 1,
+      title: t('onboarding.screens.beautySalon.title'),
+      description: t('onboarding.screens.beautySalon.description'),
+      image: images.onboardingOne,
+    },
+    {
+      id: 2,
+      title: t('onboarding.screens.plumber.title'),
+      description: t('onboarding.screens.plumber.description'),
+      image: images.onboardingTwo,
+    },
+    {
+      id: 3,
+      title: t('onboarding.screens.cleaning.title'),
+      description: t('onboarding.screens.cleaning.description'),
+      image: images.onboardingThree,
+    },
+  ];
 
   const isDarkMode = theme === 'dark';
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleNext = () => {
-    if (swiperRef.current && currentIndex < onboarding.length - 1) {
+    if (swiperRef.current && currentIndex < onboardingData.length - 1) {
       swiperRef.current.scrollBy(1);
     }
   };
@@ -50,9 +72,8 @@ const Onboarding = () => {
         },
       ]}>
       <Image source={images.onboardingTop} style={styles.topImage} />
-
       <TouchableOpacity style={styles.skipButton} onPress={handleSkip}>
-        <Text style={styles.skipText}>Skip</Text>
+        <Text style={styles.skipText}>{t('onboarding.skip')}</Text>
       </TouchableOpacity>
 
       <Swiper
@@ -63,7 +84,7 @@ const Onboarding = () => {
         loop={false}
         showsPagination={false}
         onIndexChanged={index => setCurrentIndex(index)}>
-        {onboarding.map((item, index) => (
+        {onboardingData.map((item, index) => (
           <View key={item.id} style={styles.slide}>
             <View style={styles.imageWrapper}>
               <Image source={item.image} style={styles.image} />
@@ -72,7 +93,7 @@ const Onboarding = () => {
             <View style={styles.contentContainer}>
               <View style={styles.paginationContainer}>
                 <View style={styles.pagination}>
-                  {onboarding.map((_, i) => (
+                  {onboardingData.map((_, i) => (
                     <View
                       key={i}
                       style={[
@@ -103,11 +124,13 @@ const Onboarding = () => {
                 {item.description}
               </Text>
 
-              {index === onboarding.length - 1 ? (
+              {index === onboardingData.length - 1 ? (
                 <TouchableOpacity
                   style={styles.button}
                   onPress={handleGetStarted}>
-                  <Text style={styles.buttonText}>Get Started</Text>
+                  <Text style={styles.buttonText}>
+                    {t('onboarding.getStarted')}
+                  </Text>
                 </TouchableOpacity>
               ) : (
                 <TouchableOpacity
