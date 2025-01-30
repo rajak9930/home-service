@@ -26,4 +26,10 @@ export default {
     continueWithGoogle: 'المتابعة باستخدام جوجل',
     signingIn: 'جاري تسجيل الدخول...',
   },
+  // todo: TopBar
+  topBar: {
+    currentLocation: 'الموقع الحالي',
+    points: 'نقاط',
+    bronze: 'برونزي',
+  },
 };

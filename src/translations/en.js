@@ -27,4 +27,10 @@ export default {
     continueWithGoogle: 'Continue with Google',
     signingIn: 'Signing in...',
   },
+  // todo: TopBar
+  topBar: {
+    currentLocation: 'CURRENT LOCATION',
+    points: 'POINTS',
+    bronze: 'BRONZE',
+  },
 };

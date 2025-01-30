@@ -1,15 +1,18 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {useNavigation} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
+
 import images from '../../../constants/images';
 import {useCustomTheme} from '../../../theme/Theme';
 import Colors from '../../../constants/colors';
-import {useNavigation} from '@react-navigation/native';
 
 const TopBar = () => {
   const theme = useCustomTheme();
   const navigation = useNavigation();
   const isDarkMode = theme === 'dark';
+  const {t} = useTranslation();
 
   const themedStyles = getThemedStyles(isDarkMode);
 
@@ -35,7 +38,7 @@ const TopBar = () => {
         </TouchableOpacity>
         <View style={styles.locationContainer}>
           <Text style={[styles.locationLabel, themedStyles.textSecondary]}>
-            CURRENT LOCATION
+            {t('topBar.currentLocation')}
           </Text>
           <View style={styles.addressContainer}>
             <Text style={[styles.addressText, themedStyles.textPrimary]}>
@@ -52,9 +55,9 @@ const TopBar = () => {
 
       <View style={styles.pointsContainer}>
         <View>
-          <Text style={styles.bronzeText}>BRONZE</Text>
+          <Text style={styles.bronzeText}>{t('topBar.bronze')}</Text>
           <Text style={[styles.pointsText, themedStyles.textSecondary]}>
-            0 POINTS
+            0 {t('topBar.points')}
           </Text>
         </View>
         <View style={styles.medalIcon}>
