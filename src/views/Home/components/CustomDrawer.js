@@ -11,6 +11,7 @@ import {useCustomTheme} from '../../../theme/Theme';
 import {setTheme} from '../../../redux/theme/themeSlice';
 import Colors from '../../../constants/colors';
 import {DRAWER_ITEMS, ICONS} from '../../../constants/data';
+import useDirection from '../../../hooks/useDirection';
 
 const IconRenderer = ({
   type,
@@ -33,6 +34,8 @@ const CustomDrawer = props => {
   const theme = useCustomTheme();
   const dispatch = useDispatch();
   const userDetails = useTypedSelector(selectedUser);
+  const {isRTL} = useDirection();
+
   const {
     name = '',
     email = '',
@@ -142,7 +145,6 @@ const CustomDrawer = props => {
             <Text
               style={[
                 styles.themeOptionText,
-                // eslint-disable-next-line react-native/no-inline-styles
                 {
                   color: isDarkMode ? Colors.pureWhite : Colors.pureWhite,
                 },

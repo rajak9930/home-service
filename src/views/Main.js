@@ -11,6 +11,7 @@ import Bookings from './tabs/Bookings';
 import Colors from '../constants/colors';
 import {useCustomTheme} from '../theme/Theme';
 import CustomDrawer from './Home/components/CustomDrawer';
+import useDirection from '../hooks/useDirection';
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -114,6 +115,8 @@ const TabNavigator = () => {
 };
 
 const Main = () => {
+  const {isRTL} = useDirection();
+
   return (
     <Drawer.Navigator
       drawerContent={props => <CustomDrawer {...props} />}
@@ -128,6 +131,7 @@ const Main = () => {
         sceneContainerStyle: {
           backgroundColor: 'transparent',
         },
+        drawerPosition: isRTL ? 'right' : 'left',
       }}>
       <Drawer.Screen name="TabNavigator" component={TabNavigator} />
     </Drawer.Navigator>
