@@ -52,4 +52,6 @@ export default {
     english: 'English',
     arabic: 'Arabic',
   },
+  // todo: SearchBar
+  search: 'Search what you need...',
 };

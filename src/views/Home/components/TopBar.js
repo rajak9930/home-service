@@ -60,7 +60,13 @@ const TopBar = () => {
         </View>
       </View>
 
-      <View style={styles.pointsContainer}>
+      <View
+        style={[
+          styles.pointsContainer,
+          {
+            flexDirection: isRTL ? 'row-reverse' : 'row',
+          },
+        ]}>
         <View>
           <Text style={styles.bronzeText}>{t('topBar.bronze')}</Text>
           <Text style={[styles.pointsText, themedStyles.textSecondary]}>

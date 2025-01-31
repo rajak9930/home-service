@@ -1,27 +1,33 @@
 import React from 'react';
 import {View, TextInput, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {useNavigation} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
+
 import Colors from '../../constants/colors';
 import {useCustomTheme} from '../../theme/Theme';
-import {useNavigation} from '@react-navigation/native';
+import useDirection from '../../hooks/useDirection';
 
 const SearchBar = ({placeholder, searchText, setSearchText}) => {
   const theme = useCustomTheme();
   const navigation = useNavigation();
   const isDarkMode = theme === 'dark';
+  const {t} = useTranslation();
+  const {isRTL} = useDirection();
 
   return (
     <View
       style={[
         styles.searchContainer,
         isDarkMode ? styles.darkSearchContainer : styles.lightSearchContainer,
+        isRTL && styles.rtlContainer,
       ]}>
       {placeholder && (
         <TouchableOpacity
-          style={styles.backButton}
+          style={[styles.backButton, isRTL && styles.rtlBackButton]}
           onPress={() => navigation.goBack()}>
           <Icon
-            name="arrow-back"
+            name={isRTL ? 'arrow-forward' : 'arrow-back'}
             size={24}
             color={isDarkMode ? Colors.pureWhite : '#333'}
           />
@@ -31,13 +37,16 @@ const SearchBar = ({placeholder, searchText, setSearchText}) => {
         style={[
           styles.searchInput,
           isDarkMode ? styles.darkInput : styles.lightInput,
+          isRTL && styles.rtlInput,
         ]}
-        placeholder={placeholder ? placeholder : 'Search what you need...'}
+        placeholder={placeholder ? placeholder : t('search')}
         placeholderTextColor={isDarkMode ? '#9B9E9F' : '#9CA3AF'}
         value={searchText}
         onChangeText={text => setSearchText(text)}
+        textAlign={isRTL ? 'right' : 'left'}
+        writingDirection={isRTL ? 'rtl' : 'ltr'}
       />
-      <View style={styles.searchIconContainer}>
+      <View style={[styles.searchIconContainer, isRTL && styles.rtlSearchIcon]}>
         <Icon name="search" size={24} color={Colors.pureWhite} />
       </View>
     </View>
@@ -49,7 +58,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 10,
-    // marginTop: 19,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -58,6 +66,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 4,
     elevation: 3,
+  },
+  rtlContainer: {
+    flexDirection: 'row-reverse',
   },
   darkSearchContainer: {
     backgroundColor: Colors.navBg,
@@ -75,6 +86,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     fontSize: 16,
   },
+  rtlInput: {
+    textAlign: 'right',
+  },
   darkInput: {
     color: Colors.pureWhite,
   },
@@ -87,8 +101,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginRight: 10,
   },
+  rtlSearchIcon: {
+    marginRight: 0,
+    marginLeft: 10,
+  },
   backButton: {
     marginLeft: 8,
+  },
+  rtlBackButton: {
+    marginLeft: 0,
+    marginRight: 8,
   },
 });
 

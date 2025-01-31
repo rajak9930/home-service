@@ -51,4 +51,6 @@ export default {
     english: 'English',
     arabic: 'العربية',
   },
+  // todo: SearchBar
+  search: 'ابحث عن ما تحتاجه...',
 };

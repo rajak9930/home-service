@@ -75,6 +75,7 @@ const Home = () => {
               ]}>
               {t('topBar.title')}
             </Text>
+            {/* Search Bar */}
             <SearchBar searchText={searchText} setSearchText={setSearchText} />
           </View>
 
