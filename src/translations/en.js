@@ -222,4 +222,9 @@ export default {
     numberOfUnits: 'Number of Units',
     numberOfBedrooms: 'Number of Bedrooms',
   },
+  // todo: Text Editor
+  editor: {
+    description: 'Description',
+    placeholder: 'Write something...',
+  },
 };

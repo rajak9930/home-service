@@ -221,4 +221,9 @@ export default {
     numberOfUnits: 'عدد الوحدات',
     numberOfBedrooms: 'عدد غرف النوم',
   },
+  // todo: Text Editor
+  editor: {
+    description: 'الوصف',
+    placeholder: 'اكتب شيئاً...',
+  },
 };
