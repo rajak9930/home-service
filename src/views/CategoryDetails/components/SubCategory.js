@@ -84,12 +84,18 @@ const SubCategory = () => {
             style={[styles.priceLabel, isDarkMode && styles.darkPriceLabel]}>
             {t('subCategory.startsFrom')}
           </Text>
-          <View style={styles.priceTag}>
+          <View
+            style={[
+              styles.priceTag,
+              {
+                alignSelf: isRTL ? 'none' : 'flex-start',
+              },
+            ]}>
             <Text style={styles.price}>${item.price}</Text>
           </View>
         </View>
       </View>
-      <TouchableOpacity style={styles.moreButton}>
+      <TouchableOpacity style={[styles.moreButton]}>
         <IconTwo name="ellipsis-horizontal" size={20} color="#666" />
       </TouchableOpacity>
     </TouchableOpacity>
