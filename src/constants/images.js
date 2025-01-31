@@ -20,6 +20,7 @@ import CleaningOne from '../assets/images/Cleaning-1.png';
 import CleaningTwo from '../assets/images/Cleaning-2.png';
 import CleaningThree from '../assets/images/Cleaning-3.jpg';
 import Appliance from '../assets/images/Appliance.png';
+import ApplianceTwo from '../assets/images/ApplianceTwo.png';
 import AcOne from '../assets/images/AC-1.png';
 import AcTwo from '../assets/images/AC-2.png';
 import AcThree from '../assets/images/AC-3.png';
@@ -50,6 +51,7 @@ export default {
   CleaningTwo,
   CleaningThree,
   Appliance,
+  ApplianceTwo,
   AcOne,
   AcTwo,
   AcThree,

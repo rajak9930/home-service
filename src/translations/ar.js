@@ -88,4 +88,13 @@ export default {
     },
     discount: 'خصم',
   },
+  // todo: Appliance Repair
+  applianceRepair: {
+    title: 'إصلاح الأجهزة',
+    dryCleaningOffer: {
+      title: 'عرض التنظيف الجاف',
+      discount: 'احصل على 25%',
+      action: 'احصل على العرض',
+    },
+  },
 };

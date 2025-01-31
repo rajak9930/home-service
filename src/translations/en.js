@@ -89,4 +89,13 @@ export default {
     },
     discount: 'OFF',
   },
+  // todo: Appliance Repair
+  applianceRepair: {
+    title: 'Appliance Repair',
+    dryCleaningOffer: {
+      title: 'Offer Dry Cleaning',
+      discount: 'Get 25%',
+      action: 'Grab Offer',
+    },
+  },
 };
