@@ -20,24 +20,22 @@ const SearchBar = ({placeholder, searchText, setSearchText}) => {
       style={[
         styles.searchContainer,
         isDarkMode ? styles.darkSearchContainer : styles.lightSearchContainer,
-        isRTL && styles.rtlContainer,
       ]}>
-      {placeholder && (
-        <TouchableOpacity
-          style={[styles.backButton, isRTL && styles.rtlBackButton]}
-          onPress={() => navigation.goBack()}>
-          <Icon
-            name={isRTL ? 'arrow-forward' : 'arrow-back'}
-            size={24}
-            color={isDarkMode ? Colors.pureWhite : '#333'}
-          />
-        </TouchableOpacity>
-      )}
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => navigation.goBack()}>
+        <Icon
+          name={isRTL ? 'arrow-back' : 'arrow-back'}
+          size={24}
+          color={isDarkMode ? Colors.pureWhite : '#333'}
+        />
+      </TouchableOpacity>
+
       <TextInput
         style={[
           styles.searchInput,
           isDarkMode ? styles.darkInput : styles.lightInput,
-          isRTL && styles.rtlInput,
+          {textAlign: isRTL ? 'right' : 'left'},
         ]}
         placeholder={placeholder ? placeholder : t('search')}
         placeholderTextColor={isDarkMode ? '#9B9E9F' : '#9CA3AF'}
@@ -46,7 +44,8 @@ const SearchBar = ({placeholder, searchText, setSearchText}) => {
         textAlign={isRTL ? 'right' : 'left'}
         writingDirection={isRTL ? 'rtl' : 'ltr'}
       />
-      <View style={[styles.searchIconContainer, isRTL && styles.rtlSearchIcon]}>
+
+      <View style={styles.searchIconContainer}>
         <Icon name="search" size={24} color={Colors.pureWhite} />
       </View>
     </View>
