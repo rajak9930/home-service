@@ -122,4 +122,12 @@ export default {
       callButton: 'اتصال',
     },
   },
+  // todo: History
+  history: {
+    empty: {
+      title: 'لا يوجد سجل خدمات',
+      description1: 'لم تستخدم أي خدمات حتى الآن.',
+      description2: 'احجز خدمة لرؤية سجلك هنا.',
+    },
+  },
 };

@@ -1,12 +1,16 @@
 import {View, Text, StyleSheet} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {useTranslation} from 'react-i18next';
 
 import Colors from '../../../constants/colors';
 import {useCustomTheme} from '../../../theme/Theme';
+import useDirection from '../../../hooks/useDirection';
 
 const History = () => {
   const theme = useCustomTheme();
+  const {t} = useTranslation();
+  const {isRTL} = useDirection();
   const isDarkMode = theme === 'dark';
 
   return (
@@ -21,14 +25,29 @@ const History = () => {
         <View style={styles.iconContainer}>
           <Icon name="time-outline" size={50} color={Colors.primary} />
         </View>
-        <Text style={[styles.noHistoryText, isDarkMode && styles.darkText]}>
-          No Service History
+        <Text
+          style={[
+            styles.noHistoryText,
+            isDarkMode && styles.darkText,
+            isRTL && styles.rtlText,
+          ]}>
+          {t('history.empty.title')}
         </Text>
-        <Text style={[styles.subText, isDarkMode && styles.darkSubText]}>
-          You haven't used any services yet.
+        <Text
+          style={[
+            styles.subText,
+            isDarkMode && styles.darkSubText,
+            isRTL && styles.rtlText,
+          ]}>
+          {t('history.empty.description1')}
         </Text>
-        <Text style={[styles.subText, isDarkMode && styles.darkSubText]}>
-          Book a service to see your history here.
+        <Text
+          style={[
+            styles.subText,
+            isDarkMode && styles.darkSubText,
+            isRTL && styles.rtlText,
+          ]}>
+          {t('history.empty.description2')}
         </Text>
       </View>
     </View>
@@ -44,7 +63,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 20,
-    // new
     backgroundColor: Colors.pureWhite,
     marginBottom: 16,
     borderRadius: 8,
@@ -73,6 +91,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#333',
     marginBottom: 8,
+    textAlign: 'center',
   },
   subText: {
     fontSize: 14,
@@ -85,6 +104,10 @@ const styles = StyleSheet.create({
   },
   darkSubText: {
     color: Colors.darkLightGray,
+  },
+  rtlText: {
+    writingDirection: 'rtl',
+    textAlign: 'center',
   },
 });
 

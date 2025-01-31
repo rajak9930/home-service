@@ -123,4 +123,12 @@ export default {
       callButton: 'Call',
     },
   },
+  // todo: History
+  history: {
+    empty: {
+      title: 'No Service History',
+      description1: "You haven't used any services yet.",
+      description2: 'Book a service to see your history here.',
+    },
+  },
 };
