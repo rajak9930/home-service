@@ -43,6 +43,7 @@ const CategoryDetails = () => {
           styles.header,
           {
             backgroundColor: isDarkMode ? Colors.navBg : Colors.pureWhite,
+            flexDirection: isRTL ? 'row-reverse' : 'row',
           },
         ]}>
         <View style={styles.searchContainer}>
@@ -60,8 +61,17 @@ const CategoryDetails = () => {
             styles.categoryWrap,
             isDarkMode ? styles.darkCategoryWrap : styles.lightCategoryWrap,
           ]}>
-          <View style={styles.titleContainer}>
-            <View style={styles.indicator} />
+          <View
+            style={[
+              styles.titleContainer,
+              {flexDirection: isRTL ? 'row-reverse' : 'row'},
+            ]}>
+            <View
+              style={[
+                styles.indicator,
+                {marginRight: isRTL ? 0 : 8, marginLeft: isRTL ? 8 : 0},
+              ]}
+            />
             <Text
               style={[
                 styles.title,
@@ -73,12 +83,16 @@ const CategoryDetails = () => {
             </Text>
           </View>
 
-          <View style={styles.gridContainer}>
+          <View
+            style={[
+              styles.gridContainer,
+              {flexDirection: isRTL ? 'row-reverse' : 'row'},
+            ]}>
             {filteredCategories.length > 0 ? (
               filteredCategories.map(item => (
                 <TouchableOpacity
                   key={item.id}
-                  style={styles.gridItem}
+                  style={[styles.gridItem]}
                   onPress={() =>
                     navigation.navigate('SubCategory', {category: item})
                   }>
@@ -89,6 +103,7 @@ const CategoryDetails = () => {
                     style={[
                       styles.categoryTitle,
                       isDarkMode ? styles.darkText : styles.lightText,
+                      {textAlign: isRTL ? 'right' : 'center'},
                     ]}>
                     {t(item.title)}
                   </Text>
@@ -100,6 +115,7 @@ const CategoryDetails = () => {
                   style={[
                     styles.noResultsText,
                     isDarkMode ? styles.darkText : styles.lightText,
+                    isRTL && styles.rtlText,
                   ]}>
                   {t('allCategories.noCategoriesFound')}
                 </Text>
@@ -208,6 +224,9 @@ const styles = StyleSheet.create({
   noResultsText: {
     fontSize: 16,
     fontWeight: '500',
+  },
+  rtlText: {
+    textAlign: 'left',
   },
 });
 
