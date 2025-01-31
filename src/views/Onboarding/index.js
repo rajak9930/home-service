@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
+  I18nManager, // Import I18nManager
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -15,6 +16,7 @@ import {useTranslation} from 'react-i18next';
 import Colors from '../../constants/colors';
 import images from '../../constants/images';
 import {useCustomTheme} from '../../theme/Theme';
+import useDirection from '../../hooks/useDirection';
 
 const {width, height} = Dimensions.get('window');
 
@@ -23,6 +25,7 @@ const Onboarding = () => {
   const swiperRef = useRef(null);
   const theme = useCustomTheme();
   const {t} = useTranslation();
+  const {isRTL} = useDirection();
 
   const onboardingData = [
     {
@@ -46,7 +49,6 @@ const Onboarding = () => {
   ];
 
   const isDarkMode = theme === 'dark';
-
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleNext = () => {
@@ -62,6 +64,9 @@ const Onboarding = () => {
   const handleGetStarted = () => {
     navigation.replace('SignIn');
   };
+
+  // If RTL, reverse the data array to maintain correct order
+  const displayData = isRTL ? [...onboardingData].reverse() : onboardingData;
 
   return (
     <View
@@ -83,8 +88,13 @@ const Onboarding = () => {
         activeDotStyle={styles.activeDot}
         loop={false}
         showsPagination={false}
-        onIndexChanged={index => setCurrentIndex(index)}>
-        {onboardingData.map((item, index) => (
+        onIndexChanged={index => setCurrentIndex(index)}
+        horizontal={true}
+        // Set the initial page to last for RTL
+        index={isRTL ? onboardingData.length - 1 : 0}
+        // Force RTL direction
+        dir="rtl">
+        {displayData.map((item, index) => (
           <View key={item.id} style={styles.slide}>
             <View style={styles.imageWrapper}>
               <Image source={item.image} style={styles.image} />
@@ -92,7 +102,11 @@ const Onboarding = () => {
 
             <View style={styles.contentContainer}>
               <View style={styles.paginationContainer}>
-                <View style={styles.pagination}>
+                <View
+                  style={[
+                    styles.pagination,
+                    {flexDirection: isRTL ? 'row-reverse' : 'row'},
+                  ]}>
                   {onboardingData.map((_, i) => (
                     <View
                       key={i}
@@ -124,7 +138,7 @@ const Onboarding = () => {
                 {item.description}
               </Text>
 
-              {index === onboardingData.length - 1 ? (
+              {index === (isRTL ? 0 : onboardingData.length - 1) ? (
                 <TouchableOpacity
                   style={styles.button}
                   onPress={handleGetStarted}>
@@ -136,7 +150,11 @@ const Onboarding = () => {
                 <TouchableOpacity
                   style={styles.nextButton}
                   onPress={handleNext}>
-                  <Icon name="right" size={20} color={Colors.pureWhite} />
+                  <Icon
+                    name={isRTL ? 'left' : 'right'}
+                    size={20}
+                    color={Colors.pureWhite}
+                  />
                 </TouchableOpacity>
               )}
             </View>
@@ -196,7 +214,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     fontWeight: '500',
   },
-
   topImage: {
     position: 'absolute',
     top: 0,
@@ -219,7 +236,6 @@ const styles = StyleSheet.create({
     color: '#2C2B46',
     fontWeight: '500',
   },
-
   dot: {
     width: 8,
     height: 8,
