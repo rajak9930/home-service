@@ -112,7 +112,10 @@ const Onboarding = () => {
                       key={i}
                       style={[
                         styles.dot,
-                        currentIndex === i && styles.activeDot,
+                        isRTL
+                          ? onboardingData.length - 1 - currentIndex === i &&
+                            styles.activeDot
+                          : currentIndex === i && styles.activeDot,
                       ]}
                     />
                   ))}
