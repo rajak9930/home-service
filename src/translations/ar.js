@@ -155,4 +155,20 @@ export default {
       draft: 'المسودة',
     },
   },
+  // todo: Profile
+  profile: {
+    title: 'الملف الشخصي',
+    details: {
+      phoneNumber: 'رقم الهاتف',
+      email: 'البريد الإلكتروني',
+      gender: 'الجنس',
+      male: 'ذكر',
+      languagePreference: 'تفضيلات اللغة',
+    },
+    languages: {
+      english: 'الإنجليزية',
+      arabic: 'العربية',
+    },
+    logout: 'تسجيل الخروج',
+  },
 };

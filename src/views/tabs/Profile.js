@@ -5,8 +5,8 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  Alert,
   ActivityIndicator,
+  ScrollView,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -15,22 +15,27 @@ import {supabase} from '../../supabase/supabaseClient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 
 import useTypedSelector from '../../hooks/useTypedSelector';
 import {selectedUser, setUser} from '../../redux/auth/authSlice';
 import Colors from '../../constants/colors';
 import {useCustomTheme} from '../../theme/Theme';
+import useDirection from '../../hooks/useDirection';
 import Toast from 'react-native-toast-message';
 
 const Profile = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const theme = useCustomTheme();
+  const {t, i18n} = useTranslation();
+  const {isRTL} = useDirection();
 
   const userDetails = useTypedSelector(selectedUser);
   const isDarkMode = theme === 'dark';
 
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState(isRTL ? 'ar' : 'en');
 
   useEffect(() => {
     const configureGoogleSignIn = async () => {
@@ -48,6 +53,17 @@ const Profile = () => {
     configureGoogleSignIn();
   }, []);
 
+  const handleLanguageChange = async language => {
+    try {
+      setSelectedLanguage(language);
+      await AsyncStorage.setItem('appLanguage', language);
+      // You'll implement the actual language change logic here later
+      console.log('Language preference saved:', language);
+    } catch (error) {
+      console.error('Error saving language preference:', error);
+    }
+  };
+
   const handleSignOut = async () => {
     setIsLoading(true);
     try {
@@ -60,7 +76,7 @@ const Profile = () => {
       console.error('Error signing out:', error);
       Toast.show({
         type: 'error',
-        text2: 'Failed to logout',
+        text2: t('profile.logout.failed'),
       });
     } finally {
       setIsLoading(false);
@@ -73,25 +89,59 @@ const Profile = () => {
         styles.container,
         isDarkMode ? styles.darkContainer : styles.lightContainer,
       ]}>
-      <View style={styles.titleContainer}>
-        <View style={styles.indicator} />
-        <Text style={[styles.title, isDarkMode && styles.darkText]}>
-          Profile
+      <View
+        style={[
+          styles.titleContainer,
+          {flexDirection: isRTL ? 'row-reverse' : 'row'},
+        ]}>
+        <View
+          style={[
+            styles.indicator,
+            {marginRight: isRTL ? 0 : 8, marginLeft: isRTL ? 8 : 0},
+          ]}
+        />
+        <Text
+          style={[
+            styles.title,
+            isDarkMode && styles.darkText,
+            isRTL && styles.rtlText,
+          ]}>
+          {t('profile.title')}
         </Text>
       </View>
 
-      <View style={[styles.tabsHeader, isDarkMode && styles.darkCard]}>
-        <View style={styles.tabContainer}>
-          <View style={styles.profileSection}>
+      <ScrollView
+        style={styles.mainScrollView}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}>
+        <View style={[styles.tabsHeader, isDarkMode && styles.darkCard]}>
+          <View
+            style={[
+              styles.profileSection,
+              {flexDirection: isRTL ? 'row-reverse' : 'row'},
+            ]}>
             <Image
               source={{uri: userDetails?.user?.user_metadata?.picture}}
-              style={styles.profileImage}
+              style={[
+                styles.profileImage,
+                {marginRight: isRTL ? 0 : 16, marginLeft: isRTL ? 16 : 0},
+              ]}
             />
             <View>
-              <Text style={[styles.name, isDarkMode && styles.darkText]}>
+              <Text
+                style={[
+                  styles.name,
+                  isDarkMode && styles.darkText,
+                  isRTL && styles.rtlText,
+                ]}>
                 {userDetails?.user?.user_metadata?.full_name}
               </Text>
-              <Text style={[styles.username, isDarkMode && styles.darkSubText]}>
+              <Text
+                style={[
+                  styles.username,
+                  isDarkMode && styles.darkSubText,
+                  isRTL && styles.rtlText,
+                ]}>
                 @
                 {userDetails?.user?.user_metadata?.name
                   ?.toLowerCase()
@@ -100,47 +150,211 @@ const Profile = () => {
             </View>
           </View>
         </View>
-      </View>
 
-      <View style={[styles.detailsContainer, isDarkMode && styles.darkCard]}>
-        <View style={styles.detailItem}>
-          <Text style={[styles.detailLabel, isDarkMode && styles.darkText]}>
-            Phone Number
-          </Text>
-          <View
-            style={[styles.detailValue, isDarkMode && styles.darkDetailValue]}>
-            <Text style={[styles.detailText, isDarkMode && styles.darkText]}>
-              +92 {userDetails?.user?.phone || '313 4866442'}
+        <View style={[styles.detailsContainer, isDarkMode && styles.darkCard]}>
+          <View style={styles.detailItem}>
+            <Text
+              style={[
+                styles.detailLabel,
+                isDarkMode && styles.darkText,
+                isRTL && styles.rtlText,
+              ]}>
+              {t('profile.details.phoneNumber')}
             </Text>
+            <View
+              style={[
+                styles.detailValue,
+                isDarkMode && styles.darkDetailValue,
+              ]}>
+              <Text
+                style={[
+                  styles.detailText,
+                  isDarkMode && styles.darkText,
+                  isRTL && styles.rtlText,
+                ]}>
+                +92 {userDetails?.user?.phone || '313 4866442'}
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.detailItem}>
+            <Text
+              style={[
+                styles.detailLabel,
+                isDarkMode && styles.darkText,
+                isRTL && styles.rtlText,
+              ]}>
+              {t('profile.details.email')}
+            </Text>
+            <View
+              style={[
+                styles.detailValue,
+                isDarkMode && styles.darkDetailValue,
+              ]}>
+              <Text
+                style={[
+                  styles.detailText,
+                  isDarkMode && styles.darkText,
+                  isRTL && styles.rtlText,
+                ]}>
+                {userDetails?.user?.email}
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.detailItem}>
+            <Text
+              style={[
+                styles.detailLabel,
+                isDarkMode && styles.darkText,
+                isRTL && styles.rtlText,
+              ]}>
+              {t('profile.details.gender')}
+            </Text>
+            <View
+              style={[
+                styles.detailValue,
+                isDarkMode && styles.darkDetailValue,
+              ]}>
+              <Text
+                style={[
+                  styles.detailText,
+                  isDarkMode && styles.darkText,
+                  isRTL && styles.rtlText,
+                ]}>
+                {t('profile.details.male')}
+              </Text>
+            </View>
+          </View>
+
+          {/* Language Preference Section */}
+          <View style={styles.detailItem}>
+            <Text
+              style={[
+                styles.detailLabel,
+                isDarkMode && styles.darkText,
+                isRTL && styles.rtlText,
+              ]}>
+              {t('profile.details.languagePreference')}
+            </Text>
+            <View style={styles.languageOptions}>
+              {/* English Option */}
+              <TouchableOpacity
+                style={[
+                  styles.languageButton,
+                  selectedLanguage === 'en' && styles.selectedLanguage,
+                  isDarkMode && styles.darkDetailValue,
+                  {flexDirection: isRTL ? 'row-reverse' : 'row'},
+                ]}
+                onPress={() => handleLanguageChange('en')}>
+                <View
+                  style={[
+                    styles.languageIconContainer,
+                    {
+                      marginRight: isRTL ? 0 : 8,
+                      marginLeft: isRTL ? 8 : 0,
+                    },
+                  ]}>
+                  <Icon name="globe-outline" size={20} color={Colors.primary} />
+                </View>
+                <View style={styles.languageContent}>
+                  <Text
+                    style={[
+                      styles.languageText,
+                      selectedLanguage === 'en' && styles.selectedLanguageText,
+                      isDarkMode && styles.darkText,
+                      isRTL && styles.rtlText,
+                    ]}>
+                    English
+                  </Text>
+                  <Text
+                    style={[
+                      styles.languageSubtext,
+                      isDarkMode && styles.darkSubText,
+                      isRTL && styles.rtlText,
+                    ]}>
+                    English
+                  </Text>
+                </View>
+                {selectedLanguage === 'en' && (
+                  <View
+                    style={[
+                      styles.checkmark,
+                      {
+                        marginLeft: isRTL ? 0 : 'auto',
+                        marginRight: isRTL ? 'auto' : 0,
+                      },
+                    ]}>
+                    <Icon
+                      name="checkmark-circle"
+                      size={20}
+                      color={Colors.primary}
+                    />
+                  </View>
+                )}
+              </TouchableOpacity>
+
+              {/* Arabic Option */}
+              <TouchableOpacity
+                style={[
+                  styles.languageButton,
+                  selectedLanguage === 'ar' && styles.selectedLanguage,
+                  isDarkMode && styles.darkDetailValue,
+                  {flexDirection: isRTL ? 'row-reverse' : 'row'},
+                ]}
+                onPress={() => handleLanguageChange('ar')}>
+                <View
+                  style={[
+                    styles.languageIconContainer,
+                    {
+                      marginRight: isRTL ? 0 : 8,
+                      marginLeft: isRTL ? 8 : 0,
+                    },
+                  ]}>
+                  <Icon name="globe-outline" size={20} color={Colors.primary} />
+                </View>
+                <View style={styles.languageContent}>
+                  <Text
+                    style={[
+                      styles.languageText,
+                      selectedLanguage === 'ar' && styles.selectedLanguageText,
+                      isDarkMode && styles.darkText,
+                      isRTL && styles.rtlText,
+                    ]}>
+                    العربية
+                  </Text>
+                  <Text
+                    style={[
+                      styles.languageSubtext,
+                      isDarkMode && styles.darkSubText,
+                      isRTL && styles.rtlText,
+                    ]}>
+                    Arabic
+                  </Text>
+                </View>
+                {selectedLanguage === 'ar' && (
+                  <View
+                    style={[
+                      styles.checkmark,
+                      {
+                        marginLeft: isRTL ? 0 : 'auto',
+                        marginRight: isRTL ? 'auto' : 0,
+                      },
+                    ]}>
+                    <Icon
+                      name="checkmark-circle"
+                      size={20}
+                      color={Colors.primary}
+                    />
+                  </View>
+                )}
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
+      </ScrollView>
 
-        <View style={styles.detailItem}>
-          <Text style={[styles.detailLabel, isDarkMode && styles.darkText]}>
-            E-mail
-          </Text>
-          <View
-            style={[styles.detailValue, isDarkMode && styles.darkDetailValue]}>
-            <Text style={[styles.detailText, isDarkMode && styles.darkText]}>
-              {userDetails?.user?.email}
-            </Text>
-          </View>
-        </View>
-
-        <View style={styles.detailItem}>
-          <Text style={[styles.detailLabel, isDarkMode && styles.darkText]}>
-            Gender
-          </Text>
-          <View
-            style={[styles.detailValue, isDarkMode && styles.darkDetailValue]}>
-            <Text style={[styles.detailText, isDarkMode && styles.darkText]}>
-              Male
-            </Text>
-          </View>
-        </View>
-      </View>
-
-      {/* Fixed Logout Button */}
+      {/* Logout Button */}
       <View
         style={[
           styles.logoutContainer,
@@ -151,7 +365,10 @@ const Profile = () => {
           },
         ]}>
         <TouchableOpacity
-          style={styles.logoutButton}
+          style={[
+            styles.logoutButton,
+            {flexDirection: isRTL ? 'row-reverse' : 'row'},
+          ]}
           onPress={handleSignOut}
           disabled={isLoading}>
           {!isLoading && (
@@ -160,7 +377,14 @@ const Profile = () => {
           {isLoading ? (
             <ActivityIndicator color="#FF4B55" />
           ) : (
-            <Text style={styles.logoutText}>Logout</Text>
+            <Text
+              style={[
+                styles.logoutText,
+                isRTL && styles.rtlText,
+                {marginLeft: isRTL ? 0 : 8, marginRight: isRTL ? 8 : 0},
+              ]}>
+              {t('profile.logout')}
+            </Text>
           )}
         </TouchableOpacity>
       </View>
@@ -171,6 +395,12 @@ const Profile = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  mainScrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    paddingBottom: 100, // Space for logout button
   },
   lightContainer: {
     backgroundColor: Colors.primaryLight,
@@ -198,7 +428,6 @@ const styles = StyleSheet.create({
     height: 20,
     backgroundColor: '#CABDFF',
     borderRadius: 2,
-    marginRight: 8,
   },
   title: {
     fontSize: 24,
@@ -214,28 +443,24 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,
     shadowRadius: 4,
-  },
-  tabContainer: {
-    flexDirection: 'row',
-    padding: 16,
+    padding: 10,
   },
   profileSection: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   profileImage: {
-    width: 75,
-    height: 75,
-    borderRadius: 40,
-    marginRight: 16,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
   },
   name: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'bold',
     color: Colors.black,
   },
   username: {
-    fontSize: 16,
+    fontSize: 13,
     color: Colors.lightGray,
   },
   detailsContainer: {
@@ -255,13 +480,13 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   detailLabel: {
-    fontSize: 15,
+    fontSize: 13,
     color: Colors.black,
     marginBottom: 8,
   },
   detailValue: {
     backgroundColor: Colors.primaryLight,
-    padding: 16,
+    padding: 12,
     borderRadius: 8,
     flexDirection: 'row',
     alignItems: 'center',
@@ -270,7 +495,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primaryDark,
   },
   detailText: {
-    fontSize: 16,
+    fontSize: 14,
     color: Colors.black,
   },
   logoutContainer: {
@@ -293,6 +518,62 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     marginLeft: 8,
+  },
+  languageOptions: {
+    gap: 12,
+  },
+  languageButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.primaryLight,
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 8,
+    borderWidth: 1.5,
+    borderColor: 'transparent',
+  },
+  selectedLanguage: {
+    borderColor: Colors.primary,
+    backgroundColor: `${Colors.primary}15`,
+  },
+  languageIconContainer: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.primaryLight,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+  },
+  languageContent: {
+    flex: 1,
+  },
+  languageText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: Colors.black,
+    marginBottom: 2,
+  },
+  languageSubtext: {
+    fontSize: 12,
+    color: Colors.lightGray,
+  },
+  selectedLanguageText: {
+    color: Colors.primary,
+  },
+  checkmark: {
+    marginLeft: 'auto',
+  },
+  rtlText: {
+    writingDirection: 'rtl',
   },
 });
 

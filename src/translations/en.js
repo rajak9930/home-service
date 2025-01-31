@@ -156,4 +156,20 @@ export default {
       draft: 'Draft',
     },
   },
+  // todo: Profile
+  profile: {
+    title: 'Profile',
+    details: {
+      phoneNumber: 'Phone Number',
+      email: 'E-mail',
+      gender: 'Gender',
+      male: 'Male',
+      languagePreference: 'Language Preference',
+    },
+    languages: {
+      english: 'English',
+      arabic: 'Arabic',
+    },
+    logout: 'Logout',
+  },
 };
