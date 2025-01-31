@@ -201,4 +201,19 @@ export default {
       acUninstallation: 'فك المكيف',
     },
   },
+  // todo: Service Details
+  serviceDetails: {
+    typeOfProperty: 'نوع العقار',
+    total: 'المجموع',
+    bookNow: 'احجز الآن',
+    saveDraft: 'حفظ المسودة',
+    removeDraft: 'إزالة المسودة',
+    draftSuccess: 'تم حفظ الخدمة في المسودات',
+    draftRemoved: 'تمت إزالة الخدمة من المسودات',
+    propertyTypes: {
+      apartment: 'شقة',
+      villa: 'فيلا',
+      office: 'مكتب',
+    },
+  },
 };

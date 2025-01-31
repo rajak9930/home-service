@@ -202,4 +202,19 @@ export default {
       acUninstallation: 'AC Uninstallation',
     },
   },
+  // todo: Service Details
+  serviceDetails: {
+    typeOfProperty: 'Type of Property',
+    total: 'Total',
+    bookNow: 'Book Now',
+    saveDraft: 'Save Draft',
+    removeDraft: 'Remove Draft',
+    draftSuccess: 'Service saved to drafts',
+    draftRemoved: 'Service removed from drafts',
+    propertyTypes: {
+      apartment: 'Apartment',
+      villa: 'Villa',
+      office: 'Office',
+    },
+  },
 };

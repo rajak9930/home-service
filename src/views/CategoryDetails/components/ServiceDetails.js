@@ -32,16 +32,22 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import useTypedSelector from '../../../hooks/useTypedSelector';
 import Toast from 'react-native-toast-message';
 import {setBookedService} from '../../../redux/bookedService/bookedServiceSlice';
+import {useTranslation} from 'react-i18next';
+import useDirection from '../../../hooks/useDirection';
 
 const ServiceDetails = () => {
   const route = useRoute();
   const theme = useCustomTheme();
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const {t} = useTranslation();
+  const {isRTL} = useDirection();
 
   const isDarkMode = theme === 'dark';
   const {service} = route.params;
   const draftService = useTypedSelector(selectedDraftService);
+
+  console.log('service', service);
 
   const [selectedProperty, setSelectedProperty] = useState(2);
   const [units, setUnits] = useState(2);
@@ -162,16 +168,41 @@ const ServiceDetails = () => {
                 isDarkMode ? styles.darkGradient : styles.lightGradient,
               ]}
             />
+
             <TouchableOpacity
-              style={styles.backButton}
+              style={[styles.backButton]}
               onPress={() => navigation.goBack()}>
-              <Icon name="arrow-back" size={24} color={Colors.primaryDark} />
+              <Icon
+                name={isRTL ? 'arrow-back' : 'arrow-back'}
+                size={24}
+                color={Colors.primaryDark}
+              />
             </TouchableOpacity>
-            <View style={styles.ratingContainer}>
+
+            <View
+              style={[
+                styles.ratingContainer,
+                {left: isRTL ? null : 16, right: isRTL ? 16 : null},
+                {flexDirection: isRTL ? 'row-reverse' : 'row'},
+              ]}>
               <Icon name="star" size={13} color="#FFF" />
-              <Text style={styles.ratingText}>{service.rating}</Text>
+              <Text
+                style={[
+                  styles.ratingText,
+                  {marginLeft: isRTL ? 0 : 4, marginRight: isRTL ? 4 : 0},
+                ]}>
+                {service.rating}
+              </Text>
             </View>
-            <Text style={styles.serviceTitle}>{service.title}</Text>
+
+            <Text
+              style={[
+                styles.serviceTitle,
+                {left: isRTL ? null : 16, right: isRTL ? 16 : null},
+                isRTL && styles.rtlText,
+              ]}>
+              {t(service.title)}
+            </Text>
           </View>
 
           {/* Property Type Section */}
@@ -181,17 +212,32 @@ const ServiceDetails = () => {
                 styles.propertyTypeCard,
                 isDarkMode ? styles.darkCard : styles.lightCard,
               ]}>
-              <View style={styles.sectionHeader}>
-                <View style={styles.indicator} />
+              <View
+                style={[
+                  styles.sectionHeader,
+                  {flexDirection: isRTL ? 'row-reverse' : 'row'},
+                ]}>
+                <View
+                  style={[
+                    styles.indicator,
+                    {marginRight: isRTL ? 0 : 8, marginLeft: isRTL ? 8 : 0},
+                  ]}
+                />
                 <Text
                   style={[
                     styles.sectionTitle,
                     isDarkMode ? styles.darkText : styles.lightText,
+                    isRTL && styles.rtlText,
                   ]}>
-                  Type of Property
+                  {t('serviceDetails.typeOfProperty')}
                 </Text>
               </View>
-              <View style={styles.propertyTypes}>
+
+              <View
+                style={[
+                  styles.propertyTypes,
+                  {flexDirection: isRTL ? 'row-reverse' : 'row'},
+                ]}>
                 {propertyTypes.map(type => (
                   <TouchableOpacity
                     key={type.id}
@@ -220,8 +266,11 @@ const ServiceDetails = () => {
                         isDarkMode
                           ? styles.darkPropertyText
                           : styles.lightPropertyText,
+                        isRTL && styles.rtlText,
                       ]}>
-                      {type.title}
+                      {t(
+                        `serviceDetails.propertyTypes.${type.title.toLowerCase()}`,
+                      )}
                     </Text>
                   </TouchableOpacity>
                 ))}
@@ -252,23 +301,34 @@ const ServiceDetails = () => {
               isDarkMode ? styles.darkBottomSection : styles.lightBottomSection,
               {opacity: isBottomSheetVisible ? 0.3 : 1},
             ]}>
-            <View style={styles.totalContainer}>
+            <View
+              style={[
+                styles.totalContainer,
+                {flexDirection: isRTL ? 'row-reverse' : 'row'},
+              ]}>
               <Text
                 style={[
                   styles.totalLabel,
                   isDarkMode ? styles.darkTotalLabel : styles.lightTotalLabel,
+                  isRTL && styles.rtlText,
                 ]}>
-                Total:
+                {t('serviceDetails.total')}:
               </Text>
               <Text
                 style={[
                   styles.totalAmount,
                   isDarkMode ? styles.darkTotalAmount : styles.lightTotalAmount,
+                  isRTL && styles.rtlText,
                 ]}>
                 USD {thousandSeparator(service.price * units)}
               </Text>
             </View>
-            <View style={styles.buttonContainer}>
+
+            <View
+              style={[
+                styles.buttonContainer,
+                {flexDirection: isRTL ? 'row-reverse' : 'row'},
+              ]}>
               <TouchableOpacity
                 style={[
                   styles.draftButton,
@@ -289,14 +349,20 @@ const ServiceDetails = () => {
                     isDarkMode
                       ? styles.darkDraftButtonText
                       : styles.lightDraftButtonText,
+                    isRTL && styles.rtlText,
                   ]}>
-                  {isDraftSaved ? 'Remove Draft' : 'Save Draft'}
+                  {isDraftSaved
+                    ? t('serviceDetails.removeDraft')
+                    : t('serviceDetails.saveDraft')}
                 </Text>
               </TouchableOpacity>
+
               <TouchableOpacity
                 style={styles.bookButton}
                 onPress={() => setIsBottomSheetVisible(true)}>
-                <Text style={styles.bookButtonText}>Book Now</Text>
+                <Text style={[styles.bookButtonText, isRTL && styles.rtlText]}>
+                  {t('serviceDetails.bookNow')}
+                </Text>
               </TouchableOpacity>
             </View>
           </Animated.View>
