@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {useTranslation} from 'react-i18next';
 import Colors from '../../../constants/colors';
 import {useCustomTheme} from '../../../theme/Theme';
 import useTypedSelector from '../../../hooks/useTypedSelector';
@@ -19,17 +18,12 @@ import {
 import {useDispatch} from 'react-redux';
 import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import useDirection from '../../../hooks/useDirection';
 
 const Draft = () => {
   const theme = useCustomTheme();
   const dispatch = useDispatch();
-  const {t} = useTranslation();
-  const {isRTL} = useDirection();
   const draftService = useTypedSelector(selectedDraftService);
   const isDarkMode = theme === 'dark';
-
-  console.log('isRTL', isRTL);
 
   const handleRemove = async data => {
     dispatch(setDraftService({service: data}));
@@ -41,7 +35,7 @@ const Draft = () => {
 
     Toast.show({
       type: 'success',
-      text2: t('draft.toast.removeSuccess'),
+      text2: 'Service removed from drafts',
     });
   };
 
@@ -62,29 +56,14 @@ const Draft = () => {
               color={Colors.primary}
             />
           </View>
-          <Text
-            style={[
-              styles.noDraftText,
-              isDarkMode && styles.darkText,
-              isRTL && styles.rtlText,
-            ]}>
-            {t('draft.empty.title')}
+          <Text style={[styles.noDraftText, isDarkMode && styles.darkText]}>
+            No Draft Services
           </Text>
-          <Text
-            style={[
-              styles.subText,
-              isDarkMode && styles.darkSubText,
-              isRTL && styles.rtlText,
-            ]}>
-            {t('draft.empty.description1')}
+          <Text style={[styles.subText, isDarkMode && styles.darkSubText]}>
+            You don't have any saved drafts yet.
           </Text>
-          <Text
-            style={[
-              styles.subText,
-              isDarkMode && styles.darkSubText,
-              isRTL && styles.rtlText,
-            ]}>
-            {t('draft.empty.description2')}
+          <Text style={[styles.subText, isDarkMode && styles.darkSubText]}>
+            Save a service booking as draft to see it here.
           </Text>
         </View>
       </View>
@@ -102,81 +81,46 @@ const Draft = () => {
           style={[
             styles.draftCard,
             isDarkMode ? styles.darkCard : styles.lightCard,
-            {flexDirection: isRTL ? 'row-reverse' : 'row'},
           ]}>
-          {/* Image */}
+          {/* Left side - Image */}
           <Image source={item.service.image} style={styles.serviceImage} />
 
-          {/* Content */}
+          {/* Right side - Content */}
           <View style={styles.contentContainer}>
-            <View
-              style={[
-                styles.headerRow,
-                {flexDirection: isRTL ? 'row-reverse' : 'row'},
-              ]}>
-              <Text
-                style={[
-                  styles.title,
-                  isDarkMode && styles.darkText,
-                  isRTL && styles.rtlText,
-                ]}>
+            <View style={styles.headerRow}>
+              <Text style={[styles.title, isDarkMode && styles.darkText]}>
                 {item.service.title}
               </Text>
               <TouchableOpacity
                 onPress={() => handleRemove(item.service)}
-                style={[styles.deleteButton, isRTL ? {left: -4} : {right: -4}]}>
+                style={styles.deleteButton}>
                 <Icon name="trash-outline" size={16} color="#FF4B55" />
               </TouchableOpacity>
             </View>
 
-            <View
-              style={[
-                styles.ratingContainer,
-                {flexDirection: isRTL ? 'row-reverse' : 'row'},
-              ]}>
+            <View style={styles.ratingContainer}>
               <Icon name="star" size={14} color="#FFD700" />
-              <Text
-                style={[
-                  styles.ratingText,
-                  isDarkMode && styles.darkText,
-                  {marginLeft: isRTL ? 0 : 4, marginRight: isRTL ? 4 : 0},
-                ]}>
+              <Text style={[styles.ratingText, isDarkMode && styles.darkText]}>
                 {item.service.rating}
               </Text>
               <Text
-                style={[
-                  styles.reviewCount,
-                  isDarkMode && styles.darkSubText,
-                  {marginLeft: isRTL ? 0 : 4, marginRight: isRTL ? 4 : 0},
-                ]}>
-                {t('draft.service.reviews', {count: item.service.reviews})}
+                style={[styles.reviewCount, isDarkMode && styles.darkSubText]}>
+                ({item.service.reviews})
               </Text>
             </View>
 
-            <View
-              style={[
-                styles.priceContainer,
-                {flexDirection: isRTL ? 'row-reverse' : 'row'},
-              ]}>
+            <View style={styles.priceContainer}>
               <Text
                 style={[
                   styles.price,
                   {
                     color: isDarkMode ? Colors.pureWhite : '#3D7DAB',
                   },
-                  isRTL && styles.rtlText,
                 ]}>
-                {t('draft.service.price', {
-                  amount: item.service.price * item.units,
-                })}
+                $ {item.service.price * item.units}
               </Text>
-              <Text
-                style={[
-                  styles.units,
-                  isDarkMode && styles.darkSubText,
-                  isRTL && styles.rtlText,
-                ]}>
-                {t('draft.service.units', {count: item.units})}
+              <Text style={[styles.units, isDarkMode && styles.darkSubText]}>
+                × {item.units} units
               </Text>
             </View>
           </View>
@@ -199,6 +143,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 20,
+    // new
     backgroundColor: Colors.pureWhite,
     marginBottom: 16,
     borderRadius: 8,
@@ -227,7 +172,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.black,
     marginBottom: 8,
-    textAlign: 'center',
   },
   subText: {
     fontSize: 14,
@@ -235,6 +179,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 24,
   },
+
   draftCard: {
     flexDirection: 'row',
     borderRadius: 8,
@@ -266,7 +211,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '600',
     color: Colors.black,
-    flex: 1,
   },
   ratingContainer: {
     flexDirection: 'row',
@@ -275,12 +219,14 @@ const styles = StyleSheet.create({
   },
   ratingText: {
     fontSize: 12,
+    marginLeft: 4,
     fontWeight: '500',
     color: Colors.black,
   },
   reviewCount: {
     fontSize: 12,
     color: '#7D8597',
+    marginLeft: 4,
   },
   priceContainer: {
     flexDirection: 'row',
@@ -302,6 +248,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     backgroundColor: '#FFEFF0',
     position: 'absolute',
+    right: -4,
   },
   darkCard: {
     backgroundColor: Colors.navBg,
@@ -311,9 +258,6 @@ const styles = StyleSheet.create({
   },
   darkSubText: {
     color: '#A5A5A5',
-  },
-  rtlText: {
-    writingDirection: 'rtl',
   },
 });
 
