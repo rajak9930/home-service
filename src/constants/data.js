@@ -196,7 +196,7 @@ export const DRAWER_ITEMS = [
 export const subCategoryList = [
   {
     id: 1,
-    title: 'AC Check-Up',
+    title: 'subCategory.services.acCheckup',
     rating: 4.8,
     reviews: 87,
     price: 128,
@@ -204,7 +204,7 @@ export const subCategoryList = [
   },
   {
     id: 2,
-    title: 'AC Regular Service',
+    title: 'subCategory.services.acRegularService',
     rating: 4.5,
     reviews: 87,
     price: 128,
@@ -212,7 +212,7 @@ export const subCategoryList = [
   },
   {
     id: 3,
-    title: 'AC Installation',
+    title: 'subCategory.services.acInstallation',
     rating: 4.5,
     reviews: 87,
     price: 170,
@@ -220,7 +220,7 @@ export const subCategoryList = [
   },
   {
     id: 4,
-    title: 'AC Uninstallation',
+    title: 'subCategory.services.acUninstallation',
     rating: 4.5,
     reviews: 87,
     price: 170,

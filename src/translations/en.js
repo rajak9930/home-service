@@ -188,4 +188,18 @@ export default {
     shifting: 'Shifting',
     mensSalon: "Men's Salon",
   },
+  // todo: Sub Categories
+  subCategory: {
+    searchPlaceholder: 'Search Sub Category',
+    startsFrom: 'Starts From',
+    noResults: 'No categories found',
+    comingSoon: 'Coming Soon...',
+    applianceRepair: 'Appliance Repair',
+    services: {
+      acCheckup: 'AC Check-Up',
+      acRegularService: 'AC Regular Service',
+      acInstallation: 'AC Installation',
+      acUninstallation: 'AC Uninstallation',
+    },
+  },
 };

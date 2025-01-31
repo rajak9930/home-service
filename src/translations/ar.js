@@ -187,4 +187,18 @@ export default {
     shifting: 'النقل',
     mensSalon: 'صالون الرجال',
   },
+  // todo: Sub Categories
+  subCategory: {
+    searchPlaceholder: 'بحث في الفئات الفرعية',
+    startsFrom: 'يبدأ من',
+    noResults: 'لم يتم العثور على فئات',
+    comingSoon: 'قريباً...',
+    applianceRepair: 'إصلاح الأجهزة',
+    services: {
+      acCheckup: 'فحص المكيف',
+      acRegularService: 'خدمة المكيف العادية',
+      acInstallation: 'تركيب المكيف',
+      acUninstallation: 'فك المكيف',
+    },
+  },
 };

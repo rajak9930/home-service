@@ -16,12 +16,16 @@ import Colors from '../../../constants/colors';
 import SearchBar from '../../../components/SearchBar';
 import {useCustomTheme} from '../../../theme/Theme';
 import {subCategoryList} from '../../../constants/data';
+import {useTranslation} from 'react-i18next';
+import useDirection from '../../../hooks/useDirection';
 
 const SubCategory = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const theme = useCustomTheme();
   const isDarkMode = theme === 'dark';
+  const {t} = useTranslation();
+  const {isRTL} = useDirection();
 
   const [searchText, setSearchText] = useState('');
   const [isGridView, setIsGridView] = useState(false);
@@ -37,13 +41,31 @@ const SubCategory = () => {
   const renderListView = item => (
     <TouchableOpacity
       key={item.id}
-      style={styles.serviceCard}
+      style={[
+        styles.serviceCard,
+        {flexDirection: isRTL ? 'row-reverse' : 'row'},
+      ]}
       onPress={() => navigation.navigate('ServiceDetails', {service: item})}>
-      <Image source={item.image} style={styles.serviceImage} />
+      <Image
+        source={item.image}
+        style={[
+          styles.serviceImage,
+          {marginRight: isRTL ? 0 : 12, marginLeft: isRTL ? 12 : 0},
+        ]}
+      />
       <View style={styles.serviceInfo}>
-        <View style={styles.ratingContainer}>
+        <View
+          style={[
+            styles.ratingContainer,
+            {flexDirection: isRTL ? 'row-reverse' : 'row'},
+          ]}>
           <Icon name="star" size={16} color="#FFC554" />
-          <Text style={[styles.rating, isDarkMode && styles.darkRatingText]}>
+          <Text
+            style={[
+              styles.rating,
+              isDarkMode && styles.darkRatingText,
+              {marginLeft: isRTL ? 0 : 4, marginRight: isRTL ? 4 : 0},
+            ]}>
             {item.rating}
           </Text>
           <Text style={[styles.reviews, isDarkMode && styles.darkReviewsText]}>
@@ -51,12 +73,16 @@ const SubCategory = () => {
           </Text>
         </View>
         <Text style={[styles.serviceTitle, isDarkMode && styles.darkText]}>
-          {item.title}
+          {t(item.title)}
         </Text>
-        <View style={styles.priceContainer}>
+        <View
+          style={[
+            styles.priceContainer,
+            {alignItems: isRTL ? 'flex-end' : 'flex-start'},
+          ]}>
           <Text
             style={[styles.priceLabel, isDarkMode && styles.darkPriceLabel]}>
-            Starts From
+            {t('subCategory.startsFrom')}
           </Text>
           <View style={styles.priceTag}>
             <Text style={styles.price}>${item.price}</Text>
@@ -78,10 +104,23 @@ const SubCategory = () => {
       ]}
       onPress={() => navigation.navigate('ServiceDetails', {service: item})}>
       <Image source={item.image} style={styles.gridImage} />
-      <View style={styles.gridInfo}>
-        <View style={styles.ratingContainer}>
+      <View
+        style={[
+          styles.gridInfo,
+          {alignItems: isRTL ? 'flex-end' : 'flex-start', padding: 12},
+        ]}>
+        <View
+          style={[
+            styles.ratingContainer,
+            {flexDirection: isRTL ? 'row-reverse' : 'row'},
+          ]}>
           <Icon name="star" size={14} color="#FFC554" />
-          <Text style={[styles.rating, isDarkMode && styles.darkRatingText]}>
+          <Text
+            style={[
+              styles.rating,
+              isDarkMode && styles.darkRatingText,
+              {marginLeft: isRTL ? 0 : 4, marginRight: isRTL ? 4 : 0},
+            ]}>
             {item.rating}
           </Text>
           <Text style={[styles.reviews, isDarkMode && styles.darkReviewsText]}>
@@ -89,12 +128,12 @@ const SubCategory = () => {
           </Text>
         </View>
         <Text style={[styles.gridTitle, isDarkMode && styles.darkText]}>
-          {item.title}
+          {t(item.title)}
         </Text>
         <View style={styles.gridPriceContainer}>
           <Text
             style={[styles.priceLabel, isDarkMode && styles.darkPriceLabel]}>
-            Starts From
+            {t('subCategory.startsFrom')}
           </Text>
           <View style={styles.priceTag}>
             <Text style={styles.price}>${item.price}</Text>
@@ -117,107 +156,108 @@ const SubCategory = () => {
         ]}>
         <View style={styles.searchContainer}>
           <SearchBar
-            placeholder="Search Sub Category"
+            placeholder={t('subCategory.searchPlaceholder')}
             searchText={searchText}
             setSearchText={setSearchText}
           />
         </View>
       </View>
 
-      {category?.title === 'AC Repair' ? (
-        <>
+      {category?.title === 'allCategories.acRepair' ? (
+        <View
+          style={[
+            styles.contentContainer,
+            isDarkMode ? styles.darkContent : styles.lightContent,
+          ]}>
           <View
             style={[
-              styles.contentContainer,
-              isDarkMode ? styles.darkContent : styles.lightContent,
+              styles.titleRow,
+              {flexDirection: isRTL ? 'row-reverse' : 'row'},
             ]}>
-            <View style={styles.titleRow}>
-              <View style={styles.titleContainer}>
-                <View style={styles.indicator} />
-                <Text
-                  style={[
-                    styles.title,
-                    isDarkMode ? styles.darkText : styles.lightText,
-                  ]}>
-                  {category?.title || 'Appliance Repair'}
-                </Text>
-              </View>
+            <View
+              style={[
+                styles.titleContainer,
+                {flexDirection: isRTL ? 'row-reverse' : 'row'},
+              ]}>
               <View
                 style={[
-                  styles.viewToggle,
-                  isDarkMode ? styles.darkViewToggle : styles.lightViewToggle,
+                  styles.indicator,
+                  {marginRight: isRTL ? 0 : 8, marginLeft: isRTL ? 8 : 0},
+                ]}
+              />
+              <Text
+                style={[
+                  styles.title,
+                  isDarkMode ? styles.darkText : styles.lightText,
                 ]}>
-                <TouchableOpacity
-                  style={[
-                    styles.toggleButton,
-                    !isGridView && styles.activeToggle,
-                  ]}
-                  onPress={() => setIsGridView(false)}>
-                  <IconTwo
-                    name="list"
-                    size={20}
-                    color={
-                      !isGridView
-                        ? Colors.pureWhite
-                        : isDarkMode
-                        ? Colors.pureWhite
-                        : '#333'
-                    }
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[
-                    styles.toggleButton,
-                    isGridView && styles.activeToggle,
-                  ]}
-                  onPress={() => setIsGridView(true)}>
-                  <IconTwo
-                    name="grid"
-                    size={20}
-                    color={
-                      isGridView
-                        ? Colors.pureWhite
-                        : isDarkMode
-                        ? Colors.pureWhite
-                        : '#333'
-                    }
-                  />
-                </TouchableOpacity>
-              </View>
+                {t(category?.title) || t('subCategory.applianceRepair')}
+              </Text>
             </View>
-
-            <ScrollView showsVerticalScrollIndicator={false}>
-              <View
-                style={
-                  isGridView ? styles.gridContainer : styles.listContainer
-                }>
-                {filteredSubCategories.length > 0 ? (
-                  filteredSubCategories.map(item =>
-                    isGridView ? renderGridView(item) : renderListView(item),
-                  )
-                ) : (
-                  <View style={styles.noResultsContainer}>
-                    <Text
-                      style={[
-                        styles.noResultsText,
-                        isDarkMode ? styles.darkText : styles.lightText,
-                      ]}>
-                      No categories found
-                    </Text>
-                  </View>
-                )}
-              </View>
-            </ScrollView>
+            <View style={styles.viewToggle}>
+              <TouchableOpacity
+                style={[
+                  styles.toggleButton,
+                  !isGridView && styles.activeToggle,
+                ]}
+                onPress={() => setIsGridView(false)}>
+                <IconTwo
+                  name="list"
+                  size={20}
+                  color={
+                    !isGridView
+                      ? Colors.pureWhite
+                      : isDarkMode
+                      ? Colors.pureWhite
+                      : '#333'
+                  }
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.toggleButton, isGridView && styles.activeToggle]}
+                onPress={() => setIsGridView(true)}>
+                <IconTwo
+                  name="grid"
+                  size={20}
+                  color={
+                    isGridView
+                      ? Colors.pureWhite
+                      : isDarkMode
+                      ? Colors.pureWhite
+                      : '#333'
+                  }
+                />
+              </TouchableOpacity>
+            </View>
           </View>
-        </>
+
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View
+              style={[
+                isGridView ? styles.gridContainer : styles.listContainer,
+                isGridView && {flexDirection: isRTL ? 'row-reverse' : 'row'},
+              ]}>
+              {filteredSubCategories.length > 0 ? (
+                filteredSubCategories.map(item =>
+                  isGridView ? renderGridView(item) : renderListView(item),
+                )
+              ) : (
+                <View style={styles.noResultsContainer}>
+                  <Text
+                    style={[
+                      styles.noResultsText,
+                      isDarkMode && styles.darkText,
+                    ]}>
+                    {t('subCategory.noResults')}
+                  </Text>
+                </View>
+              )}
+            </View>
+          </ScrollView>
+        </View>
       ) : (
         <View style={styles.noResultsContainer}>
-          <Text
-            style={[
-              styles.noResultsText,
-              isDarkMode ? styles.darkText : styles.lightText,
-            ]}>
-            Coming Soon...
+          <Text style={[styles.noResultsText, isDarkMode && styles.darkText]}>
+            {t('subCategory.comingSoon')}
           </Text>
         </View>
       )}
