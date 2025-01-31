@@ -54,4 +54,19 @@ export default {
   },
   // todo: SearchBar
   search: 'Search what you need...',
+  // todo: Slider
+  slider: {
+    title: {
+      acService: 'Offer AC Service',
+      cleaningService: 'Offer Cleaning Service',
+      paintingService: 'Offer Painting Service',
+    },
+    discount: {
+      get: 'Get',
+      off: 'OFF',
+    },
+    action: {
+      grabOffer: 'Grab Offer',
+    },
+  },
 };

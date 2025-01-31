@@ -53,4 +53,19 @@ export default {
   },
   // todo: SearchBar
   search: 'ابحث عن ما تحتاجه...',
+  // todo: Slider
+  slider: {
+    title: {
+      acService: 'خدمة تكييف الهواء',
+      cleaningService: 'خدمة التنظيف',
+      paintingService: 'خدمة الدهان',
+    },
+    discount: {
+      get: 'خصم',
+      off: 'خصم',
+    },
+    action: {
+      grabOffer: 'احصل على العرض',
+    },
+  },
 };

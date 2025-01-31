@@ -78,19 +78,19 @@ export const categoriesList = [
 export const sliderData = [
   {
     id: 1,
-    title: 'Offer AC Service',
+    titleKey: 'slider.title.acService',
     discount: '25%',
     bgColor: '#F0F8FF',
   },
   {
     id: 2,
-    title: 'Offer Cleaning Service',
+    titleKey: 'slider.title.cleaningService',
     discount: '15%',
     bgColor: '#FFE4E1',
   },
   {
     id: 3,
-    title: 'Offer Painting Service',
+    titleKey: 'slider.title.paintingService',
     discount: '10%',
     bgColor: '#E0FFF0',
   },

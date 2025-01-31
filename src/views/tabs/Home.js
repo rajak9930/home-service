@@ -79,6 +79,7 @@ const Home = () => {
             <SearchBar searchText={searchText} setSearchText={setSearchText} />
           </View>
 
+          {/* Slider */}
           <View
             style={[
               styles.offerContainer,
