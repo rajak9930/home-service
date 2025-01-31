@@ -9,6 +9,7 @@ import {
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import IconOne from 'react-native-vector-icons/Ionicons';
+import {useTranslation} from 'react-i18next';
 
 import Colors from '../../../constants/colors';
 import images from '../../../constants/images';
@@ -16,10 +17,13 @@ import {useCustomTheme} from '../../../theme/Theme';
 import useTypedSelector from '../../../hooks/useTypedSelector';
 import {selectedBookedService} from '../../../redux/bookedService/bookedServiceSlice';
 import {formatDateEnd, formatTimeWithEnd} from '../../../utils';
+import useDirection from '../../../hooks/useDirection';
 
 const Upcoming = () => {
   const navigation = useNavigation();
   const theme = useCustomTheme();
+  const {t} = useTranslation();
+  const {isRTL} = useDirection();
 
   const isDarkMode = theme === 'dark';
   const futureBookings = useTypedSelector(selectedBookedService);
@@ -35,18 +39,20 @@ const Upcoming = () => {
         ]}>
         <Image source={images.Upcoming} style={styles.emptyImage} />
         <Text style={[styles.noOrderText, isDarkMode && styles.darkText]}>
-          No Upcoming Order
+          {t('upcoming.empty.title')}
         </Text>
         <Text style={[styles.subText, isDarkMode && styles.darkSubText]}>
-          Currently you don't have any upcoming order.
+          {t('upcoming.empty.description1')}
         </Text>
         <Text style={[styles.subText, isDarkMode && styles.darkSubText]}>
-          Place and track your orders from here.
+          {t('upcoming.empty.description2')}
         </Text>
         <TouchableOpacity
           style={styles.viewServicesButton}
           onPress={() => navigation.navigate('CategoryDetails')}>
-          <Text style={styles.buttonText}>View all services</Text>
+          <Text style={styles.buttonText}>
+            {t('upcoming.empty.buttonText')}
+          </Text>
         </TouchableOpacity>
       </View>
     );
@@ -63,8 +69,16 @@ const Upcoming = () => {
             key={index}
             style={[styles.card, isDarkMode && styles.darkCard]}>
             {/* Header Section */}
-            <View style={styles.headerSection}>
-              <View style={styles.serviceIcon}>
+            <View
+              style={[
+                styles.headerSection,
+                {flexDirection: isRTL ? 'row-reverse' : 'row'},
+              ]}>
+              <View
+                style={[
+                  styles.serviceIcon,
+                  {marginRight: isRTL ? 0 : 12, marginLeft: isRTL ? 12 : 0},
+                ]}>
                 <Image source={images.categoryOne} style={styles.categoryOne} />
               </View>
               <View style={styles.titleContainer}>
@@ -72,20 +86,41 @@ const Upcoming = () => {
                   {booking.service.title}
                 </Text>
                 <Text style={styles.reference}>
-                  Reference Code: D-{referenceCode.substring(1, 7)}
+                  {t('upcoming.booking.referenceCode', {
+                    code: referenceCode.substring(1, 7),
+                  })}
                 </Text>
               </View>
             </View>
 
-            <View style={styles.rowStatus}>
-              <Text style={styles.label}>Status</Text>
+            <View
+              style={[
+                styles.rowStatus,
+                {flexDirection: isRTL ? 'row-reverse' : 'row'},
+              ]}>
+              <Text style={styles.label}>
+                {t('upcoming.booking.status.label')}
+              </Text>
               <View style={styles.statusBadge}>
-                <Text style={styles.statusText}>Confirmed</Text>
+                <Text style={styles.statusText}>
+                  {t('upcoming.booking.status.confirmed')}
+                </Text>
               </View>
             </View>
 
-            <View style={styles.row}>
-              <View style={styles.iconWrapper}>
+            <View
+              style={[
+                styles.row,
+                {flexDirection: isRTL ? 'row-reverse' : 'row'},
+              ]}>
+              <View
+                style={[
+                  styles.iconWrapper,
+                  {
+                    marginRight: isRTL ? 0 : 12,
+                    marginLeft: isRTL ? 12 : 0,
+                  },
+                ]}>
                 <IconOne
                   name="calendar-outline"
                   size={24}
@@ -95,20 +130,35 @@ const Upcoming = () => {
               <View>
                 <Text
                   style={[styles.scheduleText, isDarkMode && styles.darkText]}>
-                  {formatTimeWithEnd(booking.selectedTime)},{' '}
-                  {formatDateEnd(booking.selectedDate)}
+                  {t('upcoming.booking.schedule.time', {
+                    time: formatTimeWithEnd(booking.selectedTime),
+                    date: formatDateEnd(booking.selectedDate),
+                  })}
                 </Text>
-                <Text style={styles.schedule}>Schedule</Text>
+                <Text style={styles.schedule}>
+                  {t('upcoming.booking.schedule.label')}
+                </Text>
               </View>
             </View>
 
-            <View style={styles.rowLast}>
+            <View
+              style={[
+                styles.rowLast,
+                {flexDirection: isRTL ? 'row-reverse' : 'row'},
+              ]}>
               <View
                 style={{
-                  flexDirection: 'row',
+                  flexDirection: isRTL ? 'row-reverse' : 'row',
                   alignItems: 'center',
                 }}>
-                <View style={styles.serviceIcon}>
+                <View
+                  style={[
+                    styles.serviceIcon,
+                    {
+                      marginRight: isRTL ? 0 : 12,
+                      marginLeft: isRTL ? 12 : 0,
+                    },
+                  ]}>
                   <Text style={styles.serviceIconText}>W</Text>
                 </View>
 
@@ -118,14 +168,29 @@ const Upcoming = () => {
                       styles.providerName,
                       isDarkMode && styles.darkText,
                     ]}>
-                    Westinghouse
+                    {t('upcoming.booking.serviceProvider.name')}
                   </Text>
-                  <Text style={styles.schedule}>Service provider</Text>
+                  <Text style={styles.schedule}>
+                    {t('upcoming.booking.serviceProvider.label')}
+                  </Text>
                 </View>
               </View>
-              <TouchableOpacity style={styles.callButton}>
+              <TouchableOpacity
+                style={[
+                  styles.callButton,
+                  {flexDirection: isRTL ? 'row-reverse' : 'row'},
+                ]}>
                 <IconOne name="call" size={19} color={Colors.pureWhite} />
-                <Text style={styles.callButtonText}>Call</Text>
+                <Text
+                  style={[
+                    styles.callButtonText,
+                    {
+                      marginLeft: isRTL ? 0 : 8,
+                      marginRight: isRTL ? 8 : 0,
+                    },
+                  ]}>
+                  {t('upcoming.booking.callButton')}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>

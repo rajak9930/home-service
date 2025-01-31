@@ -97,4 +97,29 @@ export default {
       action: 'احصل على العرض',
     },
   },
+  // todo: Bookings
+  upcoming: {
+    empty: {
+      title: 'لا توجد طلبات قادمة',
+      description1: 'ليس لديك أي طلبات قادمة حالياً.',
+      description2: 'قم بتقديم وتتبع طلباتك من هنا.',
+      buttonText: 'عرض جميع الخدمات',
+    },
+    booking: {
+      referenceCode: 'رقم المرجع: D-{{code}}',
+      status: {
+        label: 'الحالة',
+        confirmed: 'مؤكد',
+      },
+      schedule: {
+        label: 'الجدول',
+        time: '{{time}}، {{date}}',
+      },
+      serviceProvider: {
+        label: 'مزود الخدمة',
+        name: 'وستنجهاوس',
+      },
+      callButton: 'اتصال',
+    },
+  },
 };

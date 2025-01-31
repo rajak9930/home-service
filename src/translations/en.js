@@ -98,4 +98,29 @@ export default {
       action: 'Grab Offer',
     },
   },
+  // todo: Bookings
+  upcoming: {
+    empty: {
+      title: 'No Upcoming Order',
+      description1: "Currently you don't have any upcoming order.",
+      description2: 'Place and track your orders from here.',
+      buttonText: 'View all services',
+    },
+    booking: {
+      referenceCode: 'Reference Code: D-{{code}}',
+      status: {
+        label: 'Status',
+        confirmed: 'Confirmed',
+      },
+      schedule: {
+        label: 'Schedule',
+        time: '{{time}}, {{date}}',
+      },
+      serviceProvider: {
+        label: 'Service provider',
+        name: 'Westinghouse',
+      },
+      callButton: 'Call',
+    },
+  },
 };
