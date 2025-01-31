@@ -11,24 +11,24 @@ import {
 import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import {supabase} from '../../supabase/supabaseClient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
+import Toast from 'react-native-toast-message';
 
+import {supabase} from '../../supabase/supabaseClient';
 import useTypedSelector from '../../hooks/useTypedSelector';
 import {selectedUser, setUser} from '../../redux/auth/authSlice';
 import Colors from '../../constants/colors';
 import {useCustomTheme} from '../../theme/Theme';
 import useDirection from '../../hooks/useDirection';
-import Toast from 'react-native-toast-message';
 
 const Profile = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const theme = useCustomTheme();
-  const {t, i18n} = useTranslation();
+  const {t} = useTranslation();
   const {isRTL} = useDirection();
 
   const userDetails = useTypedSelector(selectedUser);
@@ -56,7 +56,7 @@ const Profile = () => {
   const handleLanguageChange = async language => {
     try {
       setSelectedLanguage(language);
-      await AsyncStorage.setItem('appLanguage', language);
+      // await AsyncStorage.setItem('appLanguage', language);
       // You'll implement the actual language change logic here later
       console.log('Language preference saved:', language);
     } catch (error) {
@@ -247,16 +247,6 @@ const Profile = () => {
                   {flexDirection: isRTL ? 'row-reverse' : 'row'},
                 ]}
                 onPress={() => handleLanguageChange('en')}>
-                <View
-                  style={[
-                    styles.languageIconContainer,
-                    {
-                      marginRight: isRTL ? 0 : 8,
-                      marginLeft: isRTL ? 8 : 0,
-                    },
-                  ]}>
-                  <Icon name="globe-outline" size={20} color={Colors.primary} />
-                </View>
                 <View style={styles.languageContent}>
                   <Text
                     style={[
@@ -267,14 +257,22 @@ const Profile = () => {
                     ]}>
                     English
                   </Text>
-                  <Text
-                    style={[
-                      styles.languageSubtext,
-                      isDarkMode && styles.darkSubText,
-                      isRTL && styles.rtlText,
-                    ]}>
-                    English
-                  </Text>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      gap: 5,
+                    }}>
+                    <Text
+                      style={[
+                        styles.languageSubtext,
+                        isDarkMode && styles.darkSubText,
+                        isRTL && styles.rtlText,
+                      ]}>
+                      English
+                    </Text>
+                    <Text style={styles.flagText}>🇺🇸</Text>
+                  </View>
                 </View>
                 {selectedLanguage === 'en' && (
                   <View
@@ -303,16 +301,6 @@ const Profile = () => {
                   {flexDirection: isRTL ? 'row-reverse' : 'row'},
                 ]}
                 onPress={() => handleLanguageChange('ar')}>
-                <View
-                  style={[
-                    styles.languageIconContainer,
-                    {
-                      marginRight: isRTL ? 0 : 8,
-                      marginLeft: isRTL ? 8 : 0,
-                    },
-                  ]}>
-                  <Icon name="globe-outline" size={20} color={Colors.primary} />
-                </View>
                 <View style={styles.languageContent}>
                   <Text
                     style={[
@@ -323,14 +311,22 @@ const Profile = () => {
                     ]}>
                     العربية
                   </Text>
-                  <Text
-                    style={[
-                      styles.languageSubtext,
-                      isDarkMode && styles.darkSubText,
-                      isRTL && styles.rtlText,
-                    ]}>
-                    Arabic
-                  </Text>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      gap: 5,
+                    }}>
+                    <Text
+                      style={[
+                        styles.languageSubtext,
+                        isDarkMode && styles.darkSubText,
+                        isRTL && styles.rtlText,
+                      ]}>
+                      Arabic
+                    </Text>
+                    <Text style={styles.flagText}>🇸🇦</Text>
+                  </View>
                 </View>
                 {selectedLanguage === 'ar' && (
                   <View
@@ -477,7 +473,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   detailItem: {
-    marginBottom: 24,
+    marginBottom: 18,
   },
   detailLabel: {
     fontSize: 13,
@@ -495,7 +491,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primaryDark,
   },
   detailText: {
-    fontSize: 14,
+    fontSize: 15,
     color: Colors.black,
   },
   logoutContainer: {
@@ -521,40 +517,28 @@ const styles = StyleSheet.create({
   },
   languageOptions: {
     gap: 12,
+    flexDirection: 'row',
+    flex: 1,
   },
   languageButton: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: Colors.primaryLight,
-    padding: 16,
+    padding: 10,
     borderRadius: 12,
-    marginBottom: 8,
     borderWidth: 1.5,
     borderColor: 'transparent',
+    width: '48%',
+    marginTop: 5,
   },
   selectedLanguage: {
     borderColor: Colors.primary,
     backgroundColor: `${Colors.primary}15`,
   },
-  languageIconContainer: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    overflow: 'hidden',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: Colors.primaryLight,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-  },
+
   languageContent: {
-    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'flex-start',
   },
   languageText: {
     fontSize: 16,
