@@ -8,27 +8,33 @@ import {
 } from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {useTranslation} from 'react-i18next';
 
 import {useCustomTheme} from '../../../theme/Theme';
 import Colors from '../../../constants/colors';
 import {cleaningData} from '../../../constants/data';
+import useDirection from '../../../hooks/useDirection';
 
 const CleaningServices = () => {
   const theme = useCustomTheme();
   const isDarkMode = theme === 'dark';
+  const {t} = useTranslation();
+  const {isRTL} = useDirection();
 
   return (
     <View>
       {/* Header */}
-      <View style={styles.headerContainer}>
-        <View style={styles.titleContainer}>
+      <View
+        style={[styles.headerContainer, isRTL && styles.headerContainerRTL]}>
+        <View
+          style={[styles.titleContainer, isRTL && styles.titleContainerRTL]}>
           <View style={styles.indicator} />
           <Text
             style={[
               styles.title,
               {color: isDarkMode ? Colors.white : Colors.black},
             ]}>
-            Cleaning Services
+            {t('cleaningServices.title')}
           </Text>
         </View>
         <TouchableOpacity
@@ -37,6 +43,7 @@ const CleaningServices = () => {
             {
               borderColor: isDarkMode ? '#616670' : '#EEEEEE',
             },
+            isRTL && styles.seeAllButtonRTL,
           ]}>
           <Text
             style={[
@@ -44,11 +51,12 @@ const CleaningServices = () => {
               {
                 color: isDarkMode ? Colors.pureWhite : Colors.black,
               },
+              isRTL && styles.seeAllTextRTL,
             ]}>
-            See All
+            {t('cleaningServices.seeAll')}
           </Text>
           <Icon
-            name="chevron-forward"
+            name={isRTL ? 'chevron-back' : 'chevron-forward'}
             size={17}
             color={isDarkMode ? Colors.pureWhite : '#666C89'}
           />
@@ -59,12 +67,20 @@ const CleaningServices = () => {
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
+        style={{transform: [{scaleX: isRTL ? -1 : 1}]}}
         contentContainerStyle={styles.scrollContent}>
         {cleaningData.map(item => (
-          <TouchableOpacity key={item.id} style={styles.card}>
+          <TouchableOpacity
+            key={item.id}
+            style={[styles.card, {transform: [{scaleX: isRTL ? -1 : 1}]}]}>
             {item.discount && (
-              <View style={styles.discountTag}>
-                <Text style={styles.discountText}>{item.discount}</Text>
+              <View
+                style={[styles.discountTag, isRTL && styles.discountTagRTL]}>
+                <Text style={styles.discountText}>
+                  {isRTL
+                    ? `${item.discount} ${t('cleaningServices.discount')}`
+                    : `${item.discount} ${t('cleaningServices.discount')}`}
+                </Text>
               </View>
             )}
             <Image source={item.image} style={styles.cardImage} />
@@ -72,8 +88,9 @@ const CleaningServices = () => {
               style={[
                 styles.cardTitle,
                 {color: isDarkMode ? Colors.white : Colors.black},
+                isRTL && styles.textRTL,
               ]}>
-              {item.title}
+              {t(item.title)}
             </Text>
           </TouchableOpacity>
         ))}
@@ -146,11 +163,32 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     borderRadius: 16,
     zIndex: 1,
+    width: 75,
   },
   discountText: {
     color: '#FFFFFF',
     fontSize: 12,
     fontWeight: '600',
+  },
+  headerContainerRTL: {
+    flexDirection: 'row-reverse',
+  },
+  titleContainerRTL: {
+    flexDirection: 'row-reverse',
+  },
+  seeAllButtonRTL: {
+    flexDirection: 'row-reverse',
+  },
+  seeAllTextRTL: {
+    marginRight: 0,
+    marginLeft: 4,
+  },
+  textRTL: {
+    textAlign: 'right',
+  },
+  discountTagRTL: {
+    left: 'auto',
+    right: 12,
   },
 });
 

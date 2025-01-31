@@ -78,4 +78,15 @@ export default {
       seeAll: 'See All',
     },
   },
+  // todo: Cleaning Services
+  cleaningServices: {
+    title: 'Cleaning Services',
+    seeAll: 'See All',
+    services: {
+      homeCleaning: 'Home Cleaning',
+      carpetCleaning: 'Carpet Cleaning',
+      officeCleaning: 'Office Cleaning',
+    },
+    discount: 'OFF',
+  },
 };

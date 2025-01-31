@@ -117,20 +117,20 @@ export const categoryData = [
 export const cleaningData = [
   {
     id: 1,
-    title: 'Home Cleaning',
+    title: 'cleaningServices.services.homeCleaning',
     image: images.CleaningOne,
-    discount: '10% OFF',
+    discount: '10%',
   },
   {
     id: 2,
-    title: 'Carpet Cleaning',
+    title: 'cleaningServices.services.carpetCleaning',
     image: images.CleaningTwo,
   },
   {
     id: 3,
-    title: 'Office Cleaning',
+    title: 'cleaningServices.services.officeCleaning',
     image: images.CleaningThree,
-    discount: '15% OFF',
+    discount: '15%',
   },
 ];
 

@@ -77,4 +77,15 @@ export default {
       seeAll: 'عرض الكل',
     },
   },
+  // todo: Cleaning Services
+  cleaningServices: {
+    title: 'خدمات التنظيف',
+    seeAll: 'عرض الكل',
+    services: {
+      homeCleaning: 'تنظيف المنزل',
+      carpetCleaning: 'تنظيف السجاد',
+      officeCleaning: 'تنظيف المكاتب',
+    },
+    discount: 'خصم',
+  },
 };
