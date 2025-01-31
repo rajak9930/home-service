@@ -171,4 +171,20 @@ export default {
     },
     logout: 'تسجيل الخروج',
   },
+  // todo: All Categories
+  allCategories: {
+    searchCategory: 'ابحث عن الفئة',
+    allCategories: 'جميع الفئات',
+    searchResults: 'نتائج البحث',
+    noCategoriesFound: 'لم يتم العثور على أي فئات',
+    acRepair: 'إصلاح المكيفات',
+    beauty: 'الجمال',
+    appliance: 'الأجهزة الكهربائية',
+    painting: 'الطلاء',
+    cleaning: 'التنظيف',
+    plumbing: 'السباكة',
+    electronics: 'الإلكترونيات',
+    shifting: 'النقل',
+    mensSalon: 'صالون الرجال',
+  },
 };

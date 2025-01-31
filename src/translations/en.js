@@ -172,4 +172,20 @@ export default {
     },
     logout: 'Logout',
   },
+  // todo: All Categories
+  allCategories: {
+    searchCategory: 'Search Category',
+    allCategories: 'All Categories',
+    searchResults: 'Search Results',
+    noCategoriesFound: 'No categories found',
+    acRepair: 'AC Repair',
+    beauty: 'Beauty',
+    appliance: 'Appliance',
+    painting: 'Painting',
+    cleaning: 'Cleaning',
+    plumbing: 'Plumbing',
+    electronics: 'Electronics',
+    shifting: 'Shifting',
+    mensSalon: "Men's Salon",
+  },
 };

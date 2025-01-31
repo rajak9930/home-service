@@ -14,11 +14,15 @@ import SearchBar from '../../components/SearchBar';
 import Colors from '../../constants/colors';
 import {useCustomTheme} from '../../theme/Theme';
 import {categoriesList} from '../../constants/data';
+import {useTranslation} from 'react-i18next';
+import useDirection from '../../hooks/useDirection';
 
 const CategoryDetails = () => {
   const navigation = useNavigation();
   const theme = useCustomTheme();
   const isDarkMode = theme === 'dark';
+  const {t} = useTranslation();
+  const {isRTL} = useDirection();
 
   const [searchText, setSearchText] = useState('');
 
@@ -43,7 +47,7 @@ const CategoryDetails = () => {
         ]}>
         <View style={styles.searchContainer}>
           <SearchBar
-            placeholder="Search Category"
+            placeholder={t('allCategories.searchCategory')}
             searchText={searchText}
             setSearchText={setSearchText}
           />
@@ -63,7 +67,9 @@ const CategoryDetails = () => {
                 styles.title,
                 isDarkMode ? styles.darkTitle : styles.lightTitle,
               ]}>
-              {searchText ? 'Search Results' : 'All Categories'}
+              {searchText
+                ? t('allCategories.searchResults')
+                : t('allCategories.allCategories')}
             </Text>
           </View>
 
@@ -84,7 +90,7 @@ const CategoryDetails = () => {
                       styles.categoryTitle,
                       isDarkMode ? styles.darkText : styles.lightText,
                     ]}>
-                    {item.title}
+                    {t(item.title)}
                   </Text>
                 </TouchableOpacity>
               ))
@@ -95,7 +101,7 @@ const CategoryDetails = () => {
                     styles.noResultsText,
                     isDarkMode ? styles.darkText : styles.lightText,
                   ]}>
-                  No categories found
+                  {t('allCategories.noCategoriesFound')}
                 </Text>
               </View>
             )}

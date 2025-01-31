@@ -30,47 +30,47 @@ export const onboarding = [
 export const categoriesList = [
   {
     id: 1,
-    title: 'AC Repair',
+    title: 'allCategories.acRepair',
     image: images.categoryOne,
   },
   {
     id: 2,
-    title: 'Beauty',
+    title: 'allCategories.beauty',
     image: images.categoryTwo,
   },
   {
     id: 3,
-    title: 'Appliance',
+    title: 'allCategories.appliance',
     image: images.categoryThree,
   },
   {
     id: 4,
-    title: 'Painting',
+    title: 'allCategories.painting',
     image: images.categoryFour,
   },
   {
     id: 5,
-    title: 'Cleaning',
+    title: 'allCategories.cleaning',
     image: images.categoryFive,
   },
   {
     id: 6,
-    title: 'Plumbing',
+    title: 'allCategories.plumbing',
     image: images.categorySix,
   },
   {
     id: 7,
-    title: 'Electronics',
+    title: 'allCategories.electronics',
     image: images.categorySeven,
   },
   {
     id: 8,
-    title: 'Shifting',
+    title: 'allCategories.shifting',
     image: images.categoryEight,
   },
   {
     id: 9,
-    title: "Men's Salon",
+    title: 'allCategories.mensSalon',
     image: images.categoryNine,
   },
 ];
