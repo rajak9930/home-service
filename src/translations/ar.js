@@ -130,4 +130,20 @@ export default {
       description2: 'احجز خدمة لرؤية سجلك هنا.',
     },
   },
+  // todo: Draft
+  draft: {
+    empty: {
+      title: 'لا توجد مسودات خدمات',
+      description1: 'ليس لديك أي مسودات محفوظة حتى الآن.',
+      description2: 'احفظ حجز الخدمة كمسودة لرؤيتها هنا.',
+    },
+    service: {
+      units: '{{count}} وحدات ×',
+      price: '{{amount}} $',
+      reviews: '({{count}})',
+    },
+    toast: {
+      removeSuccess: 'تمت إزالة الخدمة من المسودات',
+    },
+  },
 };
