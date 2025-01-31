@@ -134,17 +134,17 @@ export default {
   // todo: Draft
   draft: {
     empty: {
-      title: 'لا توجد مسودات خدمات',
-      description1: 'ليس لديك أي مسودات محفوظة حتى الآن.',
-      description2: 'احفظ حجز الخدمة كمسودة لرؤيتها هنا.',
+      title: 'No Draft Services',
+      description1: "You don't have any saved drafts yet.",
+      description2: 'Save a service booking as a draft to see it here.',
     },
     service: {
-      units: '{{count}} وحدات ×',
-      price: '{{amount}} $',
-      reviews: '({{count}})',
+      units: '{{count}} units ×',
+      price: '${{amount}}',
+      reviews: '({{count}} reviews)',
     },
     toast: {
-      removeSuccess: 'تمت إزالة الخدمة من المسودات',
+      removeSuccess: 'Service removed from drafts',
     },
   },
   // todo: Bookings
