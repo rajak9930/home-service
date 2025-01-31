@@ -165,6 +165,9 @@ const Profile = () => {
               style={[
                 styles.detailValue,
                 isDarkMode && styles.darkDetailValue,
+                {
+                  flexDirection: isRTL ? 'row-reverse' : 'row',
+                },
               ]}>
               <Text
                 style={[
@@ -190,6 +193,9 @@ const Profile = () => {
               style={[
                 styles.detailValue,
                 isDarkMode && styles.darkDetailValue,
+                {
+                  flexDirection: isRTL ? 'row-reverse' : 'row',
+                },
               ]}>
               <Text
                 style={[
@@ -215,6 +221,9 @@ const Profile = () => {
               style={[
                 styles.detailValue,
                 isDarkMode && styles.darkDetailValue,
+                {
+                  flexDirection: isRTL ? 'row-reverse' : 'row',
+                },
               ]}>
               <Text
                 style={[
@@ -237,7 +246,13 @@ const Profile = () => {
               ]}>
               {t('profile.details.languagePreference')}
             </Text>
-            <View style={styles.languageOptions}>
+            <View
+              style={[
+                styles.languageOptions,
+                {
+                  flexDirection: isRTL ? 'row-reverse' : 'row',
+                },
+              ]}>
               {/* English Option */}
               <TouchableOpacity
                 style={[
@@ -363,7 +378,9 @@ const Profile = () => {
         <TouchableOpacity
           style={[
             styles.logoutButton,
-            {flexDirection: isRTL ? 'row-reverse' : 'row'},
+            {
+              gap: isRTL ? 8 : 0,
+            },
           ]}
           onPress={handleSignOut}
           disabled={isLoading}>
@@ -557,7 +574,7 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
   },
   rtlText: {
-    writingDirection: 'rtl',
+    textAlign: 'right',
   },
 });
 
