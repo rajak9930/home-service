@@ -23,36 +23,47 @@ const ApplianceRepair = () => {
           style={[
             styles.title,
             {color: isDarkMode ? Colors.white : Colors.black},
-            isRTL && styles.textRTL,
           ]}>
           {t('applianceRepair.title')}
         </Text>
       </View>
 
-      <TouchableOpacity style={styles.offerCard}>
+      <View style={styles.offerCard}>
         <Image
           source={images.ApplianceTwo}
           style={styles.applianceImage}
           resizeMode="contain"
         />
 
-        <View
-          style={[styles.contentOverlay, isRTL && styles.contentOverlayRTL]}>
-          <View
-            style={[styles.offerTitleRow, isRTL && styles.offerTitleRowRTL]}>
-            <Text style={[styles.offerTitle, isRTL && styles.textRTL]}>
+        <View style={[styles.contentOverlay]}>
+          <View style={[styles.offerTitleRow]}>
+            <Text style={[styles.offerTitle]}>
               {t('applianceRepair.dryCleaningOffer.title')}
             </Text>
             <IconTwo name="information" size={18} color="#33383F" />
           </View>
 
-          <Text style={[styles.discountText, isRTL && styles.textRTL]}>
+          <Text
+            style={[
+              styles.discountText,
+              {
+                textAlign: 'left',
+                fontSize: isRTL ? 27 : 40,
+                marginTop: isRTL ? 8 : 4,
+                marginBottom: isRTL ? 16 : 8,
+              },
+            ]}>
             {t('applianceRepair.dryCleaningOffer.discount')}
           </Text>
 
           <TouchableOpacity
-            style={[styles.grabButton, isRTL && styles.grabButtonRTL]}>
-            <Text style={[styles.grabButtonText, isRTL && styles.textRTL]}>
+            style={[
+              styles.grabButton,
+              {
+                flexDirection: isRTL ? 'row-reverse' : 'row',
+              },
+            ]}>
+            <Text style={[styles.grabButtonText]}>
               {t('applianceRepair.dryCleaningOffer.action')}
             </Text>
             <Icon
@@ -62,7 +73,7 @@ const ApplianceRepair = () => {
             />
           </TouchableOpacity>
         </View>
-      </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -88,9 +99,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#172B4D',
   },
-  textRTL: {
-    textAlign: 'right',
-  },
   offerCard: {
     width: '100%',
     height: 215,
@@ -111,29 +119,23 @@ const styles = StyleSheet.create({
     bottom: 0,
     padding: 24,
   },
-  contentOverlayRTL: {
-    alignItems: 'flex-end',
-  },
+
   offerTitleRow: {
     flexDirection: 'row',
     alignItems: 'center',
     width: '100%',
     gap: 5,
   },
-  offerTitleRowRTL: {
-    flexDirection: 'row-reverse',
-  },
+
   offerTitle: {
     fontSize: 13,
     fontWeight: '500',
     color: '#33383F',
   },
   discountText: {
-    fontSize: 42,
+    fontSize: 27,
     fontWeight: '600',
     color: '#1A1D1F',
-    marginTop: 4,
-    marginBottom: 8,
   },
   grabButton: {
     flexDirection: 'row',
@@ -144,10 +146,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignSelf: 'flex-start',
   },
-  grabButtonRTL: {
-    flexDirection: 'row-reverse',
-    alignSelf: 'flex-start',
-  },
+
   grabButtonText: {
     fontSize: 14,
     fontWeight: '500',
