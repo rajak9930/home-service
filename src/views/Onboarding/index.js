@@ -152,7 +152,11 @@ const Onboarding = () => {
               ) : (
                 <TouchableOpacity
                   style={styles.nextButton}
-                  onPress={handleNext}>
+                  onPress={() => {
+                    isRTL
+                      ? swiperRef.current.scrollBy(-1)
+                      : swiperRef.current.scrollBy(1);
+                  }}>
                   <Icon
                     name={isRTL ? 'left' : 'right'}
                     size={20}
