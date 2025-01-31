@@ -1,21 +1,25 @@
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
+import {useTranslation} from 'react-i18next';
 
 import Colors from '../../constants/colors';
 import {useCustomTheme} from '../../theme/Theme';
+import useDirection from '../../hooks/useDirection';
 import Draft from '../Bookings/components/Draft';
 import Upcoming from '../Bookings/components/Upcoming';
 import History from '../Bookings/components/History';
 
-const tabs = [
-  {id: 'upcoming', label: 'Upcoming'},
-  {id: 'history', label: 'History'},
-  {id: 'draft', label: 'Draft'},
-];
-
 const Bookings = () => {
   const theme = useCustomTheme();
+  const {t} = useTranslation();
+  const {isRTL} = useDirection();
   const isDarkMode = theme === 'dark';
+
+  const tabs = [
+    {id: 'upcoming', label: t('bookings.tabs.upcoming')},
+    {id: 'history', label: t('bookings.tabs.history')},
+    {id: 'draft', label: t('bookings.tabs.draft')},
+  ];
 
   const [activeTab, setActiveTab] = useState('upcoming');
 
@@ -25,10 +29,24 @@ const Bookings = () => {
         styles.container,
         isDarkMode ? styles.darkContainer : styles.lightContainer,
       ]}>
-      <View style={styles.titleContainer}>
-        <View style={styles.indicator} />
-        <Text style={[styles.title, isDarkMode && styles.darkText]}>
-          Bookings
+      <View
+        style={[
+          styles.titleContainer,
+          {flexDirection: isRTL ? 'row-reverse' : 'row'},
+        ]}>
+        <View
+          style={[
+            styles.indicator,
+            {marginRight: isRTL ? 0 : 8, marginLeft: isRTL ? 8 : 0},
+          ]}
+        />
+        <Text
+          style={[
+            styles.title,
+            isDarkMode && styles.darkText,
+            isRTL && styles.rtlText,
+          ]}>
+          {t('bookings.title')}
         </Text>
       </View>
 
@@ -39,8 +57,12 @@ const Bookings = () => {
             backgroundColor: isDarkMode ? Colors.navBg : Colors.pureWhite,
           },
         ]}>
-        <View style={styles.tabContainer}>
-          {tabs.map(tab => (
+        <View
+          style={[
+            styles.tabContainer,
+            {flexDirection: isRTL ? 'row-reverse' : 'row'},
+          ]}>
+          {(isRTL ? [...tabs].reverse() : tabs).map(tab => (
             <TouchableOpacity
               key={tab.id}
               style={[
@@ -48,6 +70,7 @@ const Bookings = () => {
                 isDarkMode ? styles.darkTab : styles.lightTab,
                 activeTab === tab.id &&
                   (isDarkMode ? styles.darkActiveTab : styles.lightActiveTab),
+                {marginRight: isRTL ? 0 : 8, marginLeft: isRTL ? 8 : 0},
               ]}
               onPress={() => setActiveTab(tab.id)}>
               <Text
@@ -58,6 +81,7 @@ const Bookings = () => {
                     (isDarkMode
                       ? styles.darkActiveTabText
                       : styles.lightActiveTabText),
+                  isRTL && styles.rtlText,
                 ]}>
                 {tab.label}
               </Text>
@@ -66,13 +90,7 @@ const Bookings = () => {
         </View>
       </View>
 
-      <View
-        style={[
-          styles.wrap,
-          // {
-          //   backgroundColor: isDarkMode ? Colors.navBg : Colors.pureWhite,
-          // },
-        ]}>
+      <View style={styles.wrap}>
         <View style={styles.bodyWrap}>
           {activeTab === 'upcoming' ? (
             <Upcoming />
@@ -114,7 +132,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     flex: 1,
   },
-
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -126,12 +143,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 8,
   },
-
   tab: {
     paddingHorizontal: 20,
     paddingVertical: 8,
     borderRadius: 8,
-    marginRight: 8,
   },
   lightTab: {
     backgroundColor: 'transparent',
@@ -163,13 +178,11 @@ const styles = StyleSheet.create({
     color: Colors.pureWhite,
     fontWeight: '600',
   },
-
   indicator: {
     width: 4,
     height: 20,
     backgroundColor: '#CABDFF',
     borderRadius: 2,
-    marginRight: 8,
   },
   title: {
     fontSize: 24,
@@ -181,6 +194,9 @@ const styles = StyleSheet.create({
   },
   bodyWrap: {
     flex: 1,
+  },
+  rtlText: {
+    writingDirection: 'rtl',
   },
 });
 

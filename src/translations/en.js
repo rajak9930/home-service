@@ -147,4 +147,13 @@ export default {
       removeSuccess: 'تمت إزالة الخدمة من المسودات',
     },
   },
+  // todo: Bookings
+  bookings: {
+    title: 'Bookings',
+    tabs: {
+      upcoming: 'Upcoming',
+      history: 'History',
+      draft: 'Draft',
+    },
+  },
 };

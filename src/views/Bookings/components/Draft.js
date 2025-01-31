@@ -29,6 +29,8 @@ const Draft = () => {
   const draftService = useTypedSelector(selectedDraftService);
   const isDarkMode = theme === 'dark';
 
+  console.log('isRTL', isRTL);
+
   const handleRemove = async data => {
     dispatch(setDraftService({service: data}));
 

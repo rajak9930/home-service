@@ -146,4 +146,13 @@ export default {
       removeSuccess: 'تمت إزالة الخدمة من المسودات',
     },
   },
+  // todo: Bookings
+  bookings: {
+    title: 'الحجوزات',
+    tabs: {
+      upcoming: 'القادمة',
+      history: 'السجل',
+      draft: 'المسودة',
+    },
+  },
 };
