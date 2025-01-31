@@ -212,9 +212,14 @@ export default {
     draftSuccess: 'Service saved to drafts',
     draftRemoved: 'Service removed from drafts',
     propertyTypes: {
-      apartment: 'Apartment',
+      home: 'Home',
       villa: 'Villa',
       office: 'Office',
     },
+  },
+  // todo: Number of Units
+  units: {
+    numberOfUnits: 'Number of Units',
+    numberOfBedrooms: 'Number of Bedrooms',
   },
 };

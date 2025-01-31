@@ -4,10 +4,14 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import Colors from '../../../constants/colors';
 import {useCustomTheme} from '../../../theme/Theme';
+import {useTranslation} from 'react-i18next';
+import useDirection from '../../../hooks/useDirection';
 
 const NumberOfUnits = ({units, setUnits, bedrooms, setBedrooms}) => {
   const theme = useCustomTheme();
   const isDarkMode = theme === 'dark';
+  const {t} = useTranslation();
+  const {isRTL} = useDirection();
 
   return (
     <View>
@@ -17,15 +21,24 @@ const NumberOfUnits = ({units, setUnits, bedrooms, setBedrooms}) => {
             styles.cardWrapper,
             isDarkMode ? styles.darkCardWrapper : styles.lightCardWrapper,
           ]}>
-          <View style={styles.card}>
+          {/* Number of Units Card */}
+          <View
+            style={[
+              styles.card,
+              {flexDirection: isRTL ? 'row-reverse' : 'row'},
+            ]}>
             <Text
               style={[
                 styles.counterLabel,
                 isDarkMode ? styles.darkText : styles.lightText,
               ]}>
-              Number of Units
+              {t('units.numberOfUnits')}
             </Text>
-            <View style={styles.counterContainer}>
+            <View
+              style={[
+                styles.counterContainer,
+                {flexDirection: isRTL ? 'row-reverse' : 'row'},
+              ]}>
               <TouchableOpacity
                 style={[
                   styles.counterButton,
@@ -55,43 +68,50 @@ const NumberOfUnits = ({units, setUnits, bedrooms, setBedrooms}) => {
             </View>
           </View>
 
-          <View>
-            <View style={styles.noPaddingCard}>
+          {/* Number of Bedrooms Card */}
+          <View
+            style={[
+              styles.noPaddingCard,
+              {flexDirection: isRTL ? 'row-reverse' : 'row'},
+            ]}>
+            <Text
+              style={[
+                styles.counterLabel,
+                isDarkMode ? styles.darkText : styles.lightText,
+              ]}>
+              {t('units.numberOfBedrooms')}
+            </Text>
+            <View
+              style={[
+                styles.counterContainer,
+                {flexDirection: isRTL ? 'row-reverse' : 'row'},
+              ]}>
+              <TouchableOpacity
+                style={[
+                  styles.counterButton,
+                  isDarkMode
+                    ? styles.darkCounterButton
+                    : styles.lightCounterButton,
+                ]}
+                onPress={() => bedrooms > 0 && setBedrooms(bedrooms - 1)}>
+                <Icon
+                  name="remove"
+                  size={24}
+                  color={isDarkMode ? Colors.pureWhite : '#333'}
+                />
+              </TouchableOpacity>
               <Text
                 style={[
-                  styles.counterLabel,
+                  styles.counterValue,
                   isDarkMode ? styles.darkText : styles.lightText,
                 ]}>
-                Number of Bedrooms
+                {bedrooms}
               </Text>
-              <View style={styles.counterContainer}>
-                <TouchableOpacity
-                  style={[
-                    styles.counterButton,
-                    isDarkMode
-                      ? styles.darkCounterButton
-                      : styles.lightCounterButton,
-                  ]}
-                  onPress={() => bedrooms > 0 && setBedrooms(bedrooms - 1)}>
-                  <Icon
-                    name="remove"
-                    size={24}
-                    color={isDarkMode ? Colors.pureWhite : '#333'}
-                  />
-                </TouchableOpacity>
-                <Text
-                  style={[
-                    styles.counterValue,
-                    isDarkMode ? styles.darkText : styles.lightText,
-                  ]}>
-                  {bedrooms}
-                </Text>
-                <TouchableOpacity
-                  style={[styles.counterButton, styles.incrementButton]}
-                  onPress={() => setBedrooms(bedrooms + 1)}>
-                  <Icon name="add" size={24} color="#FFF" />
-                </TouchableOpacity>
-              </View>
+              <TouchableOpacity
+                style={[styles.counterButton, styles.incrementButton]}
+                onPress={() => setBedrooms(bedrooms + 1)}>
+                <Icon name="add" size={24} color="#FFF" />
+              </TouchableOpacity>
             </View>
           </View>
         </View>

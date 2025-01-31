@@ -211,9 +211,14 @@ export default {
     draftSuccess: 'تم حفظ الخدمة في المسودات',
     draftRemoved: 'تمت إزالة الخدمة من المسودات',
     propertyTypes: {
-      apartment: 'شقة',
+      home: 'منزل',
       villa: 'فيلا',
       office: 'مكتب',
     },
+  },
+  // todo: Number of Units
+  units: {
+    numberOfUnits: 'عدد الوحدات',
+    numberOfBedrooms: 'عدد غرف النوم',
   },
 };
