@@ -88,6 +88,7 @@ const Home = () => {
             <Slider />
           </View>
 
+          {/* Categories */}
           <View
             style={[
               styles.greetingContainer,

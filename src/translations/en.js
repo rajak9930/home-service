@@ -69,4 +69,13 @@ export default {
       grabOffer: 'Grab Offer',
     },
   },
+  // todo: Categories
+  categories: {
+    title: {
+      acRepair: 'AC Repair',
+      beauty: 'Beauty',
+      appliance: 'Appliance',
+      seeAll: 'See All',
+    },
+  },
 };

@@ -99,17 +99,17 @@ export const sliderData = [
 export const categoryData = [
   {
     id: 1,
-    title: 'AC Repair',
+    titleKey: 'categories.title.acRepair',
     image: images.categoryOne,
   },
   {
     id: 2,
-    title: 'Beauty',
+    titleKey: 'categories.title.beauty',
     image: images.categoryTwo,
   },
   {
     id: 3,
-    title: 'Appliance',
+    titleKey: 'categories.title.appliance',
     image: images.categoryThree,
   },
 ];

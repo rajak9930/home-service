@@ -68,4 +68,13 @@ export default {
       grabOffer: 'احصل على العرض',
     },
   },
+  // todo: Categories
+  categories: {
+    title: {
+      acRepair: 'إصلاح المكيف',
+      beauty: 'تجميل',
+      appliance: 'أجهزة',
+      seeAll: 'عرض الكل',
+    },
+  },
 };
