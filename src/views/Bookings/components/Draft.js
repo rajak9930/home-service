@@ -302,8 +302,6 @@ const styles = StyleSheet.create({
     padding: 4,
     borderRadius: 6,
     backgroundColor: '#FFEFF0',
-    position: 'absolute',
-    right: -4,
   },
   darkCard: {
     backgroundColor: Colors.navBg,
