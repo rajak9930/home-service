@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
@@ -11,7 +11,8 @@ import Bookings from './tabs/Bookings';
 import Colors from '../constants/colors';
 import {useCustomTheme} from '../theme/Theme';
 import CustomDrawer from './Home/components/CustomDrawer';
-import useDirection from '../hooks/useDirection';
+import useTypedSelector from '../hooks/useTypedSelector';
+import {selectLanguage} from '../redux/language/languageSlice';
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -115,7 +116,22 @@ const TabNavigator = () => {
 };
 
 const Main = () => {
-  const {isRTL} = useDirection();
+  const currentLanguage = useTypedSelector(selectLanguage);
+  const isRTLLanguage = currentLanguage === 'ar';
+  const [isReady, setIsReady] = useState(true);
+
+  // Handle language changes
+  useEffect(() => {
+    setIsReady(false);
+    // Small delay to ensure drawer state is reset
+    setTimeout(() => {
+      setIsReady(true);
+    }, 100);
+  }, [currentLanguage]);
+
+  if (!isReady) {
+    return null;
+  }
 
   return (
     <Drawer.Navigator
@@ -131,9 +147,19 @@ const Main = () => {
         sceneContainerStyle: {
           backgroundColor: 'transparent',
         },
-        drawerPosition: isRTL ? 'right' : 'left',
+        drawerPosition: isRTLLanguage ? 'right' : 'left',
+        // Disable all gesture handling
+        gestureEnabled: false,
+        swipeEnabled: false,
       }}>
-      <Drawer.Screen name="TabNavigator" component={TabNavigator} />
+      <Drawer.Screen
+        name="TabNavigator"
+        component={TabNavigator}
+        options={{
+          swipeEnabled: false,
+          gestureEnabled: false,
+        }}
+      />
     </Drawer.Navigator>
   );
 };

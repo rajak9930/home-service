@@ -14,7 +14,6 @@ const LanguageInitializer = ({children}) => {
     const initializeLanguage = async () => {
       try {
         const storedLanguage = await AsyncStorage.getItem('language');
-        console.log('storedLanguage', storedLanguage);
         const initialLanguage = storedLanguage || 'en';
 
         // Update Redux state
