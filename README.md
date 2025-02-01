@@ -1,79 +1,137 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Home Service App
 
-# Getting Started
+A modern and accessible home service application built with React Native CLI. This app supports both iOS and Android platforms with features like dual theme support and bilingual interface (English & Arabic).
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## 🌟 Features
 
-## Step 1: Start the Metro Server
+- Dual Theme Support (Light/Dark mode)
+- Bilingual Support (English/Arabic)
+- Modern UI/UX with smooth transitions
+- Cross-platform (iOS & Android)
+- Redux state management with persistence
+- Form validation and handling
+- Google Sign-in integration
+- Supabase backend integration
+- Toast notifications
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+## 🚀 Installation
 
-To start Metro, run the following command from the _root_ of your React Native project:
-
+1. Clone the repository:
 ```bash
-# using npm
-npm start
-
-# OR using Yarn
-yarn start
+git clone https://github.com/Moazam05/native-cli-home-service.git
+cd native-cli-home-service
 ```
 
-## Step 2: Start your Application
-
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
-
-### For Android
-
+2. Install dependencies:
 ```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
+npm install
 ```
 
-### For iOS
-
+3. iOS specific setup:
 ```bash
-# using npm
+cd ios
+pod install
+cd ..
+```
+
+4. Create a `.env` file in the root directory with the following variables:
+```env
+# Supabase Configuration
+SUPABASE_URL="your-supabase-url"
+SUPABASE_ANON_KEY="your-supabase-anon-key"
+
+# Google Sign-in Configuration
+WEB_CLIENT_ID="your-google-web-client-id"
+```
+
+Replace these values with your actual credentials:
+- `SUPABASE_URL`: Your Supabase project URL
+- `SUPABASE_ANON_KEY`: Your Supabase anonymous key
+- `WEB_CLIENT_ID`: Google Sign-in Web Client ID from Google Cloud Console
+
+Note: Never commit your actual .env file to version control. Add .env to your .gitignore file.
+
+## 🏃‍♂️ Running the App
+
+### iOS
+```bash
+# Normal run
 npm run ios
 
-# OR using Yarn
-yarn ios
+# Clean build
+npm run ios-clean
 ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+### Android
+```bash
+# Normal run
+npm run android
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+# Clean build
+npm run android-clean
+```
 
-## Step 3: Modifying your App
+### Development Server
+```bash
+npm start
+```
 
-Now that you have successfully run the app, let's modify it.
+## 📱 Supported Platforms
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+- iOS: Tested on iOS 13 and above
+- Android: API level 21 (Android 5.0) and above
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+## 🛠️ Tech Stack
 
-## Congratulations! :tada:
+- React Native 0.76.5
+- React Navigation v7
+- Redux Toolkit & Redux Persist
+- @react-native-google-signin/google-signin
+- i18next & react-i18next
+- Formik & Yup
+- React Native Linear Gradient
+- React Native Vector Icons
+- Supabase
+- TypeScript
+- And more...
 
-You've successfully run and modified your React Native App. :partying_face:
+## 🔧 Third Party Service Setup
 
-### Now what?
+1. Create a Supabase account and project
+2. Set up Google Cloud Console project for Google Sign-in
+3. Configure your environment variables in the .env file
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+## 🎨 Design
 
-# Troubleshooting
+The UI/UX design follows the Figma template available at:
+[DoorHub Home Service UI Kit](https://www.figma.com/design/1ka6LQySfHSXe7WSNQJTjY/Home-Service-UI-KIt--DoorHub)
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+## Author
 
-# Learn More
+Salman Muazam
 
-To learn more about React Native, take a look at the following resources:
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+## Screenshots
+
+![Not Found](https://i.postimg.cc/MTszjQdS/1.jpg)
+![Not Found](https://i.postimg.cc/fWrwzYV7/2.jpg)
+![Not Found](https://i.postimg.cc/dVMwdvmL/2a.jpg)
+![Not Found](https://i.postimg.cc/VvrPrHJq/2b.jpg)
+![Not Found](https://i.postimg.cc/HWRgDHNB/2c.jpg)
+![Not Found](https://i.postimg.cc/7Yzyqd8D/3.jpg)
+![Not Found](https://i.postimg.cc/9Qt579Qn/3a.jpg)
+![Not Found](https://i.postimg.cc/ydGwHXLk/4.jpg)
+![Not Found](https://i.postimg.cc/qgVStBVr/4a.jpg)
+![Not Found](https://i.postimg.cc/8zHkV9Mc/5.jpg)
+![Not Found](https://i.postimg.cc/s2gjfm4c/7.jpg)
+![Not Found](https://i.postimg.cc/bNfqSpRd/7a.jpg)
+![Not Found](https://i.postimg.cc/pL2xkC4H/8.jpg)
+![Not Found](https://i.postimg.cc/fycnfSvy/8a.jpg)
+![Not Found](https://i.postimg.cc/bYkhh4jP/8b.jpg)
+![Not Found](https://i.postimg.cc/KvbyvQZM/8c.jpg)
+![Not Found](https://i.postimg.cc/NjfqRM2G/9.jpg)
+![Not Found](https://i.postimg.cc/VNdxHVF3/10.jpg)
+![Not Found](https://i.postimg.cc/W4Fy7JNV/11.jpg)
+![Not Found](https://i.postimg.cc/63C1kJ41/12.jpg)
+![Not Found](https://i.postimg.cc/BZcVN30j/13.jpg)
+![Not Found](https://i.postimg.cc/QCrvCxr3/15.jpg)
