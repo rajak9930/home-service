@@ -83,7 +83,7 @@ const Upcoming = () => {
               </View>
               <View style={styles.titleContainer}>
                 <Text style={[styles.title, isDarkMode && styles.darkText]}>
-                  {booking.service.title}
+                  {t(booking.service.title)}
                 </Text>
                 <Text style={styles.reference}>
                   {t('upcoming.booking.referenceCode', {

@@ -119,7 +119,7 @@ const Draft = () => {
                   isDarkMode && styles.darkText,
                   isRTL && styles.rtlText,
                 ]}>
-                {item.service.title}
+                {t(item.service.title)}
               </Text>
               <TouchableOpacity
                 onPress={() => handleRemove(item.service)}

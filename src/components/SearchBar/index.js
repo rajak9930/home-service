@@ -21,15 +21,17 @@ const SearchBar = ({placeholder, searchText, setSearchText}) => {
         styles.searchContainer,
         isDarkMode ? styles.darkSearchContainer : styles.lightSearchContainer,
       ]}>
-      <TouchableOpacity
-        style={styles.backButton}
-        onPress={() => navigation.goBack()}>
-        <Icon
-          name={isRTL ? 'arrow-back' : 'arrow-back'}
-          size={24}
-          color={isDarkMode ? Colors.pureWhite : '#333'}
-        />
-      </TouchableOpacity>
+      {placeholder && (
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}>
+          <Icon
+            name={isRTL ? 'arrow-back' : 'arrow-back'}
+            size={24}
+            color={isDarkMode ? Colors.pureWhite : '#333'}
+          />
+        </TouchableOpacity>
+      )}
 
       <TextInput
         style={[
