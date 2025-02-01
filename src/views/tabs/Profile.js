@@ -16,6 +16,7 @@ import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import Toast from 'react-native-toast-message';
+import RNRestart from 'react-native-restart';
 
 import {supabase} from '../../supabase/supabaseClient';
 import useTypedSelector from '../../hooks/useTypedSelector';
@@ -23,19 +24,27 @@ import {selectedUser, setUser} from '../../redux/auth/authSlice';
 import Colors from '../../constants/colors';
 import {useCustomTheme} from '../../theme/Theme';
 import useDirection from '../../hooks/useDirection';
+import {setLanguage} from '../../redux/language/languageSlice';
 
 const Profile = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const theme = useCustomTheme();
-  const {t} = useTranslation();
+  const {t, i18n} = useTranslation();
   const {isRTL} = useDirection();
 
   const userDetails = useTypedSelector(selectedUser);
+  const currentLanguage = i18n.language;
   const isDarkMode = theme === 'dark';
 
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState(isRTL ? 'ar' : 'en');
+  const [selectedLanguage, setSelectedLanguage] = useState('');
+
+  useEffect(() => {
+    if (currentLanguage) {
+      setSelectedLanguage(currentLanguage);
+    }
+  }, [currentLanguage]);
 
   useEffect(() => {
     const configureGoogleSignIn = async () => {
@@ -56,9 +65,12 @@ const Profile = () => {
   const handleLanguageChange = async language => {
     try {
       setSelectedLanguage(language);
-      // await AsyncStorage.setItem('appLanguage', language);
-      // You'll implement the actual language change logic here later
-      console.log('Language preference saved:', language);
+
+      await AsyncStorage.setItem('language', language);
+      dispatch(setLanguage(language));
+      await i18n.changeLanguage(language);
+
+      RNRestart.restart();
     } catch (error) {
       console.error('Error saving language preference:', error);
     }
