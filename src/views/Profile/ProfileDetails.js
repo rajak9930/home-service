@@ -120,6 +120,17 @@ const styles = StyleSheet.create({
   detailItem: {
     marginBottom: 18,
   },
+  darkText: {
+    color: Colors.pureWhite,
+  },
+  detailLabel: {
+    fontSize: 13,
+    color: Colors.black,
+    marginBottom: 8,
+  },
+  rtlText: {
+    textAlign: 'right',
+  },
 });
 
 export default ProfileDetails;

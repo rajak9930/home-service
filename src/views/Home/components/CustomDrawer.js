@@ -65,6 +65,7 @@ const CustomDrawer = props => {
     const newTheme = theme === 'dark' ? 'light' : 'dark';
     dispatch(setTheme(newTheme));
     AsyncStorage.setItem('theme', JSON.stringify({newTheme}));
+    props.navigation.closeDrawer();
   };
 
   return (
@@ -103,7 +104,7 @@ const CustomDrawer = props => {
               key={index}
               style={styles.drawerItemWrapper}
               onPress={() => {
-                props.navigation.navigate(item.label.split('.')[1]);
+                console.log(item.label.split('.')[1]);
               }}>
               <CustomLabel
                 icon={item.icon}
@@ -159,24 +160,22 @@ const CustomDrawer = props => {
           <TouchableOpacity
             style={[
               styles.themeOption,
-              isDarkMode && {backgroundColor: 'rgba(255,255,255,0.1)'},
+              isDarkMode && styles.activeThemeOption,
               {flexDirection: isRTL ? 'row-reverse' : 'row'},
             ]}
             onPress={toggleTheme}>
             <IconRenderer
               type="Ionicons"
               name="moon-outline"
-              color={Colors.pureWhite}
+              color={isDarkMode ? '#6C63FF' : Colors.pureWhite}
               size={20}
             />
             <Text
               style={[
                 styles.themeOptionText,
-                {
-                  marginLeft: isRTL ? 0 : 8,
-                  marginRight: isRTL ? 8 : 0,
-                },
+                isDarkMode && styles.activeThemeOptionText,
                 isRTL && styles.rtlText,
+                {marginLeft: isRTL ? 0 : 8, marginRight: isRTL ? 8 : 0},
               ]}>
               {t('drawer.dark')}
             </Text>
