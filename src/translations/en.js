@@ -229,4 +229,16 @@ export default {
     description: 'Description',
     placeholder: 'Write something...',
   },
+  // todo: BottomSheet
+  bottomSheet: {
+    title: 'Select your Date & Time?',
+    selectDate: 'Select your Date',
+    selectTime: 'Select your Time',
+    date: 'DATE',
+    time: 'TIME',
+    total: 'Total',
+    currency: 'USD',
+    continue: 'Continue',
+    selectDateTime: 'Please select Date & Time',
+  },
 };

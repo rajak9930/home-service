@@ -320,7 +320,8 @@ const ServiceDetails = () => {
                   isDarkMode ? styles.darkTotalAmount : styles.lightTotalAmount,
                   isRTL && styles.rtlText,
                 ]}>
-                USD {thousandSeparator(service.price * units)}
+                {t('bottomSheet.currency')}{' '}
+                {thousandSeparator(service.price * units)}
               </Text>
             </View>
 

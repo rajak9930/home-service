@@ -228,4 +228,16 @@ export default {
     description: 'الوصف',
     placeholder: 'اكتب شيئاً...',
   },
+  // todo: BottomSheet
+  bottomSheet: {
+    title: 'حدد التاريخ والوقت؟',
+    selectDate: 'حدد التاريخ',
+    selectTime: 'حدد الوقت',
+    date: 'التاريخ',
+    time: 'الوقت',
+    total: 'المجموع',
+    currency: 'دولار',
+    continue: 'متابعة',
+    selectDateTime: 'الرجاء تحديد التاريخ والوقت',
+  },
 };

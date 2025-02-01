@@ -2,11 +2,13 @@ import {View, Text, StyleSheet, TouchableOpacity, Platform} from 'react-native';
 import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import Toast from 'react-native-toast-message';
 
 import Colors from '../../../constants/colors';
 import {useCustomTheme} from '../../../theme/Theme';
 import {formatDate, formatTime} from '../../../utils';
-import Toast from 'react-native-toast-message';
+import {useTranslation} from 'react-i18next';
+import useDirection from '../../../hooks/useDirection';
 
 const BottomSheet = ({
   setIsBottomSheetVisible,
@@ -19,11 +21,11 @@ const BottomSheet = ({
   serviceBooked,
 }) => {
   const theme = useCustomTheme();
+  const {t} = useTranslation();
+  const {isRTL} = useDirection();
 
   const isDarkMode = theme === 'dark';
 
-  // const [selectedDate, setSelectedDate] = useState(null);
-  // const [selectedTime, setSelectedTime] = useState(null);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
 
@@ -45,7 +47,9 @@ const BottomSheet = ({
 
   // Get display text for date button
   const getDateDisplayText = () => {
-    return selectedDate ? formatDate(selectedDate) : 'Select your Date';
+    return selectedDate
+      ? formatDate(selectedDate)
+      : t('bottomSheet.selectDate');
   };
 
   const getEndTime = startTime => {
@@ -56,7 +60,7 @@ const BottomSheet = ({
 
   const getTimeDisplayText = () => {
     if (!selectedTime) {
-      return 'Select your Time';
+      return t('bottomSheet.selectTime');
     }
 
     const endTime = getEndTime(selectedTime);
@@ -71,15 +75,29 @@ const BottomSheet = ({
       ]}>
       <View style={styles.bottomSheet}>
         {/* Header Section */}
-        <View style={styles.bottomSheetHeader}>
-          <View style={styles.sectionHeader}>
-            <View style={styles.indicator} />
+        <View
+          style={[
+            styles.bottomSheetHeader,
+            {flexDirection: isRTL ? 'row-reverse' : 'row'},
+          ]}>
+          <View
+            style={[
+              styles.sectionHeader,
+              {flexDirection: isRTL ? 'row-reverse' : 'row'},
+            ]}>
+            <View
+              style={[
+                styles.indicator,
+                {marginRight: isRTL ? 0 : 8, marginLeft: isRTL ? 8 : 0},
+              ]}
+            />
             <Text
               style={[
                 styles.bottomSheetTitle,
                 isDarkMode ? styles.darkText : styles.lightText,
+                isRTL && styles.rtlText,
               ]}>
-              Select your Date & Time?
+              {t('bottomSheet.title')}
             </Text>
           </View>
           <TouchableOpacity
@@ -100,27 +118,49 @@ const BottomSheet = ({
 
         {/* Date Selection */}
         <TouchableOpacity
-          style={styles.datePickerButton}
+          style={[
+            styles.datePickerButton,
+            {flexDirection: isRTL ? 'row-reverse' : 'row'},
+          ]}
           onPress={() => setShowDatePicker(true)}>
-          <View style={styles.datePickerIcon}>
+          <View
+            style={[
+              styles.datePickerIcon,
+              {marginRight: isRTL ? 0 : 16, marginLeft: isRTL ? 16 : 0},
+            ]}>
             <Icon name="calendar-outline" size={24} color="#666" />
           </View>
           <View>
-            <Text style={styles.datePickerLabel}>DATE</Text>
-            <Text style={styles.datePickerValue}>{getDateDisplayText()}</Text>
+            <Text style={[styles.datePickerLabel, isRTL && styles.rtlText]}>
+              {t('bottomSheet.date')}
+            </Text>
+            <Text style={[styles.datePickerValue, isRTL && styles.rtlText]}>
+              {getDateDisplayText()}
+            </Text>
           </View>
         </TouchableOpacity>
 
         {/* Time Selection */}
         <TouchableOpacity
-          style={styles.timePickerButton}
+          style={[
+            styles.timePickerButton,
+            {flexDirection: isRTL ? 'row-reverse' : 'row'},
+          ]}
           onPress={() => setShowTimePicker(true)}>
-          <View style={styles.timePickerIcon}>
+          <View
+            style={[
+              styles.timePickerIcon,
+              {marginRight: isRTL ? 0 : 16, marginLeft: isRTL ? 16 : 0},
+            ]}>
             <Icon name="time-outline" size={24} color="#666" />
           </View>
           <View>
-            <Text style={styles.timePickerLabel}>TIME</Text>
-            <Text style={styles.timePickerValue}>{getTimeDisplayText()}</Text>
+            <Text style={[styles.timePickerLabel, isRTL && styles.rtlText]}>
+              {t('bottomSheet.time')}
+            </Text>
+            <Text style={[styles.timePickerValue, isRTL && styles.rtlText]}>
+              {getTimeDisplayText()}
+            </Text>
           </View>
         </TouchableOpacity>
 
@@ -148,26 +188,31 @@ const BottomSheet = ({
 
         {/* Bottom Actions */}
         <View style={styles.bottomSheetFooter}>
-          <View style={styles.totalRow}>
+          <View
+            style={[
+              styles.totalRow,
+              {flexDirection: isRTL ? 'row-reverse' : 'row'},
+            ]}>
             <Text
               style={[
                 styles.totalText,
                 isDarkMode ? styles.darkTotalLabel : styles.lightTotalLabel,
+                isRTL && styles.rtlText,
               ]}>
-              Total:
+              {t('bottomSheet.total')}:
             </Text>
             <Text
               style={[
                 styles.priceText,
                 isDarkMode ? styles.darkTotalAmount : styles.lightTotalAmount,
+                isRTL && styles.rtlText,
               ]}>
-              USD {service.price * units}
+              {t('bottomSheet.currency')} {service.price * units}
             </Text>
           </View>
           <TouchableOpacity
             style={[
               styles.continueButton,
-              styles.continueButtonText,
               {
                 backgroundColor: isDarkMode ? '#29303C' : Colors.primary,
               },
@@ -178,11 +223,13 @@ const BottomSheet = ({
               } else {
                 Toast.show({
                   type: 'error',
-                  text2: 'Please select Date & Time',
+                  text2: t('bottomSheet.selectDateTime'),
                 });
               }
             }}>
-            <Text style={styles.continueButtonText}>Continue</Text>
+            <Text style={[styles.continueButtonText, isRTL && styles.rtlText]}>
+              {t('bottomSheet.continue')}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -329,6 +376,9 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
+  },
+  rtlText: {
+    textAlign: 'right',
   },
 });
 
