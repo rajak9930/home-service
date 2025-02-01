@@ -26,6 +26,7 @@ import {useCustomTheme} from '../../theme/Theme';
 import useDirection from '../../hooks/useDirection';
 import {setLanguage} from '../../redux/language/languageSlice';
 import LanguagePreference from '../Profile/LanguagePreference';
+import ProfileDetails from '../Profile/ProfileDetails';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -176,90 +177,8 @@ const Profile = () => {
         </View>
 
         <View style={[styles.detailsContainer, isDarkMode && styles.darkCard]}>
-          <View style={styles.detailItem}>
-            <Text
-              style={[
-                styles.detailLabel,
-                isDarkMode && styles.darkText,
-                isRTL && styles.rtlText,
-              ]}>
-              {t('profile.details.phoneNumber')}
-            </Text>
-            <View
-              style={[
-                styles.detailValue,
-                isDarkMode && styles.darkDetailValue,
-                {
-                  flexDirection: isRTL ? 'row-reverse' : 'row',
-                },
-              ]}>
-              <Text
-                style={[
-                  styles.detailText,
-                  isDarkMode && styles.darkText,
-                  isRTL && styles.rtlText,
-                ]}>
-                +92 {userDetails?.user?.phone || '313 4866442'}
-              </Text>
-            </View>
-          </View>
-
-          <View style={styles.detailItem}>
-            <Text
-              style={[
-                styles.detailLabel,
-                isDarkMode && styles.darkText,
-                isRTL && styles.rtlText,
-              ]}>
-              {t('profile.details.email')}
-            </Text>
-            <View
-              style={[
-                styles.detailValue,
-                isDarkMode && styles.darkDetailValue,
-                {
-                  flexDirection: isRTL ? 'row-reverse' : 'row',
-                },
-              ]}>
-              <Text
-                style={[
-                  styles.detailText,
-                  isDarkMode && styles.darkText,
-                  isRTL && styles.rtlText,
-                ]}>
-                {userDetails?.user?.email}
-              </Text>
-            </View>
-          </View>
-
-          <View style={styles.detailItem}>
-            <Text
-              style={[
-                styles.detailLabel,
-                isDarkMode && styles.darkText,
-                isRTL && styles.rtlText,
-              ]}>
-              {t('profile.details.gender')}
-            </Text>
-            <View
-              style={[
-                styles.detailValue,
-                isDarkMode && styles.darkDetailValue,
-                {
-                  flexDirection: isRTL ? 'row-reverse' : 'row',
-                },
-              ]}>
-              <Text
-                style={[
-                  styles.detailText,
-                  isDarkMode && styles.darkText,
-                  isRTL && styles.rtlText,
-                ]}>
-                {t('profile.details.male')}
-              </Text>
-            </View>
-          </View>
-
+          {/* ProfileDetails */}
+          <ProfileDetails />
           {/* Language Preference Section */}
           <View style={styles.detailItem}>
             <Text
@@ -412,20 +331,7 @@ const styles = StyleSheet.create({
     color: Colors.black,
     marginBottom: 8,
   },
-  detailValue: {
-    backgroundColor: Colors.primaryLight,
-    padding: 12,
-    borderRadius: 8,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  darkDetailValue: {
-    backgroundColor: Colors.primaryDark,
-  },
-  detailText: {
-    fontSize: 15,
-    color: Colors.black,
-  },
+
   logoutContainer: {
     position: 'absolute',
     bottom: 0,
