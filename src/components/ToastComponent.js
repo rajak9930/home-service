@@ -54,7 +54,7 @@ const ToastBase = ({type, title, subtitle}) => {
 const ErrorToast = ({text2}) => (
   <ToastBase
     type="error"
-    title={'This is error message'}
+    title={'Error'}
     subtitle={
       text2 || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...'
     }

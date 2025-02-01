@@ -47,8 +47,6 @@ const ServiceDetails = () => {
   const {service} = route.params;
   const draftService = useTypedSelector(selectedDraftService);
 
-  console.log('service', service);
-
   const [selectedProperty, setSelectedProperty] = useState(2);
   const [units, setUnits] = useState(2);
   const [bedrooms, setBedrooms] = useState(0);
