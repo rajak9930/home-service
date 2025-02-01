@@ -147,49 +147,49 @@ export const DRAWER_ITEMS = [
       type: 'MaterialIcons',
       name: 'calendar-today',
     },
-    label: 'calendar',
+    label: 'drawer.calendar',
   },
   {
     icon: {
       type: 'MaterialIcons',
       name: 'payment',
     },
-    label: 'payments',
+    label: 'drawer.payments',
   },
   {
     icon: {
       type: 'Ionicons',
       name: 'location-outline',
     },
-    label: 'address',
+    label: 'drawer.address',
   },
   {
     icon: {
       type: 'MaterialIcons',
       name: 'notifications-none',
     },
-    label: 'notification',
+    label: 'drawer.notification',
   },
   {
     icon: {
       type: 'MaterialCommunityIcons',
       name: 'ticket-percent-outline',
     },
-    label: 'offers',
+    label: 'drawer.offers',
   },
   {
     icon: {
       type: 'MaterialIcons',
       name: 'person-add-alt-1',
     },
-    label: 'referFriend',
+    label: 'drawer.referFriend',
   },
   {
     icon: {
       type: 'MaterialIcons',
       name: 'support-agent',
     },
-    label: 'support',
+    label: 'drawer.support',
   },
 ];
 

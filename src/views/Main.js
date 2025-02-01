@@ -139,7 +139,7 @@ const Main = () => {
       screenOptions={{
         headerShown: false,
         drawerStyle: {
-          width: '85%',
+          width: '82%',
           backgroundColor: 'transparent',
         },
         overlayColor: 'rgba(0,0,0,0.5)',

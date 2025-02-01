@@ -1,8 +1,8 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
-
+import {DrawerContentScrollView} from '@react-navigation/drawer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
 
 import useTypedSelector from '../../../hooks/useTypedSelector';
@@ -30,47 +30,65 @@ const IconRenderer = ({
   );
 };
 
+const CustomLabel = ({icon, label, isRTL}) => (
+  <View
+    style={[
+      styles.labelContainer,
+      {flexDirection: isRTL ? 'row-reverse' : 'row'},
+    ]}>
+    <IconRenderer
+      type={icon.type}
+      name={icon.name}
+      isDarkMode={false}
+      size={22}
+      color={Colors.pureWhite}
+    />
+    <Text style={[styles.drawerLabel, isRTL && styles.rtlText]}>{label}</Text>
+  </View>
+);
+
 const CustomDrawer = props => {
   const theme = useCustomTheme();
   const dispatch = useDispatch();
   const userDetails = useTypedSelector(selectedUser);
+  const {t} = useTranslation();
   const {isRTL} = useDirection();
 
+  const isDarkMode = theme === 'dark';
   const {
     name = '',
     email = '',
     picture = '',
   } = userDetails?.user?.user_metadata || {};
 
-  const isDarkMode = theme === 'dark';
-
   const toggleTheme = () => {
     const newTheme = theme === 'dark' ? 'light' : 'dark';
     dispatch(setTheme(newTheme));
-    AsyncStorage.setItem(
-      'theme',
-      JSON.stringify({
-        newTheme,
-      }),
-    );
+    AsyncStorage.setItem('theme', JSON.stringify({newTheme}));
   };
 
   return (
-    <View
-      style={[
-        styles.container,
-        {backgroundColor: isDarkMode ? Colors.navBg : Colors.primary},
-      ]}>
+    <View style={[styles.container, {backgroundColor: '#6C63FF'}]}>
       <DrawerContentScrollView
         {...props}
         contentContainerStyle={styles.drawerContent}>
         {/* Profile Section */}
-        <View style={styles.profileSection}>
+        <View
+          style={[
+            styles.profileSection,
+            {flexDirection: isRTL ? 'row-reverse' : 'row'},
+          ]}>
           <Image source={{uri: picture}} style={styles.profileImage} />
-          <View style={styles.profileInfo}>
-            <Text style={styles.profileName}>{name}</Text>
+          <View
+            style={[
+              styles.profileInfo,
+              {alignItems: isRTL ? 'flex-end' : 'flex-start'},
+            ]}>
+            <Text style={[styles.profileName, isRTL && styles.rtlText]}>
+              {name}
+            </Text>
             <Text
-              style={styles.profileEmail}
+              style={[styles.profileEmail, isRTL && styles.rtlText]}
               numberOfLines={1}
               ellipsizeMode="tail">
               {email}
@@ -81,41 +99,47 @@ const CustomDrawer = props => {
         {/* Drawer Items */}
         <View style={styles.drawerItems}>
           {DRAWER_ITEMS.map((item, index) => (
-            <View key={index} style={styles.drawerItemWrapper}>
-              <DrawerItem
-                // eslint-disable-next-line react/no-unstable-nested-components
-                icon={() => (
-                  <IconRenderer
-                    type={item.icon.type}
-                    name={item.icon.name}
-                    isDarkMode={isDarkMode}
-                  />
-                )}
-                label={item.label}
-                labelStyle={styles.drawerLabel}
+            <TouchableOpacity
+              key={index}
+              style={styles.drawerItemWrapper}
+              onPress={() => {
+                props.navigation.navigate(item.label.split('.')[1]);
+              }}>
+              <CustomLabel
+                icon={item.icon}
+                label={t(item.label)}
+                isRTL={isRTL}
               />
-            </View>
+            </TouchableOpacity>
           ))}
         </View>
       </DrawerContentScrollView>
 
       {/* Theme Switcher */}
       <View style={styles.themeContainer}>
-        <View style={styles.schemeContainer}>
+        <View
+          style={[
+            styles.schemeContainer,
+            {flexDirection: isRTL ? 'row-reverse' : 'row'},
+          ]}>
           <IconRenderer
             type="MaterialIcons"
             name="palette"
-            isDarkMode={isDarkMode}
+            isDarkMode={false}
+            size={24}
           />
-          <Text style={styles.themeText}>Color Scheme</Text>
+          <Text style={[styles.themeText, isRTL && styles.rtlText]}>
+            {t('drawer.colorScheme')}
+          </Text>
         </View>
         <View style={styles.themeSwitcher}>
           <TouchableOpacity
             style={[
               styles.themeOption,
               !isDarkMode && styles.activeThemeOption,
+              {flexDirection: isRTL ? 'row-reverse' : 'row'},
             ]}
-            onPress={() => toggleTheme()}>
+            onPress={toggleTheme}>
             <IconRenderer
               type="Ionicons"
               name="sunny-outline"
@@ -126,30 +150,35 @@ const CustomDrawer = props => {
               style={[
                 styles.themeOptionText,
                 !isDarkMode && styles.activeThemeOptionText,
+                isRTL && styles.rtlText,
+                {marginLeft: isRTL ? 0 : 8, marginRight: isRTL ? 8 : 0},
               ]}>
-              Light
+              {t('drawer.light')}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[
               styles.themeOption,
-              isDarkMode && {backgroundColor: Colors.navBg},
+              isDarkMode && {backgroundColor: 'rgba(255,255,255,0.1)'},
+              {flexDirection: isRTL ? 'row-reverse' : 'row'},
             ]}
-            onPress={() => toggleTheme()}>
+            onPress={toggleTheme}>
             <IconRenderer
               type="Ionicons"
               name="moon-outline"
-              color={isDarkMode ? Colors.pureWhite : Colors.pureWhite}
+              color={Colors.pureWhite}
               size={20}
             />
             <Text
               style={[
                 styles.themeOptionText,
                 {
-                  color: isDarkMode ? Colors.pureWhite : Colors.pureWhite,
+                  marginLeft: isRTL ? 0 : 8,
+                  marginRight: isRTL ? 8 : 0,
                 },
+                isRTL && styles.rtlText,
               ]}>
-              Dark
+              {t('drawer.dark')}
             </Text>
           </TouchableOpacity>
         </View>
@@ -166,71 +195,77 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   profileSection: {
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255,255,255,0.1)',
+    padding: 16,
+    paddingVertical: 24,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
+    gap: 12,
   },
   profileImage: {
-    width: 60,
-    height: 60,
-    borderRadius: 35,
-    marginBottom: 10,
+    width: 48,
+    height: 48,
+    borderRadius: 24,
   },
   profileName: {
     color: Colors.pureWhite,
     fontSize: 18,
     fontWeight: '600',
+    marginBottom: 4,
   },
   profileInfo: {
     flex: 1,
   },
   profileEmail: {
     color: 'rgba(255,255,255,0.8)',
-    fontSize: 14,
+    fontSize: 13,
   },
   drawerItems: {
     flex: 1,
-    paddingVertical: 10,
+    paddingTop: 8,
   },
   drawerItemWrapper: {
-    marginVertical: -3,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+  },
+  labelContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
   },
   drawerLabel: {
     color: Colors.pureWhite,
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: '400',
   },
   themeContainer: {
-    padding: 15,
+    padding: 16,
     borderTopWidth: 1,
     borderTopColor: 'rgba(255,255,255,0.1)',
   },
   schemeContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 5,
+    gap: 8,
+    marginBottom: 16,
   },
   themeText: {
     color: Colors.pureWhite,
     fontSize: 16,
+    fontWeight: '500',
   },
   themeSwitcher: {
     flexDirection: 'row',
-    backgroundColor: 'rgba(255,255,255,0.1)',
-    borderRadius: 25,
-    marginTop: 10,
-    padding: 6,
+    backgroundColor: 'rgba(255,255,255,0.15)',
+    borderRadius: 30,
+    padding: 4,
   },
   themeOption: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 20,
+    paddingHorizontal: 20,
+    borderRadius: 25,
     flex: 1,
   },
   activeThemeOption: {
@@ -238,11 +273,14 @@ const styles = StyleSheet.create({
   },
   themeOptionText: {
     color: Colors.pureWhite,
-    marginLeft: 8,
-    fontSize: 14,
+    fontSize: 15,
+    fontWeight: '500',
   },
   activeThemeOptionText: {
     color: '#6C63FF',
+  },
+  rtlText: {
+    textAlign: 'right',
   },
 });
 
