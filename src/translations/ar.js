@@ -168,6 +168,8 @@ export default {
     languages: {
       english: 'الإنجليزية',
       arabic: 'العربية',
+      changed: 'تم تغيير اللغة بنجاح',
+      changeFailed: 'فشل في تغيير اللغة',
     },
     logout: 'تسجيل الخروج',
   },

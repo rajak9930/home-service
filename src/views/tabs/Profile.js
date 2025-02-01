@@ -39,6 +39,7 @@ const Profile = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('');
+  const [isLanguageChanging, setIsLanguageChanging] = useState(false);
 
   useEffect(() => {
     if (currentLanguage) {
@@ -63,16 +64,26 @@ const Profile = () => {
   }, []);
 
   const handleLanguageChange = async language => {
+    if (language === selectedLanguage) {
+      return;
+    }
+
+    setIsLanguageChanging(true);
     try {
       setSelectedLanguage(language);
-
       await AsyncStorage.setItem('language', language);
       dispatch(setLanguage(language));
       await i18n.changeLanguage(language);
 
+      // Add a small delay before restart for better UX
       RNRestart.restart();
+      setTimeout(() => {}, 1000);
     } catch (error) {
       console.error('Error saving language preference:', error);
+
+      // Revert selection on error
+      setSelectedLanguage(currentLanguage);
+      setIsLanguageChanging(false);
     }
   };
 
@@ -273,7 +284,8 @@ const Profile = () => {
                   isDarkMode && styles.darkDetailValue,
                   {flexDirection: isRTL ? 'row-reverse' : 'row'},
                 ]}
-                onPress={() => handleLanguageChange('en')}>
+                onPress={() => handleLanguageChange('en')}
+                disabled={isLanguageChanging}>
                 <View style={styles.languageContent}>
                   <Text
                     style={[
@@ -301,21 +313,35 @@ const Profile = () => {
                     <Text style={styles.flagText}>🇺🇸</Text>
                   </View>
                 </View>
-                {selectedLanguage === 'en' && (
-                  <View
+                {isLanguageChanging && selectedLanguage === 'en' ? (
+                  <ActivityIndicator
+                    size="small"
+                    color={Colors.primary}
                     style={[
                       styles.checkmark,
                       {
                         marginLeft: isRTL ? 0 : 'auto',
                         marginRight: isRTL ? 'auto' : 0,
                       },
-                    ]}>
-                    <Icon
-                      name="checkmark-circle"
-                      size={20}
-                      color={Colors.primary}
-                    />
-                  </View>
+                    ]}
+                  />
+                ) : (
+                  selectedLanguage === 'en' && (
+                    <View
+                      style={[
+                        styles.checkmark,
+                        {
+                          marginLeft: isRTL ? 0 : 'auto',
+                          marginRight: isRTL ? 'auto' : 0,
+                        },
+                      ]}>
+                      <Icon
+                        name="checkmark-circle"
+                        size={20}
+                        color={Colors.primary}
+                      />
+                    </View>
+                  )
                 )}
               </TouchableOpacity>
 
@@ -327,7 +353,8 @@ const Profile = () => {
                   isDarkMode && styles.darkDetailValue,
                   {flexDirection: isRTL ? 'row-reverse' : 'row'},
                 ]}
-                onPress={() => handleLanguageChange('ar')}>
+                onPress={() => handleLanguageChange('ar')}
+                disabled={isLanguageChanging}>
                 <View style={styles.languageContent}>
                   <Text
                     style={[
@@ -355,21 +382,35 @@ const Profile = () => {
                     <Text style={styles.flagText}>🇸🇦</Text>
                   </View>
                 </View>
-                {selectedLanguage === 'ar' && (
-                  <View
+                {isLanguageChanging && selectedLanguage === 'ar' ? (
+                  <ActivityIndicator
+                    size="small"
+                    color={Colors.primary}
                     style={[
                       styles.checkmark,
                       {
                         marginLeft: isRTL ? 0 : 'auto',
                         marginRight: isRTL ? 'auto' : 0,
                       },
-                    ]}>
-                    <Icon
-                      name="checkmark-circle"
-                      size={20}
-                      color={Colors.primary}
-                    />
-                  </View>
+                    ]}
+                  />
+                ) : (
+                  selectedLanguage === 'ar' && (
+                    <View
+                      style={[
+                        styles.checkmark,
+                        {
+                          marginLeft: isRTL ? 0 : 'auto',
+                          marginRight: isRTL ? 'auto' : 0,
+                        },
+                      ]}>
+                      <Icon
+                        name="checkmark-circle"
+                        size={20}
+                        color={Colors.primary}
+                      />
+                    </View>
+                  )
                 )}
               </TouchableOpacity>
             </View>

@@ -169,6 +169,8 @@ export default {
     languages: {
       english: 'English',
       arabic: 'Arabic',
+      changed: 'Language changed successfully',
+      changeFailed: 'Failed to change language',
     },
     logout: 'Logout',
   },
