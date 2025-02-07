@@ -18,7 +18,7 @@ A modern and accessible home service application built with React Native CLI. Th
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/Moazam05/native-cli-home-service.git
+git clone https://github.com/rajak9930/home-service
 cd native-cli-home-service
 ```
 
@@ -113,25 +113,3 @@ Salman Muazam
 
 ## Screenshots
 
-![Not Found](https://i.postimg.cc/MTszjQdS/1.jpg)
-![Not Found](https://i.postimg.cc/fWrwzYV7/2.jpg)
-![Not Found](https://i.postimg.cc/dVMwdvmL/2a.jpg)
-![Not Found](https://i.postimg.cc/VvrPrHJq/2b.jpg)
-![Not Found](https://i.postimg.cc/HWRgDHNB/2c.jpg)
-![Not Found](https://i.postimg.cc/7Yzyqd8D/3.jpg)
-![Not Found](https://i.postimg.cc/9Qt579Qn/3a.jpg)
-![Not Found](https://i.postimg.cc/ydGwHXLk/4.jpg)
-![Not Found](https://i.postimg.cc/qgVStBVr/4a.jpg)
-![Not Found](https://i.postimg.cc/8zHkV9Mc/5.jpg)
-![Not Found](https://i.postimg.cc/s2gjfm4c/7.jpg)
-![Not Found](https://i.postimg.cc/bNfqSpRd/7a.jpg)
-![Not Found](https://i.postimg.cc/pL2xkC4H/8.jpg)
-![Not Found](https://i.postimg.cc/fycnfSvy/8a.jpg)
-![Not Found](https://i.postimg.cc/bYkhh4jP/8b.jpg)
-![Not Found](https://i.postimg.cc/KvbyvQZM/8c.jpg)
-![Not Found](https://i.postimg.cc/NjfqRM2G/9.jpg)
-![Not Found](https://i.postimg.cc/VNdxHVF3/10.jpg)
-![Not Found](https://i.postimg.cc/W4Fy7JNV/11.jpg)
-![Not Found](https://i.postimg.cc/63C1kJ41/12.jpg)
-![Not Found](https://i.postimg.cc/BZcVN30j/13.jpg)
-![Not Found](https://i.postimg.cc/QCrvCxr3/15.jpg)
